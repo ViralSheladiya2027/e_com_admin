@@ -78,8 +78,6 @@ const handleMouseDownPassword = () => setShowPassword(!showPassword);
         }}
         
         />
-      
-       
         <br></br>
         <br></br>
          <CircularProgress size={30} paddingtop="10px"/>
