@@ -1,14 +1,18 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
 import { Container, Typography } from '@mui/material';
-import logo from "../Components/logo/logo.png"
+import Box from '@mui/material/Box';
+import Tab from '@mui/material/Tab';
+import Tabs from '@mui/material/Tabs';
+import * as React from 'react';
 import BannerSlider from '../Components/BannerSlider';
+import GridView from '../Components/GridView';
+import HorizontalScroller from '../Components/HorizontalScroller';
+import logo from "../Components/logo/logo.png";
+import StripAdView from '../Components/StripAdView';
+
 
 export const CategoryTab=()=>{
     return <Box>
-         <img src={logo } height= "40px"style={{marginRight:"15px"}} />
+         <img src={logo }  height= "40px"  style={{marginRight:"15px"}} />
          <Typography variant="body2"  > Title</Typography>
     </Box>
 }
@@ -24,8 +28,9 @@ const HomeFregment = () => {
     
    
   return (
-    <Container maxwidth ="md" fixed>
-       <Box sx={{  maxWidth: { xs: 660, sm: 1000 }, bgcolor: '#ffffff' }}>
+    <Container maxwidth ="md" >
+      
+       <Box sx={{  maxWidth: { xs: 600, sm: 1000 }, bgcolor: '#ffffff' }}>
      <Tabs
       value={value}
       onChange={handleChange}
@@ -52,7 +57,11 @@ const HomeFregment = () => {
     </Tabs>
     </Box>
   <BannerSlider />
+  <HorizontalScroller/>
+  <StripAdView />
+ <GridView />
   </Container>
+  
   )
 }
 

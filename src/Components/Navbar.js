@@ -22,6 +22,8 @@ import { CssBaseline } from '@mui/material';
 
 
 
+
+
 const drawerWidth = 160
 
 
@@ -112,6 +114,7 @@ const Navbar = () => {
     {/* <Toolbar/> */}
 
 <HomeFregment />
+
 </Box>
     </Box>
   )
