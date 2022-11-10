@@ -11,8 +11,7 @@ import {
 function App() {
   return (
     <>
-    {/* <Navbar /> */}
-    {/* <Login /> */}
+   
     <BrowserRouter>
     <Routes>
       <Route path="/" element={<Navbar />}/>

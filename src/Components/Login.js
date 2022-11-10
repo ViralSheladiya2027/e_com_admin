@@ -6,33 +6,67 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
-
+import { signInWithEmailAndPassword,createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from './Firebase';
+import { useNavigate} from 'react-router-dom';
+import Alert from '@mui/material/Alert';
 
 const Login = () => {
-
-  const [values, setValues] = React.useState({
-    email:"",
-    password: '',
-    showPassword:""
-  });
-
   
 const [showPassword, setShowPassword] = useState(false);
 const handleClickShowPasswordOne = () => setShowPassword(!showPassword);
 const handleMouseDownPassword = () => setShowPassword(!showPassword);
- 
+const [email, setEmail] = useState("");
+const [password, setPassword] = useState("");
+const [errorMsg, setErrorMsg] = useState('');
+const [successMsg, setSuccessMsg] = useState('')
 
-  const handleChange = (prop) => (event) => {
-    setValues({ ...values, [prop]: event.target.value });
+const navigate = useNavigate();
+
+  const handleLogin= async (e) =>{
+    e.preventDefault();
+    console.log(email,password);
     
-  };
-
+      // try {
+      //   await createUserWithEmailAndPassword(auth , email, password);
+      // } 
+      // catch (err) {
+      //   console.error(err);
+      //   alert(err.message);
+      // }
+      try {
+        await signInWithEmailAndPassword(auth , email, password);
+        setSuccessMsg("login success");
+       setEmail("");
+          setPassword("");
+          setTimeout(() => {
+            setSuccessMsg("");
+            navigate("/");
+          }, 3000); 
+      } catch (err) {
+        // console.error(err);  
+       setErrorMsg(err.message)
+       setTimeout(() => {
+        setErrorMsg("");
+      }, 3000);
+      }
+  }
+  
   return (
     <>
+    {successMsg&&<>
+      <Alert variant="filled" severity="success">
+ {successMsg}
+</Alert>
+</>}
+
+{errorMsg&&<>
+  <Alert variant="filled" severity="error">
+ {errorMsg}
+</Alert>
+</>}
      <Container maxWidth="xs">
      <Box sx={{ 
-      // width: 500,
-        // height: 500,
         borderRadius:"10px",
         backgroundColor: 'white',
         boxShadow:"2",
@@ -49,7 +83,8 @@ const handleMouseDownPassword = () => setShowPassword(!showPassword);
           margin="normal"
           padding="normal"
         required
-        onChange={handleChange('email')} 
+        value={email}
+        onChange={event => setEmail(event.target.value)} 
         
         />
          <TextField
@@ -62,7 +97,8 @@ const handleMouseDownPassword = () => setShowPassword(!showPassword);
           margin="normal"
           padding="normal"
         required
-        onChange={handleChange('password')} 
+        value={password}
+        onChange={event => setPassword(event.target.value)} 
         InputProps={{
           endAdornment: (
             <InputAdornment position="end">
@@ -79,11 +115,11 @@ const handleMouseDownPassword = () => setShowPassword(!showPassword);
         
         />
         <br></br>
-        <br></br>
-         <CircularProgress size={30} paddingtop="10px"/>
+        {/* <br></br> */}
+         {/* <CircularProgress size={30} paddingtop="10px"/> */}
          <br/>
          <br/>
-         <Button variant="contained" fullWidth color="primary" >
+         <Button variant="contained" fullWidth color="primary" onClick={handleLogin}  >
   login
 </Button>
       </Box>

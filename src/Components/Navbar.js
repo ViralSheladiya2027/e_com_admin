@@ -18,9 +18,10 @@ import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantity
 import SettingsIcon from '@mui/icons-material/Settings';
 import HomeFregment from "../Fregments/HomeFregment";
 import { ShoppingCart } from '@mui/icons-material';
-import { CssBaseline } from '@mui/material';
-
-
+import { Button, CssBaseline } from '@mui/material';
+import {useAuthState} from "react-firebase-hooks/auth"
+import {auth} from "./Firebase"
+import { useNavigate} from 'react-router-dom';
 
 
 
@@ -28,6 +29,14 @@ const drawerWidth = 160
 
 
 const Navbar = () => {
+
+const [user,loading,error] = useAuthState(auth);
+const navigate = useNavigate();
+const logOutClick =()=>{
+  auth.signOut();
+   navigate("/login");
+}
+
   return (
     
        <Box sx={{ display: 'flex' }}>
@@ -40,6 +49,11 @@ const Navbar = () => {
           <img src={logo } height= "40px"style={{marginRight:"15px"}} />
           <Typography variant = "h4" display="inline"> Admin</Typography>
           </Typography>
+          
+          <Typography  >
+            <Button  variant="outlined" onClick={logOutClick}>{user?.email} Logout</Button>
+           </Typography>
+      
         </Toolbar>
       </AppBar>
       <Drawer
