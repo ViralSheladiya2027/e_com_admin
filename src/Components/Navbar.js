@@ -50,9 +50,9 @@ const logOutClick =()=>{
           <Typography variant = "h4" display="inline"> Admin</Typography>
           </Typography>
           
-          <Typography  >
-            <Button  variant="outlined" onClick={logOutClick}>{user?.email} Logout</Button>
-           </Typography>
+          
+            {/* <Button color="inherit" variant="outlined" onClick={logOutClick}>{user?.email} Logout</Button> */}
+           
       
         </Toolbar>
       </AppBar>
@@ -117,17 +117,18 @@ const logOutClick =()=>{
                   <ListItemIcon>
                    <LogoutIcon />
                   </ListItemIcon>
-                  <ListItemText primary="Logout" />
+                  <ListItemText  onClick={logOutClick} primary="Logout" />
                 </ListItemButton>
               </ListItem>
             
           </List>
+          
         </Box>
       </Drawer>
       <Box component="main" sx={{ flexGrow: 3, p: 10 }}>
     {/* <Toolbar/> */}
 
-<HomeFregment />
+{/* <HomeFregment /> */}
 
 </Box>
     </Box>

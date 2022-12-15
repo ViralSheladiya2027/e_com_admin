@@ -6,10 +6,11 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
-import { signInWithEmailAndPassword,createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from './Firebase';
+import { signInWithEmailAndPassword,createUserWithEmailAndPassword} from "firebase/auth";
+import { auth, db } from './Firebase';
 import { useNavigate} from 'react-router-dom';
 import Alert from '@mui/material/Alert';
+import { collection, addDoc } from "firebase/firestore";
 
 const Login = () => {
   
@@ -27,13 +28,17 @@ const navigate = useNavigate();
     e.preventDefault();
     console.log(email,password);
     
-      // try {
-      //   await createUserWithEmailAndPassword(auth , email, password);
-      // } 
-      // catch (err) {
-      //   console.error(err);
-      //   alert(err.message);
-      // }
+      try {
+        await createUserWithEmailAndPassword(auth , email, password);
+      } 
+      catch (err) {
+        console.error(err);
+        setErrorMsg(err.message)
+       setTimeout(() => {
+        setErrorMsg("");
+      }, 3000);
+      }
+
       try {
         await signInWithEmailAndPassword(auth , email, password);
         setSuccessMsg("login success");
@@ -43,12 +48,22 @@ const navigate = useNavigate();
             setSuccessMsg("");
             navigate("/");
           }, 3000); 
-      } catch (err) {
+      } 
+      catch (err) {
         // console.error(err);  
        setErrorMsg(err.message)
        setTimeout(() => {
         setErrorMsg("");
       }, 3000);
+      }
+
+      try {
+        await addDoc(collection(db ,"user"),{
+email:email
+        })
+      } 
+      catch (err) {
+        setErrorMsg(err.message)
       }
   }
   
@@ -65,6 +80,7 @@ const navigate = useNavigate();
  {errorMsg}
 </Alert>
 </>}
+
      <Container maxWidth="xs">
      <Box sx={{ 
         borderRadius:"10px",

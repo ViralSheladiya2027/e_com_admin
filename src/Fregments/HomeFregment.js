@@ -8,6 +8,10 @@ import GridView from '../Components/GridView';
 import HorizontalScroller from '../Components/HorizontalScroller';
 import logo from "../Components/logo/logo.png";
 import StripAdView from '../Components/StripAdView';
+// import connect from "react-redux/lib/connect/connect";
+import {loadProducts} from "../State/Actions/categoryActions";
+import { useEffect } from 'react';
+
 
 
 export const CategoryTab=()=>{
@@ -25,7 +29,20 @@ const HomeFregment = () => {
       setValue(newValue);
     };
 
-    
+
+
+//     componentDidMount(){
+//       if(categories===null){
+// loadCategories();
+//       }
+//     }
+
+useEffect(() => {
+  if(products===null){
+loadProducts();
+  }
+}, [])
+
    
   return (
     <Container maxwidth ="md" >
@@ -61,8 +78,21 @@ const HomeFregment = () => {
   <StripAdView />
  <GridView />
   </Container>
-  
   )
-}
+  }
+  const mapStateToProps=(state)=>{
+    return{
+      products:state.products
+    }
+  }
 
-export default HomeFregment
+  const mapDispatchToProps =(dispatch)=>{
+    return{
+      loadProducts:()=>dispatch(loadProducts())
+    }
+  }
+
+
+// export default connect(mapStateToProps,mapDispatchToProps)(HomeFregment);
+
+export default HomeFregment;
