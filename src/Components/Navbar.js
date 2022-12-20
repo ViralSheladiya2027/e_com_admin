@@ -1,4 +1,4 @@
-import * as React from 'react';
+import  {useState} from 'react';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import AppBar from '@mui/material/AppBar';
@@ -22,7 +22,8 @@ import { Button, CssBaseline } from '@mui/material';
 import {useAuthState} from "react-firebase-hooks/auth"
 import {auth} from "./Firebase"
 import { useNavigate} from 'react-router-dom';
-
+import { Link } from "react-router-dom";
+import Products from '../Components/Products';
 
 
 const drawerWidth = 160
@@ -31,18 +32,21 @@ const drawerWidth = 160
 const Navbar = () => {
 
 const [user,loading,error] = useAuthState(auth);
+const [menuData, setMenuData] = useState("")
 const navigate = useNavigate();
 const logOutClick =()=>{
   auth.signOut();
    navigate("/login");
 }
 
+
+
   return (
     
        <Box sx={{ display: 'flex' }}>
       <CssBaseline />
      
-      <AppBar position="fixed"  sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }} style={{ background: '#001440' }}>
+      <AppBar position="fixed"  sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }} style={{ background: '#263238' }}>
         <Toolbar>
           
           <Typography variant="h6" noWrap component="div">
@@ -58,6 +62,7 @@ const logOutClick =()=>{
       </AppBar>
       <Drawer
         variant="permanent"
+        position="fixed"
         sx={{
           width: drawerWidth,
           flexShrink: 0,
@@ -88,7 +93,8 @@ const logOutClick =()=>{
                   <ListItemIcon>
                    <ProductionQuantityLimitsIcon/>
                   </ListItemIcon>
-                  <ListItemText primary="Products" />
+                  <ListItemText primary="Products" onClick={()=>setMenuData("Products")} />
+                
                 </ListItemButton>
               </ListItem>
               <ListItem  disablePadding>
@@ -129,7 +135,7 @@ const logOutClick =()=>{
     {/* <Toolbar/> */}
 
 {/* <HomeFregment /> */}
-
+{menuData == "Products" && <Products/> }
 </Box>
     </Box>
   )
