@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState } from 'react';
 import { useNavigate} from 'react-router-dom';
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -62,23 +63,23 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   ...theme.mixins.toolbar,
 }));
 
-const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== 'open',
-})(({ theme, open }) => ({
-  zIndex: theme.zIndex.drawer + 1,
-  transition: theme.transitions.create(['width', 'margin'], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  ...(open && {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  }),
-}));
+// const AppBar = styled(MuiAppBar, {
+//   shouldForwardProp: (prop) => prop !== 'open',
+// })(({ theme, open }) => ({
+//   zIndex: theme.zIndex.drawer + 1,
+//   transition: theme.transitions.create(['width', 'margin'], {
+//     easing: theme.transitions.easing.sharp,
+//     duration: theme.transitions.duration.leavingScreen,
+//   }),
+//   ...(open && {
+//     marginLeft: drawerWidth,
+//     width: `calc(100% - ${drawerWidth}px)`,
+//     transition: theme.transitions.create(['width', 'margin'], {
+//       easing: theme.transitions.easing.sharp,
+//       duration: theme.transitions.duration.enteringScreen,
+//     }),
+//   }),
+// }));
 
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme, open }) => ({
@@ -99,25 +100,25 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 export default function SideNav() {
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] =useState(true);
 
   const navigate = useNavigate();
 const logOutClick =()=>{
   auth.signOut();
    navigate("/login");
 }
-  const handleDrawerOpen = () => {
-//     setOpen(true);
-//   };
+  // const handleDrawerOpen = () => {
+  //   setOpen(true);
+  // };
 
-//   const handleDrawerClose = () => {
-//     setOpen(false);
-//   };
+  // const handleDrawerClose = () => {
+  //   setOpen(false);
+  // };
 
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      {/* <AppBar position="fixed" open={open}> */}
+      {/* <AppBar position="fixed" open={open}>
         <Toolbar>
           <IconButton
             color="inherit"
@@ -135,17 +136,18 @@ const logOutClick =()=>{
             Thunder Admin
           </Typography>
         </Toolbar>
-      {/* </AppBar> */}
+      </AppBar> */}
       <Drawer variant="permanent" open={open}>
         <DrawerHeader>
+          <Box height ={30}/>
           <IconButton onClick={()=>setOpen(!open)}>
             {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
           </IconButton>
         </DrawerHeader>
         <Divider />
         <List>
-        <ListItem  disablePadding>
-                <ListItemButton>
+        <ListItem  disablePadding sx={{display:"block"}}>
+                <ListItemButton onClick={()=>navigate('/home') }>
                   <ListItemIcon>
                    <HomeIcon/>
                   </ListItemIcon>
@@ -153,7 +155,7 @@ const logOutClick =()=>{
                 </ListItemButton>
               </ListItem>
               <ListItem  disablePadding>
-                <ListItemButton>
+              <ListItemButton onClick={()=>navigate('/products') }>
                   <ListItemIcon>
                    <ShoppingCart />
                   </ListItemIcon>
@@ -161,7 +163,7 @@ const logOutClick =()=>{
                 </ListItemButton>
               </ListItem>
               <ListItem  disablePadding>
-                <ListItemButton>
+              <ListItemButton onClick={()=>navigate('/about') }>
                   <ListItemIcon>
                    <ProductionQuantityLimitsIcon/>
                   </ListItemIcon>
@@ -170,7 +172,7 @@ const logOutClick =()=>{
               </ListItem>
             
               <ListItem  disablePadding>
-                <ListItemButton>
+              <ListItemButton onClick={()=>navigate('/settings') }>
                   <ListItemIcon>
                    <SettingsIcon/>
                   </ListItemIcon>
@@ -189,10 +191,10 @@ const logOutClick =()=>{
                 </ListItemButton>
               </ListItem>
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-        {/* <DrawerHeader /> */}
-        </Box>
+      {/* <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+        <DrawerHeader />
+        </Box> */}
     </Box>
   );
 }
-}
+
