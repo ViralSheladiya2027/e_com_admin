@@ -27,7 +27,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
 import CategoryIcon from '@mui/icons-material/Category';
 import { ShoppingCart } from '@mui/icons-material';
-
+import {useStore} from "../Store";
 
 
 
@@ -100,7 +100,11 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 export default function SideNav() {
   const theme = useTheme();
-  const [open, setOpen] =useState(true);
+  // const [open, setOpen] =useState(true);
+
+  // const updateOpen = useStore((state)=>state.updateOpen);
+const open = useStore((state)=>state.dopen);
+
 
   const navigate = useNavigate();
 const logOutClick =()=>{
@@ -140,7 +144,7 @@ const logOutClick =()=>{
       <Drawer variant="permanent" open={open}>
         <DrawerHeader>
           <Box height ={30}/>
-          <IconButton onClick={()=>setOpen(!open)}>
+          <IconButton >
             {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
           </IconButton>
         </DrawerHeader>
