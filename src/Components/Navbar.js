@@ -312,7 +312,7 @@ const dopen = useStore((state)=>state.dopen);
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="fixed" style={{ background: "#263238" }}>
+      <AppBar position="fixed" elevation={0} style={{ background: "#263238" }}>
         <Toolbar>
           <IconButton
             size="large"
