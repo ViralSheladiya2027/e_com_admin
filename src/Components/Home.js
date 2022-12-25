@@ -7,6 +7,7 @@ import "../App.css";
 import StorefrontIcon from "@mui/icons-material/Storefront";
 import CreditCardIcon from "@mui/icons-material/CreditCard";
 import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
+import Accordiondash from "./Accordiondash";
 
 const Home = () => {
   return (
@@ -45,7 +46,6 @@ const Home = () => {
                         sx={{ color: "#ccd1d1" }}
                       >
                         Total Earning
-                    
                       </Typography>
                     </CardContent>
                   </Card>
@@ -115,7 +115,13 @@ const Home = () => {
               </Grid>
               <Grid item xs={4}>
                 <Card sx={{ height: 60 + "vh" }}>
-                  <CardContent></CardContent>
+                  <CardContent>
+                    <div className="paddingall">
+                      <span className="pricetitle">Popular Products</span>
+                      <br />
+                    </div>
+                    <Accordiondash />
+                  </CardContent>
                 </Card>
               </Grid>
             </Grid>

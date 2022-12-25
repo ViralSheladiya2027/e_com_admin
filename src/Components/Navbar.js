@@ -161,6 +161,7 @@ import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import {useStore} from "../Store";
+import logo from "./logo/logo.png"
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -330,7 +331,7 @@ const dopen = useStore((state)=>state.dopen);
             component="div"
             sx={{ display: { xs: 'none', sm: 'block' } }}
           >
-            MUI
+            <img height="40px" style={{ marginRight: "15px" }}src={logo}/>
           </Typography>
           <Search>
             <SearchIconWrapper>
