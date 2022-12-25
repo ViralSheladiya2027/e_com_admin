@@ -161,7 +161,7 @@ import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import {useStore} from "../Store";
-import logo from "./logo/logo.png"
+import logo from "../Logo/Logo.png"
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',

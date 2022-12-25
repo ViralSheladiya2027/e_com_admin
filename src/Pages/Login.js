@@ -1,13 +1,13 @@
 import { Box ,Typography,TextField,CircularProgress,Button} from '@mui/material'
 import React, { useState }  from 'react'
 import Container from '@mui/material/Container';
-import logo from "../Components/logo/logo.png";
+import logo from "../Logo/Logo.png";
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
 import { signInWithEmailAndPassword,createUserWithEmailAndPassword} from "firebase/auth";
-import { auth, db } from './Firebase';
+import { auth, db } from '../Components/Firebase';
 import { useNavigate} from 'react-router-dom';
 import Alert from '@mui/material/Alert';
 import { collection, addDoc } from "firebase/firestore";

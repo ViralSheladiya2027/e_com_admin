@@ -28,8 +28,8 @@ import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantity
 import CategoryIcon from '@mui/icons-material/Category';
 import { ShoppingCart } from '@mui/icons-material';
 import {useStore} from "../Store";
-
-
+import AnalyticsIcon from '@mui/icons-material/Analytics';
+import GroupIcon from '@mui/icons-material/Group';
 
 const drawerWidth = 240;
 
@@ -159,19 +159,19 @@ const logOutClick =()=>{
                 </ListItemButton>
               </ListItem>
               <ListItem  disablePadding>
-              <ListItemButton onClick={()=>navigate('/products') }>
+              <ListItemButton onClick={()=>navigate('/users') }>
                   <ListItemIcon>
-                   <ShoppingCart />
+                   <GroupIcon />
                   </ListItemIcon>
-                  <ListItemText primary="Products" />
+                  <ListItemText primary="Users" />
                 </ListItemButton>
               </ListItem>
               <ListItem  disablePadding>
-              <ListItemButton onClick={()=>navigate('/about') }>
+              <ListItemButton onClick={()=>navigate('/analytics') }>
                   <ListItemIcon>
-                   <ProductionQuantityLimitsIcon/>
+                   <AnalyticsIcon/>
                   </ListItemIcon>
-                  <ListItemText primary="About" />
+                  <ListItemText primary="Analytics" />
                 </ListItemButton>
               </ListItem>
             
