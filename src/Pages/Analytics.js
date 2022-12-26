@@ -1,40 +1,42 @@
-import React from 'react'
-import SideNav from '../Components/SideNav'
-import Navbar from '../Components/Navbar'
+import React from "react";
+import SideNav from "../Components/SideNav";
+import Navbar from "../Components/Navbar";
 import { Box, CardContent, Card, Typography, Stack } from "@mui/material";
 import "../App.css";
-import StorefrontIcon from "@mui/icons-material/Storefront";
-import CreditCardIcon from "@mui/icons-material/CreditCard";
-import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 import Grid from "@mui/material/Grid";
 
 const Analytics = () => {
   return (
     <>
-    <div className="bgcolor">
-    <Navbar />
-    <Box height ={70}/>
-    <Box sx={{display:"flex"}}>
-      <SideNav/>
-      <Box component="main" sx={{flexgrow: 1,p: 3}}>
-      <Grid container spacing={2}>
+      <div className="bgcolor">
+        <Navbar />
+        <Box height={70} />
+        <Box sx={{ display: "flex" }}>
+          <SideNav />
+          <Box component="main" sx={{ flexgrow: 1, p: 3 }}>
+            <Grid container spacing={2}>
               <Grid item xs={8}>
                 <Stack spacing={2} direction="row">
                   <Card
-                    sx={{ minWidth: 49 + "%", height: 150 }}
+                    sx={{ minWidth: 90 + "%", height: 130 }}
                     className="gradient"
                   >
                     <CardContent>
-                      <div className="iconstyle">
-                        <CreditCardIcon />
-                      </div>
+                      <Typography
+                        gutterBottom
+                        variant="h6"
+                        component="div"
+                        sx={{ color: "#ccd1d1" }}
+                      >
+                        Visitors
+                      </Typography>
                       <Typography
                         gutterBottom
                         variant="h5"
                         component="div"
                         sx={{ color: "white" }}
                       >
-                        $500.00
+                        24,630
                       </Typography>
                       <Typography
                         gutterBottom
@@ -42,25 +44,30 @@ const Analytics = () => {
                         component="div"
                         sx={{ color: "#ccd1d1" }}
                       >
-                        Total Earning
+                        since last week
                       </Typography>
                     </CardContent>
                   </Card>
                   <Card
-                    sx={{ minWidth: 49 + "%", height: 150 }}
+                    sx={{ minWidth: 90 + "%", height: 130 }}
                     className="gradientlight"
                   >
                     <CardContent>
-                      <div className="iconstyle">
-                        <ShoppingBagIcon />
-                      </div>
+                      <Typography
+                        gutterBottom
+                        variant="h6"
+                        component="div"
+                        sx={{ color: "#ccd1d1" }}
+                      >
+                        Visitors
+                      </Typography>
                       <Typography
                         gutterBottom
                         variant="h5"
                         component="div"
                         sx={{ color: "white" }}
                       >
-                        $900.00
+                        24,630
                       </Typography>
                       <Typography
                         gutterBottom
@@ -68,77 +75,102 @@ const Analytics = () => {
                         component="div"
                         sx={{ color: "#ccd1d1" }}
                       >
-                        Total Orders
+                        since last week
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                </Stack>
+                <Box height={20} />
+                <Stack spacing={2} direction="row">
+                  <Card
+                    sx={{ minWidth: 90 + "%", height: 130 }}
+                    className="gradient"
+                  >
+                    <CardContent>
+                      <Typography
+                        gutterBottom
+                        variant="h6"
+                        component="div"
+                        sx={{ color: "#ccd1d1" }}
+                      >
+                        Visitors
+                      </Typography>
+                      <Typography
+                        gutterBottom
+                        variant="h5"
+                        component="div"
+                        sx={{ color: "white" }}
+                      >
+                        24,630
+                      </Typography>
+                      <Typography
+                        gutterBottom
+                        variant="body2"
+                        component="div"
+                        sx={{ color: "#ccd1d1" }}
+                      >
+                        since last week
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                  <Card
+                    sx={{ minWidth: 90 + "%", height: 130 }}
+                    className="gradientlight"
+                  >
+                    <CardContent>
+                      <Typography
+                        gutterBottom
+                        variant="h6"
+                        component="div"
+                        sx={{ color: "#ccd1d1" }}
+                      >
+                        Visitors
+                      </Typography>
+                      <Typography
+                        gutterBottom
+                        variant="h5"
+                        component="div"
+                        sx={{ color: "white" }}
+                      >
+                        24,630
+                      </Typography>
+                      <Typography
+                        gutterBottom
+                        variant="body2"
+                        component="div"
+                        sx={{ color: "#ccd1d1" }}
+                      >
+                        since last week
                       </Typography>
                     </CardContent>
                   </Card>
                 </Stack>
               </Grid>
-              <Grid item xs={8}>
-                <Stack spacing={2} direction="row">
-                  <Card
-                    sx={{ minWidth: 49 + "%", height: 150 }}
-                    className="gradient"
-                  >
-                    <CardContent>
-                      <div className="iconstyle">
-                        <CreditCardIcon />
-                      </div>
-                      <Typography
-                        gutterBottom
-                        variant="h5"
-                        component="div"
-                        sx={{ color: "white" }}
-                      >
-                        $500.00
-                      </Typography>
-                      <Typography
-                        gutterBottom
-                        variant="body2"
-                        component="div"
-                        sx={{ color: "#ccd1d1" }}
-                      >
-                        Total Earning
-                      </Typography>
-                    </CardContent>
-                  </Card>
-                  <Card
-                    sx={{ minWidth: 49 + "%", height: 150 }}
-                    className="gradientlight"
-                  >
-                    <CardContent>
-                      <div className="iconstyle">
-                        <ShoppingBagIcon />
-                      </div>
-                      <Typography
-                        gutterBottom
-                        variant="h5"
-                        component="div"
-                        sx={{ color: "white" }}
-                      >
-                        $900.00
-                      </Typography>
-                      <Typography
-                        gutterBottom
-                        variant="body2"
-                        component="div"
-                        sx={{ color: "#ccd1d1" }}
-                      >
-                        Total Orders
-                      </Typography>
-                    </CardContent>
-                  </Card>
-                </Stack>
+             
+              <Grid item xs={4}>
+                <Card sx={{ height: 40 + "vh" }}>
+                  <CardContent></CardContent>
+                </Card>
               </Grid>
             </Grid>
-      </Box>
-  
-    </Box>
-    </div>
-    
-      
+            <Box height={20} />
+            <Grid container spacing={2}>
+              <Grid item xs={8}>
+                <Card sx={{ height: 40 + "vh" }}>
+                  <CardContent></CardContent>
+                </Card>
+              </Grid>
+              <Grid item xs={4}>
+                <Card sx={{ height: 40 + "vh" }}>
+                  <CardContent></CardContent>
+                </Card>
+              </Grid>
+            </Grid>
+          </Box>
+        </Box>
+      </div>
     </>
-  )
-}
+  );
+};
 
-export default Analytics
+export default Analytics;

@@ -19,10 +19,9 @@ function App() {
    
     <BrowserRouter>
     <Routes>
-      {/* <Route path="/" element={<SideNav />}/> */}
+    <Route path="/" element={<Home />}/>
       <Route path="/login" element={<Login />}/>
       <Route path="/users" element={<Users />}/>
-      <Route path="/home" element={<Home />}/>
       <Route path="/analytics" element={<Analytics />}/>
       <Route path="/settings" element={<Settings />}/>
       

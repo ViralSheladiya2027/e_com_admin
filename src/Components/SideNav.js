@@ -151,7 +151,7 @@ const logOutClick =()=>{
         <Divider />
         <List>
         <ListItem  disablePadding sx={{display:"block"}}>
-                <ListItemButton onClick={()=>navigate('/home') }>
+                <ListItemButton onClick={()=>navigate('/') }>
                   <ListItemIcon>
                    <HomeIcon/>
                   </ListItemIcon>
