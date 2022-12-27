@@ -4,6 +4,9 @@ import Navbar from "../Components/Navbar";
 import { Box, CardContent, Card, Typography, Stack } from "@mui/material";
 import "../App.css";
 import Grid from "@mui/material/Grid";
+import GeoChart from "../Charts/GeoChart";
+import PieChart from "../Charts/PieChart";
+import HBarChart from "../Charts/HBarChart";
 
 const Analytics = () => {
   return (
@@ -13,12 +16,12 @@ const Analytics = () => {
         <Box height={70} />
         <Box sx={{ display: "flex" }}>
           <SideNav />
-          <Box component="main" sx={{ flexgrow: 1, p: 3 }}>
+          <Box component="main" sx={{ flexgrow: 1, p: 3, width: "100%" }}>
             <Grid container spacing={2}>
-              <Grid item xs={8}>
+              <Grid item xs={5}>
                 <Stack spacing={2} direction="row">
                   <Card
-                    sx={{ minWidth: 90 + "%", height: 130 }}
+                    sx={{ height: 19 + "vh", width: "50%" }}
                     className="gradient"
                   >
                     <CardContent>
@@ -49,7 +52,7 @@ const Analytics = () => {
                     </CardContent>
                   </Card>
                   <Card
-                    sx={{ minWidth: 90 + "%", height: 130 }}
+                    sx={{ height: 19 + "vh", marginTop: "16px", width: "50%" }}
                     className="gradientlight"
                   >
                     <CardContent>
@@ -57,7 +60,7 @@ const Analytics = () => {
                         gutterBottom
                         variant="h6"
                         component="div"
-                        sx={{ color: "#ccd1d1" }}
+                        sx={{ color: "#ccd1d1", padding: "7px,0px" }}
                       >
                         Visitors
                       </Typography>
@@ -83,7 +86,7 @@ const Analytics = () => {
                 <Box height={20} />
                 <Stack spacing={2} direction="row">
                   <Card
-                    sx={{ minWidth: 90 + "%", height: 130 }}
+                    sx={{ height: 19 + "vh", width: "50%" }}
                     className="gradient"
                   >
                     <CardContent>
@@ -114,7 +117,7 @@ const Analytics = () => {
                     </CardContent>
                   </Card>
                   <Card
-                    sx={{ minWidth: 90 + "%", height: 130 }}
+                    sx={{ height: 19 + "vh", marginTop: "16px", width: "50%" }}
                     className="gradientlight"
                   >
                     <CardContent>
@@ -122,7 +125,7 @@ const Analytics = () => {
                         gutterBottom
                         variant="h6"
                         component="div"
-                        sx={{ color: "#ccd1d1" }}
+                        sx={{ color: "#ccd1d1", padding: "7px,0px" }}
                       >
                         Visitors
                       </Typography>
@@ -146,23 +149,29 @@ const Analytics = () => {
                   </Card>
                 </Stack>
               </Grid>
-             
-              <Grid item xs={4}>
+
+              <Grid item xs={7}>
                 <Card sx={{ height: 40 + "vh" }}>
-                  <CardContent></CardContent>
+                  <CardContent>
+                    <HBarChart />
+                  </CardContent>
                 </Card>
               </Grid>
             </Grid>
-            <Box height={20} />
+            <Box height={16} />
             <Grid container spacing={2}>
               <Grid item xs={8}>
                 <Card sx={{ height: 40 + "vh" }}>
-                  <CardContent></CardContent>
+                  <CardContent>
+                    <GeoChart />
+                  </CardContent>
                 </Card>
               </Grid>
               <Grid item xs={4}>
                 <Card sx={{ height: 40 + "vh" }}>
-                  <CardContent></CardContent>
+                  <CardContent>
+                    <PieChart />
+                  </CardContent>
                 </Card>
               </Grid>
             </Grid>
