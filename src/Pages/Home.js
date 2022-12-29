@@ -9,6 +9,7 @@ import CreditCardIcon from "@mui/icons-material/CreditCard";
 import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 import Accordiondash from "../Components/Accordiondash";
 import BarChart from "../Charts/BarChart";
+import CountUp from 'react-countup';
 
 const Home = () => {
   return (
@@ -37,7 +38,7 @@ const Home = () => {
                         component="div"
                         sx={{ color: "white" }}
                       >
-                        $500.00
+                        $<CountUp duration={0.3} end={500} delay={0.2}/>
                       </Typography>
                       <Typography
                         gutterBottom
@@ -63,7 +64,7 @@ const Home = () => {
                         component="div"
                         sx={{ color: "white" }}
                       >
-                        $900.00
+                        $<CountUp duration={0.3} end={900} delay={0.2}/>
                       </Typography>
                       <Typography
                         gutterBottom

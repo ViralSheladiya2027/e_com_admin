@@ -7,6 +7,7 @@ import Grid from "@mui/material/Grid";
 import GeoChart from "../Charts/GeoChart";
 import PieChart from "../Charts/PieChart";
 import HBarChart from "../Charts/HBarChart";
+import CountUp from 'react-countup';
 
 const Analytics = () => {
   return (
@@ -39,7 +40,7 @@ const Analytics = () => {
                         component="div"
                         sx={{ color: "white" }}
                       >
-                        24,630
+                        <CountUp duration={0.4} end={4580} delay={0.3}/>
                       </Typography>
                       <Typography
                         gutterBottom
@@ -70,7 +71,7 @@ const Analytics = () => {
                         component="div"
                         sx={{ color: "white" }}
                       >
-                        24,630
+                       <CountUp duration={0.3} end={5945} delay={0.2}/>
                       </Typography>
                       <Typography
                         gutterBottom
@@ -104,7 +105,7 @@ const Analytics = () => {
                         component="div"
                         sx={{ color: "white" }}
                       >
-                        24,630
+                         <CountUp duration={0.2} end={1357} delay={0.3}/>
                       </Typography>
                       <Typography
                         gutterBottom
@@ -135,7 +136,7 @@ const Analytics = () => {
                         component="div"
                         sx={{ color: "white" }}
                       >
-                        24,630
+                        <CountUp duration={0.5} end={4564} delay={0.2}/>
                       </Typography>
                       <Typography
                         gutterBottom

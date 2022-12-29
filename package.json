@@ -12,6 +12,7 @@
     "@testing-library/user-event": "^13.5.0",
     "firebase": "^9.13.0",
     "react": "^18.2.0",
+    "react-countup": "^6.4.0",
     "react-dom": "^18.2.0",
     "react-firebase-hooks": "^5.1.0",
     "react-google-charts": "^4.0.0",
@@ -23,6 +24,7 @@
     "react-swipeable-views-utils": "^0.14.0",
     "redux": "^4.2.0",
     "redux-thunk": "^2.4.1",
+    "sweetalert2": "^11.6.16",
     "web-vitals": "^2.1.4",
     "zustand": "^4.1.5"
   },
