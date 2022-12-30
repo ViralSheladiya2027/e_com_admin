@@ -105,12 +105,12 @@ export default function ProductList() {
     <div>
     <Modal
       open={open}
-      onClose={handleClose}
+      // onClose={handleClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
       <Box sx={style}>
-       <AddProduct/>
+       <AddProduct closeEvent={handleClose}/>
       </Box>
     </Modal>
   </div>
@@ -128,7 +128,7 @@ export default function ProductList() {
     
         <Divider />
         <Box height={10} />
-          <Stack direction="row" spacing={2} className="my-2 mb-2">
+          <Stack direction="row" spacing={2} className="my-2 mb-2 mx-2">
             <Autocomplete
               disablePortal
               id="combo-box-demo"
@@ -188,7 +188,7 @@ export default function ProductList() {
                       {row.name}
                     </TableCell>
                     <TableCell key={row.id} align="left">
-                      {row.price}
+                      {row.mrp}
                     </TableCell>
                     {/* <TableCell key={row.id} align="left">
                          {row.image}
