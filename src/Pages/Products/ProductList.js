@@ -28,7 +28,7 @@ import Swal from "sweetalert2";
 import TextField from "@mui/material/TextField";
 import Modal from '@mui/material/Modal';
 import AddProduct from "./AddProduct";
-
+import { useStore } from "../../Store";
 
 const style = {
   position: 'absolute',
@@ -45,7 +45,9 @@ const style = {
 export default function ProductList() {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [rows, setRows] = useState([]);
+  // const [rows, setRows] = useState([]);
+  const setRows=useStore((state)=>state.setRows);
+  const rows=useStore((state)=>state.rows);
   const empCollectionRef = collection(db, "products");
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -116,7 +118,7 @@ export default function ProductList() {
   </div>
   {rows.length > 0 && (
     <Paper sx={{ width: "100%", overflow: "hidden" }}>
-      <TableContainer sx={{ maxHeight: 440 }}>
+      <TableContainer sx={{ maxHeight: 500 }}>
         <Typography
           gutterBottom
           variant="h5"
@@ -188,7 +190,7 @@ export default function ProductList() {
                       {row.name}
                     </TableCell>
                     <TableCell key={row.id} align="left">
-                      {row.mrp}
+                      {row.price}
                     </TableCell>
                     {/* <TableCell key={row.id} align="left">
                          {row.image}

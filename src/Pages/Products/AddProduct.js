@@ -9,30 +9,68 @@ import {
   InputAdornment,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
+import { db } from "../../Components/Firebase";
+import {
+  collection,
+  getDocs,
+  addDoc,
+} from "firebase/firestore";
+import Swal from "sweetalert2";
+import { useStore } from "../../Store";
 
 const AddProduct = ({ closeEvent }) => {
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [unit, setUnit] = useState("");
-  const createUser = () => {}
+  // const rows=useStore((state)=>state.rows);
+  const setRows=useStore((state)=>state.setRows);
+  const empCollectionRef = collection(db, "products");
+
+  const createUser = async() => {
+    await addDoc(empCollectionRef,{
+      name:name,
+      price:Number(price),
+      unit:unit,
+    });
+    getUsers();
+    closeEvent();
+    Swal.fire("submitted","your file has been submitted","success");
+    // setRows();
+  }
+  // useEffect(() => {
+  //   getUsers();
+  // }, []);
+
+  const getUsers = async () => {
+    const data = await getDocs(empCollectionRef);
+    setRows(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+  };
   const currencies =  [
       {
-        value: 'ml',
-        label: 'ml',
+        value: '500 ml',
+        label: '500 ml',
       },
       {
-        value: 'liter',
-        label: 'liter',
+        value: '1 liter',
+        label: '1 liter',
+      },
+       {
+        value: '5 liter',
+        label: '5 liter',
       },
       {
-        value: 'gram',
-        label: 'gram',
+        value: '50 gram',
+        label: '50 gram',
       },
       {
-        value: 'kg',
-        label: 'kg',
+        value: '2 kg',
+        label: '2 kg',
+      },
+      {
+        value: '5 kg',
+        label: '5 kg',
       },
     ];
   
