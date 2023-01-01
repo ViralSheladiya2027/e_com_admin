@@ -5,7 +5,7 @@ import Navbar from '../Components/Navbar'
 import ProductList from './Products/ProductList'
 
 
-const User = () => {
+const Products = () => {
   return (
     <>
     <div className="bgcolor">
@@ -27,4 +27,4 @@ const User = () => {
   )
 }
 
-export default User
+export default Products

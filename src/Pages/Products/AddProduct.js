@@ -12,11 +12,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { useState, useEffect } from "react";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import { db } from "../../Components/Firebase";
-import {
-  collection,
-  getDocs,
-  addDoc,
-} from "firebase/firestore";
+import { collection, getDocs, addDoc } from "firebase/firestore";
 import Swal from "sweetalert2";
 import { useStore } from "../../Store";
 
@@ -25,55 +21,50 @@ const AddProduct = ({ closeEvent }) => {
   const [price, setPrice] = useState("");
   const [unit, setUnit] = useState("");
   // const rows=useStore((state)=>state.rows);
-  const setRows=useStore((state)=>state.setRows);
+  const setRows = useStore((state) => state.setRows);
   const empCollectionRef = collection(db, "products");
 
-  const createUser = async() => {
-    await addDoc(empCollectionRef,{
-      name:name,
-      price:Number(price),
-      unit:unit,
+  const createUser = async () => {
+    await addDoc(empCollectionRef, {
+      name: name,
+      price: Number(price),
+      unit: unit,
     });
     getUsers();
     closeEvent();
-    Swal.fire("submitted","your file has been submitted","success");
-    // setRows();
-  }
-  // useEffect(() => {
-  //   getUsers();
-  // }, []);
+    Swal.fire("submitted", "your file has been submitted", "success");
+  };
 
   const getUsers = async () => {
     const data = await getDocs(empCollectionRef);
     setRows(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
   };
-  const currencies =  [
-      {
-        value: '500 ml',
-        label: '500 ml',
-      },
-      {
-        value: '1 liter',
-        label: '1 liter',
-      },
-       {
-        value: '5 liter',
-        label: '5 liter',
-      },
-      {
-        value: '50 gram',
-        label: '50 gram',
-      },
-      {
-        value: '2 kg',
-        label: '2 kg',
-      },
-      {
-        value: '5 kg',
-        label: '5 kg',
-      },
-    ];
-  
+  const currencies = [
+    {
+      value: "500 ml",
+      label: "500 ml",
+    },
+    {
+      value: "1 liter",
+      label: "1 liter",
+    },
+    {
+      value: "5 liter",
+      label: "5 liter",
+    },
+    {
+      value: "50 gram",
+      label: "50 gram",
+    },
+    {
+      value: "2 kg",
+      label: "2 kg",
+    },
+    {
+      value: "5 kg",
+      label: "5 kg",
+    },
+  ];
 
   return (
     <>
@@ -129,13 +120,13 @@ const AddProduct = ({ closeEvent }) => {
             variant="outlined"
             size="small"
             sx={{ minWidth: "100%" }}
-          > 
-          {currencies.map((option) => (
-            <MenuItem key={option.value} value={option.value}>
-              {option.label}
-            </MenuItem>
-          ))}
-            </TextField>
+          >
+            {currencies.map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </TextField>
         </Grid>
         <Grid item xs={12}>
           <Typography variant="h5" align="center">

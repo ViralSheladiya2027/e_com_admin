@@ -159,11 +159,11 @@ const logOutClick =()=>{
                 </ListItemButton>
               </ListItem>
               <ListItem  disablePadding>
-              <ListItemButton onClick={()=>navigate('/users') }>
+              <ListItemButton onClick={()=>navigate('/products') }>
                   <ListItemIcon>
-                   <GroupIcon />
+                   <ShoppingCart />
                   </ListItemIcon>
-                  <ListItemText primary="Users" />
+                  <ListItemText primary="Products" />
                 </ListItemButton>
               </ListItem>
               <ListItem  disablePadding>

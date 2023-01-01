@@ -17,8 +17,6 @@ import { db } from "../../Components/Firebase";
 import {
   collection,
   getDocs,
-  addDoc,
-  updateDoc,
   deleteDoc,
   doc,
 } from "firebase/firestore";
@@ -26,18 +24,21 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Swal from "sweetalert2";
 import TextField from "@mui/material/TextField";
-import Modal from '@mui/material/Modal';
+import Modal from "@mui/material/Modal";
 import AddProduct from "./AddProduct";
 import { useStore } from "../../Store";
+import EditProduct from "./EditProduct";
+import Skeleton from '@mui/material/Skeleton';
+
 
 const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
   width: 400,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
+  bgcolor: "background.paper",
+  border: "2px solid #000",
   boxShadow: 24,
   p: 4,
 };
@@ -46,12 +47,16 @@ export default function ProductList() {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   // const [rows, setRows] = useState([]);
-  const setRows=useStore((state)=>state.setRows);
-  const rows=useStore((state)=>state.rows);
+  const setRows = useStore((state) => state.setRows);
+  const rows = useStore((state) => state.rows);
   const empCollectionRef = collection(db, "products");
   const [open, setOpen] = useState(false);
+  const [editOpen, setEditOpen] = useState(false);
+  const [formId, setFormId] = useState("");
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const handleEditOpen = () => setEditOpen(true);
+  const handleEditClose = () => setEditOpen(false);
 
   useEffect(() => {
     getUsers();
@@ -102,106 +107,108 @@ export default function ProductList() {
       getUsers();
     }
   };
+
+  const editData = (id, name, price, unit) => {
+    const data = {
+      id: id,
+      name: name,
+      price: price,
+      unit: unit,
+    };
+    setFormId(data);
+    handleEditOpen();
+  };
   return (
     <>
-    <div>
-    <Modal
-      open={open}
-      // onClose={handleClose}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
-    >
-      <Box sx={style}>
-       <AddProduct closeEvent={handleClose}/>
-      </Box>
-    </Modal>
-  </div>
-  {rows.length > 0 && (
-    <Paper sx={{ width: "100%", overflow: "hidden" }}>
-      <TableContainer sx={{ maxHeight: 500 }}>
-        <Typography
-          gutterBottom
-          variant="h5"
-          component="div"
-          sx={{ padding: "20px" }}
+      <div>
+        <Modal
+          open={open}
+          // onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
         >
-          Products List
-        </Typography>
-    
-        <Divider />
-        <Box height={10} />
-          <Stack direction="row" spacing={2} className="my-2 mb-2 mx-2">
-            <Autocomplete
-              disablePortal
-              id="combo-box-demo"
-              options={rows}
-              sx={{ width: 300 }}
-              onChange={(e, v) => filterData(v)}
-              getOptionLabel={(rows) => rows.name || ""}
-              renderInput={(params) => (
-                <TextField {...params} size="small" label="Search Products" />
-              )}
-            />
+          <Box sx={style}>
+            <AddProduct closeEvent={handleClose} />
+          </Box>
+        </Modal>
+        <Modal
+          open={editOpen}
+          // onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style}>
+            <EditProduct closeEvent={handleEditClose} fId={formId} />
+          </Box>
+        </Modal>
+      </div>
+      {rows.length > 0 && (
+        <Paper sx={{ width: "100%", overflow: "hidden" }}>
+          <TableContainer sx={{ maxHeight: 500 }}>
             <Typography
-              variant="h6"
+              gutterBottom
+              variant="h5"
               component="div"
-              sx={{ flexGrow: 1 }}
-            ></Typography>
-            <Button variant="contained" endIcon={<AddCircleIcon />}onClick={handleOpen}>
-              Add
-            </Button>
-          </Stack>
-          <Box height={10} />
-        <Table stickyHeader aria-label="sticky table">
-          <TableHead>
-            <TableRow>
-              <TableCell align="left" style={{ minWidth: "100px" }}>
-                Name
-              </TableCell>
-              <TableCell align="left" style={{ minWidth: "100px" }}>
-                Price
-              </TableCell>
-              {/* <TableCell
-             
-             align="left"
-             style={{ minWidth: "100px" }}
-           >
-             Image
-            
-           </TableCell> */}
-              {/* <TableCell align="left" style={{ minWidth: "100px" }}>
-                Discount
-              </TableCell> */}
-              <TableCell align="left" style={{ minWidth: "100px" }}>
-                unit
-              </TableCell>
-              <TableCell align="left" style={{ minWidth: "100px" }}>
-               Action
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row) => {
-                return (
-                  <TableRow hover role="checkbox" tabIndex={-1}>
-                    <TableCell key={row.id} align="left">
-                      {row.name}
-                    </TableCell>
-                    <TableCell key={row.id} align="left">
-                      {row.price}
-                    </TableCell>
-                    {/* <TableCell key={row.id} align="left">
-                         {row.image}
-                        </TableCell> */}
-                    {/* <TableCell key={row.id} align="left">
-                      {row.discount}
-                    </TableCell> */}
-                    <TableCell key={row.id} align="left">
-                      {row.unit}
-                    </TableCell>
-                    <TableCell align="left">
+              sx={{ padding: "20px" }}
+            >
+              Products List
+            </Typography>
+
+            <Divider />
+            <Box height={10} />
+            <Stack direction="row" spacing={2} className="my-2 mb-2 mx-2">
+              <Autocomplete
+                disablePortal
+                id="combo-box-demo"
+                options={rows}
+                sx={{ width: 300 }}
+                onChange={(e, v) => filterData(v)}
+                getOptionLabel={(rows) => rows.name || ""}
+                renderInput={(params) => (
+                  <TextField {...params} size="small" label="Search Products" />
+                )}
+              />
+              <Typography
+                variant="h6"
+                component="div"
+                sx={{ flexGrow: 1 }}
+              ></Typography>
+              <Button
+                variant="contained"
+                endIcon={<AddCircleIcon />}
+                onClick={handleOpen}
+              >
+                Add
+              </Button>
+            </Stack>
+            <Box height={10} />
+            <Table stickyHeader aria-label="sticky table">
+              <TableHead>
+                <TableRow>
+                  <TableCell align="left" style={{ minWidth: "100px" }}>
+                    Name
+                  </TableCell>
+                  <TableCell align="left" style={{ minWidth: "100px" }}>
+                    Price
+                  </TableCell>
+                  <TableCell align="left" style={{ minWidth: "100px" }}>
+                    unit
+                  </TableCell>
+                  <TableCell align="left" style={{ minWidth: "100px" }}>
+                    Action
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {rows
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((row) => {
+                    return (
+                      <TableRow hover role="checkbox" tabIndex={-1}>
+                        <TableCell align="left">{row.name}</TableCell>
+                        <TableCell align="left">{row.price}</TableCell>
+                        <TableCell align="left">{row.unit}</TableCell>
+                        <TableCell align="left">
                           <Stack spacing={2} direction="row">
                             <EditIcon
                               style={{
@@ -210,7 +217,9 @@ export default function ProductList() {
                                 cursor: "pointer",
                               }}
                               className="cursor-pointer"
-                              // onClick={() => editUser(row.id)}
+                              onClick={() => {
+                                editData(row.id, row.name, row.price, row.unit);
+                              }}
                             />
                             <DeleteIcon
                               style={{
@@ -224,23 +233,39 @@ export default function ProductList() {
                             />
                           </Stack>
                         </TableCell>
-                  </TableRow>
-                );
-              })}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
-        component="div"
-        count={rows.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
-    </Paper>
-  )}
-  </>
+                      </TableRow>
+                    );
+                  })}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <TablePagination
+            rowsPerPageOptions={[10, 25, 100]}
+            component="div"
+            count={rows.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
+        </Paper>
+      )}
+      {rows.length === 0&&(
+        <>
+          <Paper sx={{ width: "100%", overflow: "hidden",padding:"12px" }}>
+            <Box height={20}/>
+          <Skeleton variant="rectangular" width={'100%'} height={30} />
+          <Box height={40}/>
+          <Skeleton variant="rectangular" width={'100%'} height={60} />
+          <Box height={20}/>
+          <Skeleton variant="rectangular" width={'100%'} height={60} />
+          <Box height={30}/>
+          <Skeleton variant="rectangular" width={'100%'} height={30} />
+          <Box height={20}/>
+          <Skeleton variant="rectangular" width={'100%'} height={60} />
+          </Paper>
+        </>
+      )}
+    </>
   );
 }
