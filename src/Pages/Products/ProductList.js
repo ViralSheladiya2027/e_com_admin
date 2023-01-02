@@ -252,7 +252,7 @@ export default function ProductList() {
       )}
       {rows.length === 0&&(
         <>
-          <Paper sx={{ width: "100%", overflow: "hidden",padding:"12px" }}>
+          <Paper sx={{ width: "100%",height:"100%" ,overflow: "hidden",padding:"12px" }}>
             <Box height={20}/>
           <Skeleton variant="rectangular" width={'100%'} height={30} />
           <Box height={40}/>

@@ -98,7 +98,7 @@ export default function List() {
               <StyledTab   label="Profile" {...a11yProps(0)} />
               <StyledTab  label="Personal Details" {...a11yProps(1)} />
               <StyledTab  label="My Account" {...a11yProps(2)} />
-              <StyledTab  label="Change Passord" {...a11yProps(3)} />
+              <StyledTab  label="Change Password" {...a11yProps(3)} />
             </StyledTabs>
           </Box>
           <TabPanel value={value} index={0}>
