@@ -5,44 +5,44 @@ import {
   TextField,
   Divider,
   Typography,
-  CardContent, MenuItem,
+  CardContent,
+  MenuItem,
   Card,
 } from "@mui/material";
 import React from "react";
 
 const MyAccount = () => {
-
-    const currencies = [
-        {
-          value: "Super Admin",
-          label: "Super Admin",
-        },
-        {
-          value: "User",
-          label: "User",
-        },
-      ];
-      const Location = [
-        {
-          value: "India",
-          label: "India",
-        },
-        {
-          value: "Usa",
-          label: "Usa",
-        },
-        {
-          value: "Canada",
-          label: "Canada",
-        },
-        {
-          value: "Australia",
-          label: "Australia",
-        },
-      ];
+  const currencies = [
+    {
+      value: "Super Admin",
+      label: "Super Admin",
+    },
+    {
+      value: "User",
+      label: "User",
+    },
+  ];
+  const Location = [
+    {
+      value: "India",
+      label: "India",
+    },
+    {
+      value: "Usa",
+      label: "Usa",
+    },
+    {
+      value: "Canada",
+      label: "Canada",
+    },
+    {
+      value: "Australia",
+      label: "Australia",
+    },
+  ];
   return (
     <>
-     <Box sx={{ width: "100%" }}>
+      <Box sx={{ width: "100%" }}>
         <Card sx={{ width: "100%" }}>
           <CardContent>
             <Typography gutterBottom variant="h5" component="div">
@@ -51,31 +51,28 @@ const MyAccount = () => {
             <Divider />
             <Box height={30} />
             <Grid container spacing={2}>
-            
-                <Grid item xs={6}>
+              <Grid item xs={6}>
                 <TextField
-                    id="outlined-basic"
-                    size="small"
-                    fullWidth
-                    label="Username"
-                    variant="outlined"
-                  />
-                </Grid>
-                <Grid item xs={6}>
+                  id="outlined-basic"
+                  size="small"
+                  fullWidth
+                  label="Username"
+                  variant="outlined"
+                />
+              </Grid>
+              <Grid item xs={6}>
                 <TextField
-                    id="outlined-basic"
-                    size="small"
-                    fullWidth
-                    label="Account Email"
-                    variant="outlined"
-                  />
-                </Grid>
-              
+                  id="outlined-basic"
+                  size="small"
+                  fullWidth
+                  label="Account Email"
+                  variant="outlined"
+                />
+              </Grid>
             </Grid>
             <Box height={30} />
             <Grid container spacing={2}>
-           
-            <Grid item xs={6}>
+              <Grid item xs={6}>
                 <TextField
                   id="outlined-basic"
                   size="small"
@@ -93,7 +90,7 @@ const MyAccount = () => {
                 </TextField>
               </Grid>
               <Grid item xs={6}>
-              <TextField
+                <TextField
                   id="outlined-basic"
                   size="small"
                   fullWidth
@@ -108,31 +105,23 @@ const MyAccount = () => {
                     </MenuItem>
                   ))}
                 </TextField>
-                </Grid>
-           
+              </Grid>
             </Grid>
-            
-            
           </CardContent>
         </Card>
-        </Box>
-        
-        {/* <Card sx={{ width: "100%" }}>
+      </Box>
+
+      {/* <Card sx={{ width: "100%" }}>
           <CardContent> */}
-          <Box height={30}/>
-          <Typography gutterBottom variant="h5" component="div">
-              Advance Setting
-            </Typography>
-            <Divider />
-          {/* </CardContent>
+      <Box height={30} />
+      <Typography gutterBottom variant="h5" component="div">
+        Advance Setting
+      </Typography>
+      <Divider />
+      {/* </CardContent>
         
             </Card> */}
-           
-
-
     </>
-     
-    
   );
 };
 
