@@ -204,7 +204,7 @@ export default function ProductList() {
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row) => {
                     return (
-                      <TableRow hover role="checkbox" tabIndex={-1}>
+                      <TableRow hover key={row.id}  role="checkbox" tabIndex={-1}>
                         <TableCell align="left">{row.name}</TableCell>
                         <TableCell align="left">{row.price}</TableCell>
                         <TableCell align="left">{row.unit}</TableCell>
@@ -240,7 +240,7 @@ export default function ProductList() {
             </Table>
           </TableContainer>
           <TablePagination
-            rowsPerPageOptions={[10, 25, 100]}
+            rowsPerPageOptions={[5,10, 25]}
             component="div"
             count={rows.length}
             rowsPerPage={rowsPerPage}

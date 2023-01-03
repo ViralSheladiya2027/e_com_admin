@@ -23,9 +23,9 @@ export default function Personal() {
     },
   ];
   return (
-    <>
+    <div>
       <Box sx={{ width: "100%" }}>
-      <Grid container Spacing={2}>
+      <Grid container spacing={2}>
       <Stack spacing={2} direction="row">
         <Grid item xs={6}>
           <Card sx={{ width: "100%" }}>
@@ -135,7 +135,7 @@ export default function Personal() {
         </Stack>
       </Grid>
     </Box>
-    </>
+    </div>
   
   );
 }

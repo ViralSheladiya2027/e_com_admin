@@ -7,6 +7,8 @@ import Box from "@mui/material/Box";
 import { Card, CardContent, Stack } from "@mui/material";
 import Personal from "./Personal";
 import Profile from "./Profile";
+import ChangePassword from "./ChangePassword";
+import MyAccount from "./MyAccount";
 import { styled } from '@mui/material/styles';
 
 
@@ -85,7 +87,8 @@ export default function List() {
   };
 
   return (
-    <Card sx={{ minHeight: 84 + "vh" }}>
+    <>
+      <Card sx={{ minHeight: 84 + "vh" }}>
       <CardContent>
         <Box sx={{ width: "100%" }}>
           <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -108,10 +111,15 @@ export default function List() {
             <Personal />
           </TabPanel>
           <TabPanel value={value} index={2}>
-            Item Three
+            <MyAccount />
+          </TabPanel>
+          <TabPanel value={value} index={3}>
+            <ChangePassword/>
           </TabPanel>
         </Box>
       </CardContent>
     </Card>
+    </>
+  
   );
 }

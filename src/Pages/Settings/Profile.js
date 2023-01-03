@@ -1,4 +1,4 @@
-import * as React from "react";
+import  React from "react";
 import {
   Box,
   CardContent,
@@ -15,7 +15,8 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 
 export default function Profile() {
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <div>
+<Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={2}>
         <Grid item xs={4}>
           <Card sx={{ width: "100%" }}>
@@ -136,5 +137,7 @@ export default function Profile() {
         </Grid>
       </Grid>
     </Box>
+    </div>
+    
   );
 }
