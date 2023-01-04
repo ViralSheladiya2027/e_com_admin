@@ -108,10 +108,11 @@ export default function ProductList() {
     }
   };
 
-  const editData = (id, name, price, unit) => {
+  const editData = (id, name,image, price, unit) => {
     const data = {
       id: id,
       name: name,
+      image:image,
       price: price,
       unit: unit,
     };
@@ -188,6 +189,9 @@ export default function ProductList() {
                   <TableCell align="left" style={{ minWidth: "100px" }}>
                     Name
                   </TableCell>
+                   <TableCell align="left" style={{ minWidth: "100px" }}>
+                    Image
+                  </TableCell>
                   <TableCell align="left" style={{ minWidth: "100px" }}>
                     Price
                   </TableCell>
@@ -206,6 +210,7 @@ export default function ProductList() {
                     return (
                       <TableRow hover key={row.id}  role="checkbox" tabIndex={-1}>
                         <TableCell align="left">{row.name}</TableCell>
+                         <TableCell align="left">{row.image}</TableCell>
                         <TableCell align="left">{row.price}</TableCell>
                         <TableCell align="left">{row.unit}</TableCell>
                         <TableCell align="left">
@@ -218,7 +223,7 @@ export default function ProductList() {
                               }}
                               className="cursor-pointer"
                               onClick={() => {
-                                editData(row.id, row.name, row.price, row.unit);
+                                editData(row.id, row.name,row.image, row.price, row.unit);
                               }}
                             />
                             <DeleteIcon

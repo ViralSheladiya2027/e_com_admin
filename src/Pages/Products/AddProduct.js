@@ -20,12 +20,13 @@ const AddProduct = ({ closeEvent }) => {
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [unit, setUnit] = useState("");
-  // const rows=useStore((state)=>state.rows);
+  const [image, setImage] = useState("");
   const setRows = useStore((state) => state.setRows);
   const empCollectionRef = collection(db, "products");
 
   const createUser = async () => {
     await addDoc(empCollectionRef, {
+      image: image,
       name: name,
       price: Number(price),
       unit: unit,
@@ -78,6 +79,17 @@ const AddProduct = ({ closeEvent }) => {
       >
         <CloseIcon />
       </IconButton>
+      <Box height={20} />
+      <div>
+        {/* <label htmlFor="image">Image</label> */}
+        <input
+          type="file"
+          name="Image"
+          display="none"
+          value={image}
+          onChange={(event) => setImage(event.target.value)}
+        ></input>
+      </div>
       <Box height={20} />
       <Grid container spacing={2}>
         <Grid item xs={12}>

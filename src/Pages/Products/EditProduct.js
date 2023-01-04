@@ -13,12 +13,13 @@ import CloseIcon from "@mui/icons-material/Close";
 import { useState, useEffect } from "react";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import { db } from "../../Components/Firebase";
-
+import ImageUploading from "react-images-uploading";
 import Swal from "sweetalert2";
 import { useStore } from "../../Store";
 
 const EditProduct = ({ fId, closeEvent }) => {
   const [name, setName] = useState("");
+  const [image, setImage] = useState("");
   const [price, setPrice] = useState("");
   const [unit, setUnit] = useState("");
   // const rows=useStore((state)=>state.rows);
@@ -26,6 +27,7 @@ const EditProduct = ({ fId, closeEvent }) => {
   const empCollectionRef = collection(db, "products");
 
   useEffect(() => {
+    setName(fId.image);
     setName(fId.name);
     setPrice(fId.price);
     setUnit(fId.unit);
@@ -34,6 +36,7 @@ const EditProduct = ({ fId, closeEvent }) => {
   const createUser = async () => {
     const userDoc = doc(db, "products", fId.id);
     const newFields = {
+      image: image,
       name: name,
       price: Number(price),
       unit: unit,
@@ -87,6 +90,15 @@ const EditProduct = ({ fId, closeEvent }) => {
       >
         <CloseIcon />
       </IconButton>
+      <Box height={20} />
+      <div>
+        <input
+          type="file"
+          name="myImage"
+          value={image}
+          onChange={(event) => setImage(event.target.value)}
+        ></input>
+      </div>
       <Box height={20} />
       <Grid container spacing={2}>
         <Grid item xs={12}>
