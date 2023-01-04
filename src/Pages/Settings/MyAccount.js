@@ -7,6 +7,9 @@ import {
   Typography,
   CardContent,
   MenuItem,
+  FormGroup,
+  Switch,
+  FormControlLabel,
   Card,
 } from "@mui/material";
 import React from "react";
@@ -111,16 +114,32 @@ const MyAccount = () => {
         </Card>
       </Box>
 
-      {/* <Card sx={{ width: "100%" }}>
-          <CardContent> */}
       <Box height={30} />
       <Typography gutterBottom variant="h5" component="div">
         Advance Setting
       </Typography>
       <Divider />
-      {/* </CardContent>
-        
-            </Card> */}
+      <Typography gutterBottom fontSize={13} variant="body1" component="div">
+        Assign responsibility
+      </Typography>
+      <FormGroup>
+        <FormControlLabel
+          control={<Switch defaultChecked />}
+          label="Gilad Gray"
+        />
+        <FormControlLabel
+          control={<Switch defaultChecked />}
+          label="Jason Killian"
+        />
+        <FormControlLabel
+          control={<Switch defaultChecked />}
+          label="Antoine Llorca"
+        />
+      </FormGroup>
+
+      <Typography gutterBottom fontSize={11.5} variant="body1" component="div">
+        Be Careful
+      </Typography>
     </>
   );
 };
