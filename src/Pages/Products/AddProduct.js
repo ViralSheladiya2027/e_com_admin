@@ -9,7 +9,7 @@ import {
   InputAdornment,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import { db } from "../../Components/Firebase";
 import { collection, getDocs, addDoc } from "firebase/firestore";
@@ -20,10 +20,11 @@ const AddProduct = ({ closeEvent }) => {
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [unit, setUnit] = useState("");
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState(null);
   const setRows = useStore((state) => state.setRows);
   const empCollectionRef = collection(db, "products");
 
+  const fileRef = useRef(null);
   const createUser = async () => {
     await addDoc(empCollectionRef, {
       image: image,
@@ -80,15 +81,56 @@ const AddProduct = ({ closeEvent }) => {
         <CloseIcon />
       </IconButton>
       <Box height={20} />
-      <div>
-        {/* <label htmlFor="image">Image</label> */}
+      {/* <div>
+      
         <input
+        // ref={fileRef}
           type="file"
           name="Image"
+          id="image"
+          hidden
           display="none"
           value={image}
           onChange={(event) => setImage(event.target.value)}
-        ></input>
+        /> */}
+      {/* <PreviewImage /> */}
+      {/* <label htmlFor="image" >
+        <Button >Image</Button>
+        </label>
+      
+      </div> */}
+      <div>
+        {image && (
+          <img
+            alt="not fount"
+            className="center"
+            width="50px"
+            style={{ alignSelf: "center" }}
+            src={URL.createObjectURL(image)}
+          />
+        )}
+
+        <br />
+        <input
+          hidden
+          id="image"
+          type="file"
+          name="myImage"
+          onChange={(event) => {
+            console.log(event.target.files[0]);
+            setImage(event.target.files[0]);
+          }}
+        />
+        <label
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+          htmlFor="image"
+        >
+          Image
+        </label>
       </div>
       <Box height={20} />
       <Grid container spacing={2}>
