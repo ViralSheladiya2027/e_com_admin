@@ -27,7 +27,7 @@ const EditProduct = ({ fId, closeEvent }) => {
   const empCollectionRef = collection(db, "products");
 
   useEffect(() => {
-    setName(fId.image);
+    setImage(fId.image);
     setName(fId.name);
     setPrice(fId.price);
     setUnit(fId.unit);
@@ -92,12 +92,35 @@ const EditProduct = ({ fId, closeEvent }) => {
       </IconButton>
       <Box height={20} />
       <div>
+        {image && (
+          <center>
+            <img
+              alt="not fount"
+              width="50px"
+              src={URL.createObjectURL(image)}
+            />
+          </center>
+        )}
         <input
+          hidden
+          id="image"
           type="file"
           name="myImage"
-          value={image}
-          onChange={(event) => setImage(event.target.value)}
-        ></input>
+          onChange={(event) => {
+            // console.log(event.target.files[0]);
+            setImage(event.target.files[0]);
+          }}
+        />
+        <label
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+          htmlFor="image"
+        >
+          Image
+        </label>
       </div>
       <Box height={20} />
       <Grid container spacing={2}>
