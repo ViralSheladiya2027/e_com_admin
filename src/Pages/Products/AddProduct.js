@@ -15,37 +15,76 @@ import { db ,storage} from "../../Components/Firebase";
 import { collection, getDocs, addDoc } from "firebase/firestore";
 import Swal from "sweetalert2";
 import { useStore } from "../../Store";
-import { getStorage,uploadBytes, ref } from "firebase/storage";
-import { v4 } from "uuid";
+import { getStorage, ref,uploadBytesResumable, uploadBytes, getDownloadURL } from "firebase/storage";
+import firebase from 'firebase/compat/app';
 
 const AddProduct = ({ closeEvent }) => {
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [unit, setUnit] = useState("");
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState("");
+   const [Url, setUrl] = useState('');
   const setRows = useStore((state) => state.setRows);
   const empCollectionRef = collection(db, "products");
   // const storage = getStorage();
   // const storageRef = ref(storage, '/images/${filename}');
 
-  const createUser = async () => {
-     //     });});
-     const imageRef = ref(storage, `images/${image.name + v4()}`);
-     uploadBytes(imageRef, image).then(() => {
-       console.log('Uploaded a blob or file!');
-     });
-    await addDoc(empCollectionRef, {
-      image: image,
-      name: name,
-      price: Number(price),
-      unit: unit,
+  const createUser = async (e) => {
+    // function createUser (e) {
+    try {
+      e.preventDefault()
+      const imageRef = ref(storage, `images/${image.name}`);
+      const uploadTask = uploadBytesResumable(imageRef, image);
+      uploadTask.on('state_changed', (snapshot) => {
+        
+        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log('Upload is ' + progress + '% done');
+      }, 
+      (error) => { 
+        
+        console.log(error);
+      },
+    
+    () => {
+      getDownloadURL(uploadTask.snapshot.ref).then((Url) => {
+        console.log('File available at', Url);
+       db.collection("products").add({
+        setUrl:setUrl,
+        name: name,
+        price: Number(price),
+        unit: unit,
+       })
     });
+      }
+      );
+    }
+  catch (error) {
+    throw error;
+}
+
+// storage.ref('images').child(image.name).getDownloadURL().then(url => {
+//   firebase
+//   .firestore()
+//   .collection('products')
+//   .add({
+//     image: url
+//   })
+//   .then(() => {
+//     setImage('')
+//   })
+// });
+      
+    // await addDoc(empCollectionRef, {
+    //   image: image,
+    //   name: name,
+    //   price: Number(price),
+    //   unit: unit,
+    // });
    
     getUsers();
     closeEvent();
     Swal.fire("submitted", "your file has been submitted", "success");
-  };
-
+  }
   const getUsers = async () => {
     const data = await getDocs(empCollectionRef);
     setRows(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
@@ -120,6 +159,7 @@ const AddProduct = ({ closeEvent }) => {
         >
           Image
         </label>
+         <p><a href={Url}>{Url}</a></p>
       </div>
       <Box height={20} />
       <Grid container spacing={2}>
