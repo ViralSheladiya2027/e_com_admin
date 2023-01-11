@@ -14,12 +14,7 @@ import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import { db } from "../../Components/Firebase";
-import {
-  collection,
-  getDocs,
-  deleteDoc,
-  doc,
-} from "firebase/firestore";
+import { collection, getDocs, deleteDoc, doc } from "firebase/firestore";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Swal from "sweetalert2";
@@ -28,8 +23,7 @@ import Modal from "@mui/material/Modal";
 import AddProduct from "./AddProduct";
 import { useStore } from "../../Store";
 import EditProduct from "./EditProduct";
-import Skeleton from '@mui/material/Skeleton';
-
+import Skeleton from "@mui/material/Skeleton";
 
 const style = {
   position: "absolute",
@@ -108,11 +102,11 @@ export default function ProductList() {
     }
   };
 
-  const editData = (id, name,image, price, unit) => {
+  const editData = (id, name, image, price, unit) => {
     const data = {
       id: id,
       name: name,
-      image:image,
+      image: image,
       price: price,
       unit: unit,
     };
@@ -189,7 +183,7 @@ export default function ProductList() {
                   <TableCell align="left" style={{ minWidth: "100px" }}>
                     Name
                   </TableCell>
-                   <TableCell align="left" style={{ minWidth: "100px" }}>
+                  <TableCell align="left" style={{ minWidth: "100px" }}>
                     Image
                   </TableCell>
                   <TableCell align="left" style={{ minWidth: "100px" }}>
@@ -208,9 +202,21 @@ export default function ProductList() {
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row) => {
                     return (
-                      <TableRow hover key={row.id}  role="checkbox" tabIndex={-1}>
+                      <TableRow
+                        hover
+                        key={row.id}
+                        role="checkbox"
+                        tabIndex={-1}
+                      >
                         <TableCell align="left">{row.name}</TableCell>
-                         <TableCell align="left">{row.image}</TableCell>
+                        <TableCell align="left">
+                          <img
+                            width="40px"
+                            height="35px"
+                            src={row.image}
+                            alt=""
+                          />
+                        </TableCell>
                         <TableCell align="left">{row.price}</TableCell>
                         <TableCell align="left">{row.unit}</TableCell>
                         <TableCell align="left">
@@ -223,7 +229,13 @@ export default function ProductList() {
                               }}
                               className="cursor-pointer"
                               onClick={() => {
-                                editData(row.id, row.name,row.image, row.price, row.unit);
+                                editData(
+                                  row.id,
+                                  row.name,
+                                  row.image,
+                                  row.price,
+                                  row.unit
+                                );
                               }}
                             />
                             <DeleteIcon
@@ -245,7 +257,7 @@ export default function ProductList() {
             </Table>
           </TableContainer>
           <TablePagination
-            rowsPerPageOptions={[5,10, 25]}
+            rowsPerPageOptions={[5, 10, 25]}
             component="div"
             count={rows.length}
             rowsPerPage={rowsPerPage}
@@ -255,19 +267,26 @@ export default function ProductList() {
           />
         </Paper>
       )}
-      {rows.length === 0&&(
+      {rows.length === 0 && (
         <>
-          <Paper sx={{ width: "100%",height:"100%" ,overflow: "hidden",padding:"12px" }}>
-            <Box height={20}/>
-          <Skeleton variant="rectangular" width={'100%'} height={30} />
-          <Box height={40}/>
-          <Skeleton variant="rectangular" width={'100%'} height={60} />
-          <Box height={20}/>
-          <Skeleton variant="rectangular" width={'100%'} height={60} />
-          <Box height={30}/>
-          <Skeleton variant="rectangular" width={'100%'} height={30} />
-          <Box height={20}/>
-          <Skeleton variant="rectangular" width={'100%'} height={60} />
+          <Paper
+            sx={{
+              width: "100%",
+              height: "100%",
+              overflow: "hidden",
+              padding: "12px",
+            }}
+          >
+            <Box height={20} />
+            <Skeleton variant="rectangular" width={"100%"} height={30} />
+            <Box height={40} />
+            <Skeleton variant="rectangular" width={"100%"} height={60} />
+            <Box height={20} />
+            <Skeleton variant="rectangular" width={"100%"} height={60} />
+            <Box height={30} />
+            <Skeleton variant="rectangular" width={"100%"} height={30} />
+            <Box height={20} />
+            <Skeleton variant="rectangular" width={"100%"} height={60} />
           </Paper>
         </>
       )}

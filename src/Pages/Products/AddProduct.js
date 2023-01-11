@@ -11,113 +11,52 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 import { useState } from "react";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
-import { db ,storage} from "../../Components/Firebase";
+import { db, storage } from "../../Components/Firebase";
 import { collection, getDocs, addDoc } from "firebase/firestore";
 import Swal from "sweetalert2";
 import { useStore } from "../../Store";
-import { getStorage, ref,uploadBytesResumable, uploadBytes, getDownloadURL } from "firebase/storage";
-import firebase from 'firebase/compat/app';
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 const AddProduct = ({ closeEvent }) => {
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [unit, setUnit] = useState("");
-  const [image, setImage] = useState("");
-   const [Url, setUrl] = useState('');
+  const [image, setImage] = useState(null);
   const setRows = useStore((state) => state.setRows);
   const empCollectionRef = collection(db, "products");
 
-  // useEffect(() => {
-  //   const uploadFile = () => {
-  //     // const name = new Date().getTime() + image.name;
-
-  //     // console.log(name);
-  //     const storageRef = ref(storage,`images/${image.name}`);
-  //     const uploadTask = uploadBytesResumable(storageRef, image);
-
-  //     uploadTask.on(
-  //       "state_changed",
-  //       (snapshot) => {
-  //         const progress =
-  //           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-  //         console.log("Upload is " + progress + "% done");
-      
-  //       },
-  //       (error) => {
-  //         console.log(error);
-  //       },
-  //       () => {
-  //         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-  //           // setData((prev) => ({ ...prev, img: downloadURL }));
-          
-  //         });
-  //       }
-  //     );
-  //   };
-  //   image && uploadFile();
-  // }, [image]);
-
-  // useEffect(() => {
-  //   const getImage = async()=>{
-  //     const ImageUrl = await getDownloadURL()
-  //  setImage(ImageUrl);
-  //  getImage()
-  //   }
-  // }, [image])
-  
   const createUser = async (e) => {
-   
-    // const storageRef = ref(storage,`images/${image.name}`);
-    // uploadBytes(storageRef,image).then(()=>{
-    //   console.log("image");
-    //   storageRef.getDownloadURL()
-    //    .then(fireBaseUrl => {
-    //     console.log("URL:::" + fireBaseUrl)
-    //     //  setImageAsUrl(prevObject => ({...prevObject, imgUrl: fireBaseUrl}))
-    //    })
-    // })
-    // storage.ref(`/images/${image.name}`).put(image)
-    //   .on("state_changed", alert("success"), alert, () => {
-  
-    //     // Getting Download Link
-    //     storage.ref("images").child(image.name).getDownloadURL()
-    //       .then((url) => {
-    //         setUrl(url);
-    //         console.log("URL::"+url);
-    //       })
-    //   });
-
-
+    e.preventDefault();
+    if (image === null) return;
     const storageRef = ref(storage, `images/${image.name}`);
     const uploadTask = uploadBytesResumable(storageRef, image);
-    uploadTask.on("state_changed",
+    uploadTask.on(
+      "state_changed",
       (snapshot) => {
-        const progress =
-          Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-        // setProgresspercent(progress);
+        const progress = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
       },
       (error) => {
         alert(error);
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          setImage(downloadURL)
-          console.log("URL::"+downloadURL);
+          addDoc(empCollectionRef, {
+            image: downloadURL,
+            name: name,
+            price: Number(price),
+            unit: unit,
+          });
+          console.log("URL::" + downloadURL);
         });
       }
     );
-      
-    await addDoc(empCollectionRef, {
-      image:image,
-      name: name,
-      price: Number(price),
-      unit: unit,
-    });
-   
+
     getUsers();
     closeEvent();
     Swal.fire("submitted", "your file has been submitted", "success");
-  }
+  };
   const getUsers = async () => {
     const data = await getDocs(empCollectionRef);
     setRows(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
@@ -168,7 +107,7 @@ const AddProduct = ({ closeEvent }) => {
             <img
               alt="not fount"
               width="50px"
-              // src={URL.createObjectURL(image)}
+              src={URL.createObjectURL(image)}
             />
           </center>
         )}
@@ -192,12 +131,12 @@ const AddProduct = ({ closeEvent }) => {
         >
           Image
         </label>
-         {/* <p><a href={Url}>{Url}</a></p> */}
       </div>
       <Box height={20} />
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <TextField
+            required
             id="outlined-basic"
             label="Name"
             value={name}
@@ -209,6 +148,7 @@ const AddProduct = ({ closeEvent }) => {
         </Grid>
         <Grid item xs={6}>
           <TextField
+            required
             id="outlined-basic"
             label="Price"
             type="number"
@@ -228,6 +168,7 @@ const AddProduct = ({ closeEvent }) => {
         </Grid>
         <Grid item xs={6}>
           <TextField
+            required
             id="outlined-basic"
             label="Unit"
             select
