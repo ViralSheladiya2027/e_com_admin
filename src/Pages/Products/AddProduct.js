@@ -9,7 +9,7 @@ import {
   InputAdornment,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import { db ,storage} from "../../Components/Firebase";
 import { collection, getDocs, addDoc } from "firebase/firestore";
@@ -26,60 +26,93 @@ const AddProduct = ({ closeEvent }) => {
    const [Url, setUrl] = useState('');
   const setRows = useStore((state) => state.setRows);
   const empCollectionRef = collection(db, "products");
-  // const storage = getStorage();
-  // const storageRef = ref(storage, '/images/${filename}');
 
-  const createUser = async (e) => {
-    // function createUser (e) {
-    try {
-      e.preventDefault()
-      const imageRef = ref(storage, `images/${image.name}`);
-      const uploadTask = uploadBytesResumable(imageRef, image);
-      uploadTask.on('state_changed', (snapshot) => {
-        
-        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log('Upload is ' + progress + '% done');
-      }, 
-      (error) => { 
-        
-        console.log(error);
-      },
-    
-    () => {
-      getDownloadURL(uploadTask.snapshot.ref).then((Url) => {
-        console.log('File available at', Url);
-       db.collection("products").add({
-        setUrl:setUrl,
-        name: name,
-        price: Number(price),
-        unit: unit,
-       })
-    });
-      }
-      );
-    }
-  catch (error) {
-    throw error;
-}
+  // useEffect(() => {
+  //   const uploadFile = () => {
+  //     // const name = new Date().getTime() + image.name;
 
-// storage.ref('images').child(image.name).getDownloadURL().then(url => {
-//   firebase
-//   .firestore()
-//   .collection('products')
-//   .add({
-//     image: url
-//   })
-//   .then(() => {
-//     setImage('')
-//   })
-// });
+  //     // console.log(name);
+  //     const storageRef = ref(storage,`images/${image.name}`);
+  //     const uploadTask = uploadBytesResumable(storageRef, image);
+
+  //     uploadTask.on(
+  //       "state_changed",
+  //       (snapshot) => {
+  //         const progress =
+  //           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+  //         console.log("Upload is " + progress + "% done");
       
-    // await addDoc(empCollectionRef, {
-    //   image: image,
-    //   name: name,
-    //   price: Number(price),
-    //   unit: unit,
-    // });
+  //       },
+  //       (error) => {
+  //         console.log(error);
+  //       },
+  //       () => {
+  //         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+  //           // setData((prev) => ({ ...prev, img: downloadURL }));
+          
+  //         });
+  //       }
+  //     );
+  //   };
+  //   image && uploadFile();
+  // }, [image]);
+
+  // useEffect(() => {
+  //   const getImage = async()=>{
+  //     const ImageUrl = await getDownloadURL()
+  //  setImage(ImageUrl);
+  //  getImage()
+  //   }
+  // }, [image])
+  
+  const createUser = async (e) => {
+   
+    // const storageRef = ref(storage,`images/${image.name}`);
+    // uploadBytes(storageRef,image).then(()=>{
+    //   console.log("image");
+    //   storageRef.getDownloadURL()
+    //    .then(fireBaseUrl => {
+    //     console.log("URL:::" + fireBaseUrl)
+    //     //  setImageAsUrl(prevObject => ({...prevObject, imgUrl: fireBaseUrl}))
+    //    })
+    // })
+    // storage.ref(`/images/${image.name}`).put(image)
+    //   .on("state_changed", alert("success"), alert, () => {
+  
+    //     // Getting Download Link
+    //     storage.ref("images").child(image.name).getDownloadURL()
+    //       .then((url) => {
+    //         setUrl(url);
+    //         console.log("URL::"+url);
+    //       })
+    //   });
+
+
+    const storageRef = ref(storage, `images/${image.name}`);
+    const uploadTask = uploadBytesResumable(storageRef, image);
+    uploadTask.on("state_changed",
+      (snapshot) => {
+        const progress =
+          Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+        // setProgresspercent(progress);
+      },
+      (error) => {
+        alert(error);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          setImage(downloadURL)
+          console.log("URL::"+downloadURL);
+        });
+      }
+    );
+      
+    await addDoc(empCollectionRef, {
+      image:image,
+      name: name,
+      price: Number(price),
+      unit: unit,
+    });
    
     getUsers();
     closeEvent();
@@ -135,7 +168,7 @@ const AddProduct = ({ closeEvent }) => {
             <img
               alt="not fount"
               width="50px"
-              src={URL.createObjectURL(image)}
+              // src={URL.createObjectURL(image)}
             />
           </center>
         )}
@@ -159,7 +192,7 @@ const AddProduct = ({ closeEvent }) => {
         >
           Image
         </label>
-         <p><a href={Url}>{Url}</a></p>
+         {/* <p><a href={Url}>{Url}</a></p> */}
       </div>
       <Box height={20} />
       <Grid container spacing={2}>
