@@ -8,21 +8,20 @@ import {
   MenuItem,
   InputAdornment,
 } from "@mui/material";
-import { collection, getDocs, updateDoc, doc } from "firebase/firestore";
+import { collection, getDocs,ref,updateMetadata , updateDoc, doc } from "firebase/firestore";
 import CloseIcon from "@mui/icons-material/Close";
 import { useState, useEffect } from "react";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
-import { db } from "../../Components/Firebase";
-import ImageUploading from "react-images-uploading";
+import { db,storage } from "../../Components/Firebase";
 import Swal from "sweetalert2";
 import { useStore } from "../../Store";
+
 
 const EditProduct = ({ fId, closeEvent }) => {
   const [name, setName] = useState("");
   const [image, setImage] = useState("");
   const [price, setPrice] = useState("");
   const [unit, setUnit] = useState("");
-  // const rows=useStore((state)=>state.rows);
   const setRows = useStore((state) => state.setRows);
   const empCollectionRef = collection(db, "products");
 
@@ -33,7 +32,7 @@ const EditProduct = ({ fId, closeEvent }) => {
     setUnit(fId.unit);
   }, []);
 
-  const createUser = async () => {
+  const updateUser = async () => {
     const userDoc = doc(db, "products", fId.id);
     const newFields = {
       image: image,
@@ -97,7 +96,8 @@ const EditProduct = ({ fId, closeEvent }) => {
             <img
               alt="not fount"
               width="50px"
-              src={URL.createObjectURL(image)}
+              // src={URL.createObjectURL(image)}
+              src={image}
             />
           </center>
         )}
@@ -107,7 +107,7 @@ const EditProduct = ({ fId, closeEvent }) => {
           type="file"
           name="myImage"
           onChange={(event) => {
-            // console.log(event.target.files[0]);
+            console.log(event.target.files[0]);
             setImage(event.target.files[0]);
           }}
         />
@@ -126,6 +126,7 @@ const EditProduct = ({ fId, closeEvent }) => {
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <TextField
+          required
             id="outlined-basic"
             label="Name"
             value={name}
@@ -137,6 +138,7 @@ const EditProduct = ({ fId, closeEvent }) => {
         </Grid>
         <Grid item xs={6}>
           <TextField
+            required
             id="outlined-basic"
             label="Price"
             type="number"
@@ -156,6 +158,7 @@ const EditProduct = ({ fId, closeEvent }) => {
         </Grid>
         <Grid item xs={6}>
           <TextField
+            required
             id="outlined-basic"
             label="Unit"
             select
@@ -174,7 +177,7 @@ const EditProduct = ({ fId, closeEvent }) => {
         </Grid>
         <Grid item xs={12}>
           <Typography variant="h5" align="center">
-            <Button variant="contained" onClick={createUser}>
+            <Button variant="contained" onClick={updateUser}>
               Submit
             </Button>
           </Typography>

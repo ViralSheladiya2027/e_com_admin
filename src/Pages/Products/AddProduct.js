@@ -107,7 +107,7 @@ const AddProduct = ({ closeEvent }) => {
             <img
               alt="not fount"
               width="50px"
-              src={URL.createObjectURL(image)}
+              src={URL.createObjectURL(image)}            
             />
           </center>
         )}
