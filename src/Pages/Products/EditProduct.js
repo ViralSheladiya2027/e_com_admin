@@ -8,14 +8,14 @@ import {
   MenuItem,
   InputAdornment,
 } from "@mui/material";
-import { collection, getDocs,ref,updateMetadata , updateDoc, doc } from "firebase/firestore";
+import { collection, getDocs, updateDoc, doc } from "firebase/firestore";
 import CloseIcon from "@mui/icons-material/Close";
 import { useState, useEffect } from "react";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
-import { db,storage } from "../../Components/Firebase";
+import { db, storage } from "../../Components/Firebase";
 import Swal from "sweetalert2";
 import { useStore } from "../../Store";
-
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 const EditProduct = ({ fId, closeEvent }) => {
   const [name, setName] = useState("");
@@ -32,15 +32,35 @@ const EditProduct = ({ fId, closeEvent }) => {
     setUnit(fId.unit);
   }, []);
 
-  const updateUser = async () => {
+  const updateUser = async (e) => {
+    e.preventDefault();
     const userDoc = doc(db, "products", fId.id);
-    const newFields = {
-      image: image,
-      name: name,
-      price: Number(price),
-      unit: unit,
-    };
-    await updateDoc(userDoc, newFields);
+    if (image === null) return;
+    const storageRef = ref(storage, `images/${image.name}`);
+    const uploadTask = uploadBytesResumable(storageRef, image);
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
+      },
+      (error) => {
+        alert(error);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          const newFields = {
+            image: downloadURL,
+            name: name,
+            price: Number(price),
+            unit: unit,
+          };
+          updateDoc(userDoc, newFields);
+          console.log("URL::" + downloadURL);
+        });
+      }
+    );
     getUsers();
     closeEvent();
     Swal.fire("submitted", "your file has been updated", "success");
@@ -126,7 +146,7 @@ const EditProduct = ({ fId, closeEvent }) => {
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <TextField
-          required
+            required
             id="outlined-basic"
             label="Name"
             value={name}
