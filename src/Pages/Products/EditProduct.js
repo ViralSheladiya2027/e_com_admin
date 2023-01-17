@@ -128,7 +128,10 @@ const EditProduct = ({ fId, closeEvent }) => {
           name="myImage"
           onChange={(event) => {
             console.log(event.target.files[0]);
-            setImage(event.target.files[0]);
+            // if(event.target.files.length!==0){
+              setImage(event.target.files[0]);
+            // }
+           
           }}
         />
         <label

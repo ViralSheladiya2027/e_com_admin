@@ -167,6 +167,14 @@ const logOutClick =()=>{
                 </ListItemButton>
               </ListItem>
               <ListItem  disablePadding>
+              <ListItemButton onClick={()=>navigate('/customers') }>
+                  <ListItemIcon>
+                   <GroupIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Customers" />
+                </ListItemButton>
+              </ListItem>
+              <ListItem  disablePadding>
               <ListItemButton onClick={()=>navigate('/analytics') }>
                   <ListItemIcon>
                    <AnalyticsIcon/>
