@@ -1,5 +1,4 @@
 import * as React from "react";
-import { DataGrid } from "@mui/x-data-grid";
 import { useState, useEffect } from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -19,43 +18,34 @@ import {
   TableHead,
   TableBody,
 } from "@mui/material";
+import { db } from "../../Components/Firebase";
+import { collection, getDocs, deleteDoc, doc } from "firebase/firestore";
+import { useStore } from "../../Store";
+import Swal from "sweetalert2";
 
-const columns = [
-  { field: "id", headerName: "ID", width: 70 },
-  { field: "firstName", headerName: "First name", width: 130 },
-  { field: "lastName", headerName: "Last name", width: 130 },
-  {
-    field: "age",
-    headerName: "Age",
-    type: "number",
-    width: 90,
-  },
-  {
-    field: "fullName",
-    headerName: "Full name",
-    description: "This column has a value getter and is not sortable.",
-    sortable: false,
-    width: 160,
-    valueGetter: (params) =>
-      `${params.row.firstName || ""} ${params.row.lastName || ""}`,
-  },
-];
-
-const rows = [
-  { id: 1, lastName: "Snow", firstName: "Jon", age: 35 },
-  { id: 2, lastName: "Lannister", firstName: "Cersei", age: 42 },
-  { id: 3, lastName: "Lannister", firstName: "Jaime", age: 45 },
-  { id: 4, lastName: "Stark", firstName: "Arya", age: 16 },
-  { id: 5, lastName: "Targaryen", firstName: "Daenerys", age: null },
-  { id: 6, lastName: "Melisandre", firstName: null, age: 150 },
-  { id: 7, lastName: "Clifford", firstName: "Ferrara", age: 44 },
-  { id: 8, lastName: "Frances", firstName: "Rossini", age: 36 },
-  { id: 9, lastName: "Roxie", firstName: "Harvey", age: 65 },
-];
 
 export default function CustomerList() {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const setRows = useStore((state) => state.setRows);
+  const rows = useStore((state) => state.rows);
+  const empCollectionRef = collection(db, "user");
+  const [open, setOpen] = useState(false);
+  const [editOpen, setEditOpen] = useState(false);
+  const [formId, setFormId] = useState("");
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const handleEditOpen = () => setEditOpen(true);
+  const handleEditClose = () => setEditOpen(false);
+
+  useEffect(() => {
+    getUsers();
+  }, []);
+
+  const getUsers = async () => {
+    const data = await getDocs(empCollectionRef);
+    setRows(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+  };
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -65,34 +55,44 @@ export default function CustomerList() {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
+  const deleteUser = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.value) {
+        deleteApi(id);
+      }
+    });
+  };
+
+  const deleteApi = async (id) => {
+    const userDoc = doc(db, "user", id);
+    await deleteDoc(userDoc);
+    Swal.fire("Deleted!", "Your file has been deleted.", "success");
+    getUsers();
+  };
+
+  const editData = (id, fullname, mobilenumber, address, email, cart) => {
+    const data = {
+      id: id,
+      cart: cart,
+      fullname: fullname,
+      email: email,
+      mobilenumber: mobilenumber,
+      address: address,
+      // location:location,
+    };
+    setFormId(data);
+    handleEditOpen();
+  };
+
   return (
-    // <>
-    //   <Card sx={{ minHeight: 84 + "vh" }}>
-    //     <CardContent>
-    //       <Typography
-    //         gutterBottom
-    //         variant="h5"
-    //         component="div"
-    //         sx={{ padding: "20px" }}
-    //       >
-    //         Customers
-    //       </Typography>
-
-    //       <Divider />
-    //       <Box height={15} />
-    //       <div style={{ height: 400, width: "100%" }}>
-    //         <DataGrid
-    //           rows={rows}
-    //           columns={columns}
-    //           pageSize={5}
-    //           rowsPerPageOptions={[5]}
-    //           checkboxSelection
-    //         />
-    //       </div>
-    //     </CardContent>
-    //   </Card>
-    // </>
-
     <>
       {rows.length > 0 && (
         <Paper sx={{ width: "100%", overflow: "hidden" }}>
@@ -103,7 +103,7 @@ export default function CustomerList() {
               component="div"
               sx={{ padding: "20px" }}
             >
-              Customer
+              Customers
             </Typography>
 
             <Divider />
@@ -173,15 +173,17 @@ export default function CustomerList() {
                                 cursor: "pointer",
                               }}
                               className="cursor-pointer"
-                              // onClick={() => {
-                              //   editData(
-                              //     row.id,
-                              //     row.name,
-                              //     row.image,
-                              //     row.price,
-                              //     row.unit
-                              //   );
-                              // }}
+                              onClick={() => {
+                                editData(
+                                  row.id,
+                                  row.fullname,
+                                  row.mobilenumber,
+                                  row.address,
+                                  row.email,
+                                  row.cart,
+                                  row.location
+                                );
+                              }}
                             />
                             <DeleteIcon
                               style={{
@@ -189,9 +191,9 @@ export default function CustomerList() {
                                 color: "darkred",
                                 cursor: "pointer",
                               }}
-                              // onClick={() => {
-                              //   deleteUser(row.id);
-                              // }}
+                              onClick={() => {
+                                deleteUser(row.id);
+                              }}
                             />
                           </Stack>
                         </TableCell>
