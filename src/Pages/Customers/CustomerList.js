@@ -17,12 +17,25 @@ import {
   Table,
   TableHead,
   TableBody,
+  Modal,
 } from "@mui/material";
 import { db } from "../../Components/Firebase";
 import { collection, getDocs, deleteDoc, doc } from "firebase/firestore";
 import { useStore } from "../../Store";
 import Swal from "sweetalert2";
+import EditCustomer from "./EditCustomer";
 
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
 
 export default function CustomerList() {
   const [page, setPage] = useState(0);
@@ -78,7 +91,7 @@ export default function CustomerList() {
     getUsers();
   };
 
-  const editData = (id, fullname, mobilenumber, address, email, cart) => {
+  const editData = (id, fullname, mobilenumber, address, email, cart,price) => {
     const data = {
       id: id,
       cart: cart,
@@ -86,7 +99,7 @@ export default function CustomerList() {
       email: email,
       mobilenumber: mobilenumber,
       address: address,
-      // location:location,
+      price:price,
     };
     setFormId(data);
     handleEditOpen();
@@ -94,6 +107,18 @@ export default function CustomerList() {
 
   return (
     <>
+    <div>
+    <Modal
+          open={editOpen}
+          // onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style}>
+            <EditCustomer closeEvent={handleEditClose} fId={formId} />
+          </Box>
+        </Modal>
+    </div>
       {rows.length > 0 && (
         <Paper sx={{ width: "100%", overflow: "hidden" }}>
           <TableContainer sx={{ maxHeight: 500 }}>
@@ -134,6 +159,9 @@ export default function CustomerList() {
                     Location
                   </TableCell>
                   <TableCell align="left" style={{ minWidth: "100px" }}>
+                    Price
+                  </TableCell>
+                  <TableCell align="left" style={{ minWidth: "100px" }}>
                     Action
                   </TableCell>
                 </TableRow>
@@ -163,7 +191,7 @@ export default function CustomerList() {
                         <TableCell align="left">{row.email}</TableCell>
                         <TableCell align="left">{row.cart}</TableCell>
                         <TableCell align="left">{row.location}</TableCell>
-
+                        <TableCell align="left">{row.price}</TableCell>
                         <TableCell align="left">
                           <Stack spacing={2} direction="row">
                             <EditIcon
@@ -181,7 +209,8 @@ export default function CustomerList() {
                                   row.address,
                                   row.email,
                                   row.cart,
-                                  row.location
+                                  row.location,
+                                  row.price,
                                 );
                               }}
                             />
