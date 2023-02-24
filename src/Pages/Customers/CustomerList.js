@@ -18,6 +18,7 @@ import {
   TableHead,
   TableBody,
   Modal,
+  CircularProgress,
 } from "@mui/material";
 import { db } from "../../Components/Firebase";
 import { collection, getDocs, deleteDoc, doc } from "firebase/firestore";
@@ -201,18 +202,18 @@ export default function CustomerList() {
                                 cursor: "pointer",
                               }}
                               className="cursor-pointer"
-                              onClick={() => {
-                                editData(
-                                  row.id,
-                                  row.fullname,
-                                  row.mobilenumber,
-                                  row.address,
-                                  row.email,
-                                  row.cart,
-                                  row.location,
-                                  row.price,
-                                );
-                              }}
+                              // onClick={() => {
+                              //   editData(
+                              //     row.id,
+                              //     row.fullname,
+                              //     row.mobilenumber,
+                              //     row.address,
+                              //     row.email,
+                              //     row.cart,
+                              //     row.location,
+                              //     row.price,
+                              //   );
+                              // }}
                             />
                             <DeleteIcon
                               style={{
@@ -242,6 +243,13 @@ export default function CustomerList() {
             onRowsPerPageChange={handleChangeRowsPerPage}
           />
         </Paper>
+      )}
+      {rows.length === 0 && (
+        <>
+        <Box sx={{ display: 'flex' }}>
+      <CircularProgress />
+    </Box>
+        </>
       )}
     </>
   );

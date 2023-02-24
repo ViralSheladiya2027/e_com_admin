@@ -32,7 +32,7 @@ const Analytics = () => {
                         component="div"
                         sx={{ color: "#ccd1d1" }}
                       >
-                        Visitors
+                        Customers
                       </Typography>
                       <Typography
                         gutterBottom
@@ -63,7 +63,7 @@ const Analytics = () => {
                         component="div"
                         sx={{ color: "#ccd1d1", padding: "7px,0px" }}
                       >
-                        Visitors
+                        Orders
                       </Typography>
                       <Typography
                         gutterBottom
@@ -97,7 +97,7 @@ const Analytics = () => {
                         component="div"
                         sx={{ color: "#ccd1d1" }}
                       >
-                        Visitors
+                        Products
                       </Typography>
                       <Typography
                         gutterBottom
@@ -128,7 +128,7 @@ const Analytics = () => {
                         component="div"
                         sx={{ color: "#ccd1d1", padding: "7px,0px" }}
                       >
-                        Visitors
+                       Cancle Orders
                       </Typography>
                       <Typography
                         gutterBottom

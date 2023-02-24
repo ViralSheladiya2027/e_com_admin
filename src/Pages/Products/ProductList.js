@@ -8,7 +8,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import { Autocomplete, Divider, Typography } from "@mui/material";
+import { Autocomplete, CircularProgress, Divider, Typography } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
@@ -269,6 +269,9 @@ export default function ProductList() {
       )}
       {rows.length === 0 && (
         <>
+         {/* <Box sx={{ display: 'center', alignItems:"center" }}>
+      <CircularProgress sx={{display:"center"}} />
+    </Box> */}
           <Paper
             sx={{
               width: "100%",
