@@ -22,6 +22,7 @@ const AddProduct = ({ closeEvent }) => {
   const [price, setPrice] = useState("");
   const [unit, setUnit] = useState("");
   const [image, setImage] = useState(null);
+  const [description, setDescription] = useState("");
   const setRows = useStore((state) => state.setRows);
   const empCollectionRef = collection(db, "products");
 
@@ -32,11 +33,11 @@ const AddProduct = ({ closeEvent }) => {
     const uploadTask = uploadBytesResumable(storageRef, image);
     uploadTask.on(
       "state_changed",
-      (snapshot) => {
-        const progress = Math.round(
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-        );
-      },
+      // (snapshot) => {
+      //   const progress = Math.round(
+      //     (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+      //   );
+      // },
       (error) => {
         alert(error);
       },
@@ -47,6 +48,7 @@ const AddProduct = ({ closeEvent }) => {
             name: name,
             price: Number(price),
             unit: unit,
+            description:description,
           });
           console.log("URL::" + downloadURL);
         });
@@ -184,6 +186,18 @@ const AddProduct = ({ closeEvent }) => {
               </MenuItem>
             ))}
           </TextField>
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            required
+            id="outlined-basic"
+            label="Description"
+            value={description}
+            onChange={(event) => setDescription(event.target.value)}
+            variant="outlined"
+            size="small"
+            sx={{ minWidth: "100%" }}
+          />
         </Grid>
         <Grid item xs={12}>
           <Typography variant="h5" align="center">

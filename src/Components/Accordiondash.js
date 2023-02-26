@@ -14,7 +14,21 @@ export default function Accordiondash() {
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
-          <Typography>Accordion 1</Typography>
+          <Typography>Cloth Wash</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Typography>
+           Cloth wash liquid is best product of thunder chemical. it is not harmful of body
+          </Typography>
+        </AccordionDetails>
+      </Accordion>
+      <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel2a-content"
+          id="panel2a-header"
+        >
+          <Typography>Dish Wash</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
@@ -29,7 +43,7 @@ export default function Accordiondash() {
           aria-controls="panel2a-content"
           id="panel2a-header"
         >
-          <Typography>Accordion 2</Typography>
+          <Typography>Hand Wash</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
@@ -44,22 +58,7 @@ export default function Accordiondash() {
           aria-controls="panel2a-content"
           id="panel2a-header"
         >
-          <Typography>Accordion 3</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            malesuada lacus ex, sit amet blandit leo lobortis eget.
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
-      <Accordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel2a-content"
-          id="panel2a-header"
-        >
-          <Typography>Accordion 4</Typography>
+          <Typography>juggary</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Typography>

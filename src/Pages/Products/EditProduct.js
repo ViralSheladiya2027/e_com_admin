@@ -19,9 +19,10 @@ import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 const EditProduct = ({ fId, closeEvent }) => {
   const [name, setName] = useState("");
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState();
   const [price, setPrice] = useState("");
   const [unit, setUnit] = useState("");
+  const [description, setDescription] = useState("");
   const setRows = useStore((state) => state.setRows);
   const empCollectionRef = collection(db, "products");
 
@@ -30,6 +31,7 @@ const EditProduct = ({ fId, closeEvent }) => {
     setName(fId.name);
     setPrice(fId.price);
     setUnit(fId.unit);
+    setDescription(fId.description);
   }, []);
 
   const updateUser = async (e) => {
@@ -40,11 +42,11 @@ const EditProduct = ({ fId, closeEvent }) => {
     const uploadTask = uploadBytesResumable(storageRef, image);
     uploadTask.on(
       "state_changed",
-      (snapshot) => {
-        const progress = Math.round(
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-        );
-      },
+      // (snapshot) => {
+      //   const progress = Math.round(
+      //     (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+      //   );
+      // },
       (error) => {
         alert(error);
       },
@@ -55,6 +57,7 @@ const EditProduct = ({ fId, closeEvent }) => {
             name: name,
             price: Number(price),
             unit: unit,
+            description:description,
           };
           updateDoc(userDoc, newFields);
           console.log("URL::" + downloadURL);
@@ -120,7 +123,7 @@ const EditProduct = ({ fId, closeEvent }) => {
               src={image}
             />
           </center>
-        )}
+         )}
         <input
           hidden
           id="image"
@@ -128,9 +131,9 @@ const EditProduct = ({ fId, closeEvent }) => {
           name="myImage"
           onChange={(event) => {
             console.log(event.target.files[0]);
-            // if(event.target.files.length!==0){
+            
               setImage(event.target.files[0]);
-            // }
+            
            
           }}
         />
@@ -197,6 +200,18 @@ const EditProduct = ({ fId, closeEvent }) => {
               </MenuItem>
             ))}
           </TextField>
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            required
+            id="outlined-basic"
+            label="Description"
+            value={description}
+            onChange={(event) => setDescription(event.target.value)}
+            variant="outlined"
+            size="small"
+            sx={{ minWidth: "100%" }}
+          />
         </Grid>
         <Grid item xs={12}>
           <Typography variant="h5" align="center">
