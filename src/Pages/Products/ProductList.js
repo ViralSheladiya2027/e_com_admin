@@ -102,7 +102,7 @@ export default function ProductList() {
     }
   };
 
-  const editData = (id, name, image, price, unit,description) => {
+  const editData = (id, name, image, price, unit,description,rating) => {
     const data = {
       id: id,
       name: name,
@@ -110,6 +110,7 @@ export default function ProductList() {
       price: price,
       unit: unit,
       description:description,
+      rating:rating,
     };
     setFormId(data);
     handleEditOpen();
@@ -197,6 +198,9 @@ export default function ProductList() {
                     Description
                   </TableCell>
                   <TableCell align="left" style={{ minWidth: "100px" }}>
+                  Rating
+                  </TableCell>
+                  <TableCell align="left" style={{ minWidth: "100px" }}>
                     Action
                   </TableCell>
                 </TableRow>
@@ -224,6 +228,7 @@ export default function ProductList() {
                         <TableCell align="left">{row.price}</TableCell>
                         <TableCell align="left">{row.unit}</TableCell>
                         <TableCell align="left">{row.description}</TableCell>
+                         <TableCell align="left">{row.rating}</TableCell>
                         <TableCell align="left">
                           <Stack spacing={2} direction="row">
                             <EditIcon
@@ -241,6 +246,7 @@ export default function ProductList() {
                                   row.price,
                                  row.unit,       
                                 row.description,
+                                row.rating,
                                 );
                               }}
                             />

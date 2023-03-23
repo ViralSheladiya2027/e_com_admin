@@ -246,9 +246,9 @@ export default function CustomerList() {
       )}
       {rows.length === 0 && (
         <>
-        <Box sx={{ display: 'flex',justifyContent:"center" }}>
+        {/* <Box sx={{ display: 'flex',justifyContent:"center",margin:"50%" }}> */}
       <CircularProgress />
-    </Box>
+    {/* </Box> */}
         </>
       )}
     </>

@@ -21,8 +21,9 @@ const AddProduct = ({ closeEvent }) => {
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [unit, setUnit] = useState("");
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState("");
   const [description, setDescription] = useState("");
+  const [rating, setRating] = useState("");
   const setRows = useStore((state) => state.setRows);
   const empCollectionRef = collection(db, "products");
 
@@ -33,11 +34,11 @@ const AddProduct = ({ closeEvent }) => {
     const uploadTask = uploadBytesResumable(storageRef, image);
     uploadTask.on(
       "state_changed",
-      // (snapshot) => {
-      //   const progress = Math.round(
-      //     (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-      //   );
-      // },
+      (snapshot) => {
+        const progress = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
+      },
       (error) => {
         alert(error);
       },
@@ -49,6 +50,7 @@ const AddProduct = ({ closeEvent }) => {
             price: Number(price),
             unit: unit,
             description:description,
+            rating:rating,
           });
           console.log("URL::" + downloadURL);
         });
@@ -109,7 +111,8 @@ const AddProduct = ({ closeEvent }) => {
             <img
               alt="not fount"
               width="50px"
-              src={URL.createObjectURL(image)}            
+              // src={URL.createObjectURL(image)} 
+              src={image}           
             />
           </center>
         )}
@@ -186,6 +189,20 @@ const AddProduct = ({ closeEvent }) => {
               </MenuItem>
             ))}
           </TextField>
+        </Grid>
+        <Grid item xs={6}>
+          <TextField
+            required
+            id="outlined-basic"
+            label="Rating"
+            type="number"
+            value={rating}
+            onChange={(event) => setRating(event.target.value)}
+            variant="outlined"
+            size="small"
+            sx={{ minWidth: "100%" }}
+      
+          />
         </Grid>
         <Grid item xs={12}>
           <TextField

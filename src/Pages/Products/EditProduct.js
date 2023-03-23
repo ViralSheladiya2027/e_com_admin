@@ -19,10 +19,11 @@ import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 const EditProduct = ({ fId, closeEvent }) => {
   const [name, setName] = useState("");
-  const [image, setImage] = useState();
+  const [image, setImage] = useState("");
   const [price, setPrice] = useState("");
   const [unit, setUnit] = useState("");
   const [description, setDescription] = useState("");
+  const [rating, setRating] = useState("");
   const setRows = useStore((state) => state.setRows);
   const empCollectionRef = collection(db, "products");
 
@@ -32,6 +33,8 @@ const EditProduct = ({ fId, closeEvent }) => {
     setPrice(fId.price);
     setUnit(fId.unit);
     setDescription(fId.description);
+    setRating(fId.rating);
+    // eslint-disable-next-line
   }, []);
 
   const updateUser = async (e) => {
@@ -42,11 +45,11 @@ const EditProduct = ({ fId, closeEvent }) => {
     const uploadTask = uploadBytesResumable(storageRef, image);
     uploadTask.on(
       "state_changed",
-      // (snapshot) => {
-      //   const progress = Math.round(
-      //     (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-      //   );
-      // },
+      (snapshot) => {
+        const progress = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
+      },
       (error) => {
         alert(error);
       },
@@ -58,6 +61,7 @@ const EditProduct = ({ fId, closeEvent }) => {
             price: Number(price),
             unit: unit,
             description:description,
+            rating:rating,
           };
           updateDoc(userDoc, newFields);
           console.log("URL::" + downloadURL);
@@ -131,10 +135,12 @@ const EditProduct = ({ fId, closeEvent }) => {
           name="myImage"
           onChange={(event) => {
             console.log(event.target.files[0]);
-            
-              setImage(event.target.files[0]);
-            
-           
+            // if(event.target.files.length!==0)
+// {
+//   setImage(URL.createObjectURL(event.target.files[0]));
+// }             
+            setImage(event.target.files[0])
+
           }}
         />
         <label
@@ -200,6 +206,20 @@ const EditProduct = ({ fId, closeEvent }) => {
               </MenuItem>
             ))}
           </TextField>
+        </Grid>
+        <Grid item xs={6}>
+          <TextField
+            required
+            id="outlined-basic"
+            label="Rating"
+            type="number"
+            value={rating}
+            onChange={(event) => setRating(event.target.value)}
+            variant="outlined"
+            size="small"
+            sx={{ minWidth: "100%" }}
+      
+          />
         </Grid>
         <Grid item xs={12}>
           <TextField
