@@ -1,34 +1,31 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
-import Paper from "@mui/material/Paper";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TablePagination from "@mui/material/TablePagination";
-import TableRow from "@mui/material/TableRow";
-import {
-  Autocomplete,
-  // CircularProgress,
-  Divider,
-  Typography,
-} from "@mui/material";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
-import Button from "@mui/material/Button";
-import Box from "@mui/material/Box";
-import Stack from "@mui/material/Stack";
-import { db } from "../../Components/Firebase";
-import { collection, getDocs, deleteDoc, doc } from "firebase/firestore";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import Swal from "sweetalert2";
-import TextField from "@mui/material/TextField";
-import Modal from "@mui/material/Modal";
-import AddProduct from "./AddProduct";
+import {
+  Typography,
+  Divider,
+  Box,
+  // Card,
+  // CardContent,
+  TablePagination,
+  TableCell,
+  Stack,
+  TableRow,
+  Paper,
+  TableContainer,
+  Table,
+  TableHead,
+  TableBody,
+  Modal,
+  CircularProgress,
+} from "@mui/material";
+import { db } from "../../Components/Firebase";
+import { collection, getDocs, deleteDoc, doc } from "firebase/firestore";
 import { useStore } from "../../Store";
-import EditProduct from "./EditProduct";
-import Skeleton from "@mui/material/Skeleton";
+import Swal from "sweetalert2";
+// import EditCustomer from "./EditCustomer";
+import EditOrder from "./EditOrder";
 
 const style = {
   position: "absolute",
@@ -42,25 +39,24 @@ const style = {
   p: 4,
 };
 
-export default function ProductList() {
+export default function OrderList() {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  // const [rows, setRows] = useState([]);
   const setRows = useStore((state) => state.setRows);
   const rows = useStore((state) => state.rows);
-  const empCollectionRef = collection(db, "products");
-  const [open, setOpen] = useState(false);
+  const empCollectionRef = collection(db, "orders");
+  // const [open, setOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
   const [formId, setFormId] = useState("");
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  // const handleOpen = () => setOpen(true);
+  // const handleClose = () => setOpen(false);
   const handleEditOpen = () => setEditOpen(true);
   const handleEditClose = () => setEditOpen(false);
 
   useEffect(() => {
     getUsers();
     // eslint-disable-next-line
-  },[]);
+  },[] );
 
   const getUsers = async () => {
     const data = await getDocs(empCollectionRef);
@@ -75,7 +71,6 @@ export default function ProductList() {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-
   const deleteUser = (id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -93,47 +88,37 @@ export default function ProductList() {
   };
 
   const deleteApi = async (id) => {
-    const userDoc = doc(db, "products", id);
+    const userDoc = doc(db, "user", id);
     await deleteDoc(userDoc);
     Swal.fire("Deleted!", "Your file has been deleted.", "success");
     getUsers();
   };
 
-  const filterData = (v) => {
-    if (v) {
-      setRows([v]);
-    } else {
-      setRows([]);
-      getUsers();
-    }
-  };
-
-  const editData = (id, name, image, price, unit, description, rating) => {
+  const editData = (
+    id,
+    fullname,
+    mobilenumber,
+    address,
+    email,
+    cart,
+    price
+  ) => {
     const data = {
       id: id,
-      name: name,
-      image: image,
+      cart: cart,
+      fullname: fullname,
+      email: email,
+      mobilenumber: mobilenumber,
+      address: address,
       price: price,
-      unit: unit,
-      description: description,
-      rating: rating,
     };
     setFormId(data);
     handleEditOpen();
   };
+
   return (
     <>
       <div>
-        <Modal
-          open={open}
-          // onClose={handleClose}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Box sx={style}>
-            <AddProduct closeEvent={handleClose} />
-          </Box>
-        </Modal>
         <Modal
           open={editOpen}
           // onClose={handleClose}
@@ -141,7 +126,7 @@ export default function ProductList() {
           aria-describedby="modal-modal-description"
         >
           <Box sx={style}>
-            <EditProduct closeEvent={handleEditClose} fId={formId} />
+            <EditOrder closeEvent={handleEditClose} fId={formId} />
           </Box>
         </Modal>
       </div>
@@ -154,36 +139,11 @@ export default function ProductList() {
               component="div"
               sx={{ padding: "20px" }}
             >
-              Products List
+            Orders
             </Typography>
 
             <Divider />
-            <Box height={10} />
-            <Stack direction="row" spacing={2} className="my-2 mb-2 mx-2">
-              <Autocomplete
-                disablePortal
-                id="combo-box-demo"
-                options={rows}
-                sx={{ width: 300 }}
-                onChange={(e, v) => filterData(v)}
-                getOptionLabel={(rows) => rows.name || ""}
-                renderInput={(params) => (
-                  <TextField {...params} size="small" label="Search Products" />
-                )}
-              />
-              <Typography
-                variant="h6"
-                component="div"
-                sx={{ flexGrow: 1 }}
-              ></Typography>
-              <Button
-                variant="contained"
-                endIcon={<AddCircleIcon />}
-                onClick={handleOpen}
-              >
-                Add
-              </Button>
-            </Stack>
+
             <Box height={10} />
             <Table stickyHeader aria-label="sticky table">
               <TableHead>
@@ -192,13 +152,22 @@ export default function ProductList() {
                     align="left"
                     style={{ minWidth: "100px", fontWeight: "bold" }}
                   >
-                    Name
+                   Name
+                  </TableCell>
+                  {/* <TableCell align="left" style={{ minWidth: "100px" }}>
+                  Image
+                </TableCell> */}
+                  <TableCell
+                    align="left"
+                    style={{ minWidth: "100px", fontWeight: "bold" }}
+                  >
+                   Unit
                   </TableCell>
                   <TableCell
                     align="left"
                     style={{ minWidth: "100px", fontWeight: "bold" }}
                   >
-                    Image
+                    Totalitems
                   </TableCell>
                   <TableCell
                     align="left"
@@ -210,20 +179,20 @@ export default function ProductList() {
                     align="left"
                     style={{ minWidth: "100px", fontWeight: "bold" }}
                   >
-                    unit
+                    CartTotal
                   </TableCell>
                   <TableCell
                     align="left"
                     style={{ minWidth: "100px", fontWeight: "bold" }}
                   >
-                    Description
+                  Userid
                   </TableCell>
-                  <TableCell
+                  {/* <TableCell
                     align="left"
                     style={{ minWidth: "100px", fontWeight: "bold" }}
                   >
-                    Rating
-                  </TableCell>
+                    Price
+                  </TableCell> */}
                   <TableCell
                     align="left"
                     style={{ minWidth: "100px", fontWeight: "bold" }}
@@ -244,18 +213,20 @@ export default function ProductList() {
                         tabIndex={-1}
                       >
                         <TableCell align="left">{row.name}</TableCell>
-                        <TableCell align="left">
-                          <img
-                            width="40px"
-                            height="35px"
-                            src={row.image}
-                            alt=""
-                          />
-                        </TableCell>
-                        <TableCell align="left">{row.price}</TableCell>
+                        {/* <TableCell align="left">
+                        <img
+                          width="40px"
+                          height="35px"
+                          src={row.image}
+                          alt=""
+                        />
+                      </TableCell> */}
                         <TableCell align="left">{row.unit}</TableCell>
-                        <TableCell align="left">{row.description}</TableCell>
-                        <TableCell align="left">{row.rating}</TableCell>
+                        <TableCell align="left">{row.totalItems}</TableCell>
+                        <TableCell align="left">{row.price}</TableCell>
+                        <TableCell align="left">{row.cartTotal}</TableCell>
+                        <TableCell align="left">{row.userid}</TableCell>
+                        {/* <TableCell align="left">{row.price}</TableCell> */}
                         <TableCell align="left">
                           <Stack spacing={2} direction="row">
                             <EditIcon
@@ -268,12 +239,13 @@ export default function ProductList() {
                               onClick={() => {
                                 editData(
                                   row.id,
-                                  row.name,
-                                  row.image,
+                                  row.fullname,
+                                  row.mobilenumber,
+                                  row.address,
+                                  row.email,
+                                  row.cart,
+                                  row.location,
                                   row.price,
-                                  row.unit,
-                                  row.description,
-                                  row.rating
                                 );
                               }}
                             />
@@ -308,28 +280,9 @@ export default function ProductList() {
       )}
       {rows.length === 0 && (
         <>
-          {/* <Box sx={{ display: 'center', alignItems:"center" }}>
-      <CircularProgress sx={{display:"center"}} />
-    </Box> */}
-          <Paper
-            sx={{
-              width: "100%",
-              height: "100%",
-              overflow: "hidden",
-              padding: "12px",
-            }}
-          >
-            <Box height={20} />
-            <Skeleton variant="rectangular" width={"100%"} height={30} />
-            <Box height={40} />
-            <Skeleton variant="rectangular" width={"100%"} height={60} />
-            <Box height={20} />
-            <Skeleton variant="rectangular" width={"100%"} height={60} />
-            <Box height={30} />
-            <Skeleton variant="rectangular" width={"100%"} height={30} />
-            <Box height={20} />
-            <Skeleton variant="rectangular" width={"100%"} height={60} />
-          </Paper>
+          {/* <Box sx={{ display: 'flex',justifyContent:"center",margin:"50%" }}> */}
+          <CircularProgress />
+          {/* </Box> */}
         </>
       )}
     </>

@@ -1,35 +1,27 @@
-import * as React from 'react';
-import { useState } from 'react';
-import { useNavigate} from 'react-router-dom';
-import { styled, useTheme } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import MuiDrawer from '@mui/material/Drawer';
-import MuiAppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import List from '@mui/material/List';
-import CssBaseline from '@mui/material/CssBaseline';
-import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
+import { ShoppingCart } from '@mui/icons-material';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import AnalyticsIcon from '@mui/icons-material/Analytics';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import GroupIcon from '@mui/icons-material/Group';
+import HomeIcon from '@mui/icons-material/Home';
+import LogoutIcon from '@mui/icons-material/Logout';
+import SettingsIcon from '@mui/icons-material/Settings';
+import Box from '@mui/material/Box';
+import CssBaseline from '@mui/material/CssBaseline';
+import Divider from '@mui/material/Divider';
+import MuiDrawer from '@mui/material/Drawer';
+import IconButton from '@mui/material/IconButton';
+import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
-import SettingsIcon from '@mui/icons-material/Settings';
-import LogoutIcon from '@mui/icons-material/Logout';
-import {auth} from "./Firebase"
-import HomeIcon from '@mui/icons-material/Home';
-import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
-import CategoryIcon from '@mui/icons-material/Category';
-import { ShoppingCart } from '@mui/icons-material';
-import {useStore} from "../Store";
-import AnalyticsIcon from '@mui/icons-material/Analytics';
-import GroupIcon from '@mui/icons-material/Group';
+import { styled, useTheme } from '@mui/material/styles';
+import * as React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useStore } from "../Store";
+import { auth } from "./Firebase";
 
 const drawerWidth = 240;
 
@@ -172,6 +164,14 @@ const logOutClick =()=>{
                    <GroupIcon />
                   </ListItemIcon>
                   <ListItemText primary="Customers" />
+                </ListItemButton>
+              </ListItem>
+               <ListItem  disablePadding>
+              <ListItemButton onClick={()=>navigate('/orders') }>
+                  <ListItemIcon>
+                   <AddShoppingCartIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Orders" />
                 </ListItemButton>
               </ListItem>
               <ListItem  disablePadding>

@@ -6,8 +6,8 @@ import {
   Typography,
   Divider,
   Box,
-  Card,
-  CardContent,
+  // Card,
+  // CardContent,
   TablePagination,
   TableCell,
   Stack,
@@ -44,17 +44,18 @@ export default function CustomerList() {
   const setRows = useStore((state) => state.setRows);
   const rows = useStore((state) => state.rows);
   const empCollectionRef = collection(db, "user");
-  const [open, setOpen] = useState(false);
+  // const [open, setOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
   const [formId, setFormId] = useState("");
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  // const handleOpen = () => setOpen(true);
+  // const handleClose = () => setOpen(false);
   const handleEditOpen = () => setEditOpen(true);
   const handleEditClose = () => setEditOpen(false);
 
   useEffect(() => {
     getUsers();
-  }, []);
+    // eslint-disable-next-line
+  },[] );
 
   const getUsers = async () => {
     const data = await getDocs(empCollectionRef);
@@ -92,7 +93,15 @@ export default function CustomerList() {
     getUsers();
   };
 
-  const editData = (id, fullname, mobilenumber, address, email, cart,price) => {
+  const editData = (
+    id,
+    fullname,
+    mobilenumber,
+    address,
+    email,
+    cart,
+    price
+  ) => {
     const data = {
       id: id,
       cart: cart,
@@ -100,7 +109,7 @@ export default function CustomerList() {
       email: email,
       mobilenumber: mobilenumber,
       address: address,
-      price:price,
+      price: price,
     };
     setFormId(data);
     handleEditOpen();
@@ -108,8 +117,8 @@ export default function CustomerList() {
 
   return (
     <>
-    <div>
-    <Modal
+      <div>
+        <Modal
           open={editOpen}
           // onClose={handleClose}
           aria-labelledby="modal-modal-title"
@@ -119,7 +128,7 @@ export default function CustomerList() {
             <EditCustomer closeEvent={handleEditClose} fId={formId} />
           </Box>
         </Modal>
-    </div>
+      </div>
       {rows.length > 0 && (
         <Paper sx={{ width: "100%", overflow: "hidden" }}>
           <TableContainer sx={{ maxHeight: 500 }}>
@@ -138,31 +147,55 @@ export default function CustomerList() {
             <Table stickyHeader aria-label="sticky table">
               <TableHead>
                 <TableRow>
-                  <TableCell align="left" style={{ minWidth: "100px" }}>
+                  <TableCell
+                    align="left"
+                    style={{ minWidth: "100px", fontWeight: "bold" }}
+                  >
                     Full Name
                   </TableCell>
                   {/* <TableCell align="left" style={{ minWidth: "100px" }}>
                   Image
                 </TableCell> */}
-                  <TableCell align="left" style={{ minWidth: "100px" }}>
+                  <TableCell
+                    align="left"
+                    style={{ minWidth: "100px", fontWeight: "bold" }}
+                  >
                     Mobile Number
                   </TableCell>
-                  <TableCell align="left" style={{ minWidth: "100px" }}>
+                  <TableCell
+                    align="left"
+                    style={{ minWidth: "100px", fontWeight: "bold" }}
+                  >
                     Address
                   </TableCell>
-                  <TableCell align="left" style={{ minWidth: "100px" }}>
+                  <TableCell
+                    align="left"
+                    style={{ minWidth: "100px", fontWeight: "bold" }}
+                  >
                     Email
                   </TableCell>
-                  <TableCell align="left" style={{ minWidth: "100px" }}>
+                  <TableCell
+                    align="left"
+                    style={{ minWidth: "100px", fontWeight: "bold" }}
+                  >
                     Cart
                   </TableCell>
-                  <TableCell align="left" style={{ minWidth: "100px" }}>
-                    Location
+                  <TableCell
+                    align="left"
+                    style={{ minWidth: "100px", fontWeight: "bold" }}
+                  >
+                  userid
                   </TableCell>
-                  <TableCell align="left" style={{ minWidth: "100px" }}>
+                  <TableCell
+                    align="left"
+                    style={{ minWidth: "100px", fontWeight: "bold" }}
+                  >
                     Price
                   </TableCell>
-                  <TableCell align="left" style={{ minWidth: "100px" }}>
+                  <TableCell
+                    align="left"
+                    style={{ minWidth: "100px", fontWeight: "bold" }}
+                  >
                     Action
                   </TableCell>
                 </TableRow>
@@ -191,7 +224,7 @@ export default function CustomerList() {
                         <TableCell align="left">{row.address}</TableCell>
                         <TableCell align="left">{row.email}</TableCell>
                         <TableCell align="left">{row.cart}</TableCell>
-                        <TableCell align="left">{row.location}</TableCell>
+                        <TableCell align="left">{row.userid}</TableCell>
                         <TableCell align="left">{row.price}</TableCell>
                         <TableCell align="left">
                           <Stack spacing={2} direction="row">
@@ -202,18 +235,18 @@ export default function CustomerList() {
                                 cursor: "pointer",
                               }}
                               className="cursor-pointer"
-                              // onClick={() => {
-                              //   editData(
-                              //     row.id,
-                              //     row.fullname,
-                              //     row.mobilenumber,
-                              //     row.address,
-                              //     row.email,
-                              //     row.cart,
-                              //     row.location,
-                              //     row.price,
-                              //   );
-                              // }}
+                              onClick={() => {
+                                editData(
+                                  row.id,
+                                  row.fullname,
+                                  row.mobilenumber,
+                                  row.address,
+                                  row.email,
+                                  row.cart,
+                                  row.location,
+                                  row.price,
+                                );
+                              }}
                             />
                             <DeleteIcon
                               style={{
@@ -246,9 +279,9 @@ export default function CustomerList() {
       )}
       {rows.length === 0 && (
         <>
-        {/* <Box sx={{ display: 'flex',justifyContent:"center",margin:"50%" }}> */}
-      <CircularProgress />
-    {/* </Box> */}
+          {/* <Box sx={{ display: 'flex',justifyContent:"center",margin:"50%" }}> */}
+          <CircularProgress />
+          {/* </Box> */}
         </>
       )}
     </>

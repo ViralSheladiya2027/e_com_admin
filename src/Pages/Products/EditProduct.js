@@ -49,6 +49,7 @@ const EditProduct = ({ fId, closeEvent }) => {
         const progress = Math.round(
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100
         );
+        console.log(progress)
       },
       (error) => {
         alert(error);
@@ -61,7 +62,7 @@ const EditProduct = ({ fId, closeEvent }) => {
             price: Number(price),
             unit: unit,
             description:description,
-            rating:rating,
+            rating:Number(rating),
           };
           updateDoc(userDoc, newFields);
           console.log("URL::" + downloadURL);
@@ -135,7 +136,7 @@ const EditProduct = ({ fId, closeEvent }) => {
           name="myImage"
           onChange={(event) => {
             console.log(event.target.files[0]);
-            // if(event.target.files.length!==0)
+//             if(event.target.files.length!==0)
 // {
 //   setImage(URL.createObjectURL(event.target.files[0]));
 // }             

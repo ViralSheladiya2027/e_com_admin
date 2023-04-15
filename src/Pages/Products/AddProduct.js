@@ -35,6 +35,7 @@ const AddProduct = ({ closeEvent }) => {
     uploadTask.on(
       "state_changed",
       (snapshot) => {
+        // eslint-disable-next-line
         const progress = Math.round(
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100
         );
@@ -50,7 +51,7 @@ const AddProduct = ({ closeEvent }) => {
             price: Number(price),
             unit: unit,
             description:description,
-            rating:rating,
+            rating:Number(rating),
           });
           console.log("URL::" + downloadURL);
         });
