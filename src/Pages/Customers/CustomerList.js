@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
-import EditIcon from "@mui/icons-material/Edit";
+// import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {
   Typography,
@@ -10,33 +10,33 @@ import {
   // CardContent,
   TablePagination,
   TableCell,
-  Stack,
+  // Stack,
   TableRow,
   Paper,
   TableContainer,
   Table,
   TableHead,
   TableBody,
-  Modal,
+  // Modal,
   CircularProgress,
 } from "@mui/material";
 import { db } from "../../Components/Firebase";
 import { collection, getDocs, deleteDoc, doc } from "firebase/firestore";
 import { useStore } from "../../Store";
 import Swal from "sweetalert2";
-import EditCustomer from "./EditCustomer";
+// import EditCustomer from "./EditCustomer";
 
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
+// const style = {
+//   position: "absolute",
+//   top: "50%",
+//   left: "50%",
+//   transform: "translate(-50%, -50%)",
+//   width: 400,
+//   bgcolor: "background.paper",
+//   border: "2px solid #000",
+//   boxShadow: 24,
+//   p: 4,
+// };
 
 export default function CustomerList() {
   const [page, setPage] = useState(0);
@@ -45,12 +45,12 @@ export default function CustomerList() {
   const rows = useStore((state) => state.rows);
   const empCollectionRef = collection(db, "user");
   // const [open, setOpen] = useState(false);
-  const [editOpen, setEditOpen] = useState(false);
-  const [formId, setFormId] = useState("");
+  // const [editOpen, setEditOpen] = useState(false);
+  // const [formId, setFormId] = useState("");
   // const handleOpen = () => setOpen(true);
   // const handleClose = () => setOpen(false);
-  const handleEditOpen = () => setEditOpen(true);
-  const handleEditClose = () => setEditOpen(false);
+  // const handleEditOpen = () => setEditOpen(true);
+  // const handleEditClose = () => setEditOpen(false);
 
   useEffect(() => {
     getUsers();
@@ -93,31 +93,31 @@ export default function CustomerList() {
     getUsers();
   };
 
-  const editData = (
-    id,
-    fullname,
-    mobilenumber,
-    address,
-    email,
-    cart,
-    price
-  ) => {
-    const data = {
-      id: id,
-      cart: cart,
-      fullname: fullname,
-      email: email,
-      mobilenumber: mobilenumber,
-      address: address,
-      price: price,
-    };
-    setFormId(data);
-    handleEditOpen();
-  };
+  // const editData = (
+  //   id,
+  //   fullname,
+  //   mobilenumber,
+  //   address,
+  //   email,
+  //   cart,
+  //   price
+  // ) => {
+  //   const data = {
+  //     id: id,
+  //     cart: cart,
+  //     fullname: fullname,
+  //     email: email,
+  //     mobilenumber: mobilenumber,
+  //     address: address,
+  //     price: price,
+  //   };
+  //   setFormId(data);
+  //   handleEditOpen();
+  // };
 
   return (
     <>
-      <div>
+      {/* <div>
         <Modal
           open={editOpen}
           // onClose={handleClose}
@@ -128,7 +128,7 @@ export default function CustomerList() {
             <EditCustomer closeEvent={handleEditClose} fId={formId} />
           </Box>
         </Modal>
-      </div>
+      </div> */}
       {rows.length > 0 && (
         <Paper sx={{ width: "100%", overflow: "hidden" }}>
           <TableContainer sx={{ maxHeight: 500 }}>
@@ -174,24 +174,24 @@ export default function CustomerList() {
                   >
                     Email
                   </TableCell>
-                  <TableCell
+                  {/* <TableCell
                     align="left"
                     style={{ minWidth: "100px", fontWeight: "bold" }}
                   >
                     Cart
-                  </TableCell>
+                  </TableCell> */}
                   <TableCell
                     align="left"
                     style={{ minWidth: "100px", fontWeight: "bold" }}
                   >
                   userid
                   </TableCell>
-                  <TableCell
+                  {/* <TableCell
                     align="left"
                     style={{ minWidth: "100px", fontWeight: "bold" }}
                   >
                     Price
-                  </TableCell>
+                  </TableCell> */}
                   <TableCell
                     align="left"
                     style={{ minWidth: "100px", fontWeight: "bold" }}
@@ -223,12 +223,12 @@ export default function CustomerList() {
                         <TableCell align="left">{row.mobilenumber}</TableCell>
                         <TableCell align="left">{row.address}</TableCell>
                         <TableCell align="left">{row.email}</TableCell>
-                        <TableCell align="left">{row.cart}</TableCell>
+                        {/* <TableCell align="left">{row.cart}</TableCell> */}
                         <TableCell align="left">{row.userid}</TableCell>
-                        <TableCell align="left">{row.price}</TableCell>
+                        {/* <TableCell align="left">{row.price}</TableCell> */}
                         <TableCell align="left">
-                          <Stack spacing={2} direction="row">
-                            <EditIcon
+                          {/* <Stack spacing={2} direction="row"> */}
+                            {/* <EditIcon
                               style={{
                                 fontSize: "20px",
                                 color: "blue",
@@ -242,12 +242,12 @@ export default function CustomerList() {
                                   row.mobilenumber,
                                   row.address,
                                   row.email,
-                                  row.cart,
+                                  // row.cart,
                                   row.location,
-                                  row.price,
+                                  // row.price,
                                 );
                               }}
-                            />
+                            /> */}
                             <DeleteIcon
                               style={{
                                 fontSize: "20px",
@@ -258,7 +258,7 @@ export default function CustomerList() {
                                 deleteUser(row.id);
                               }}
                             />
-                          </Stack>
+                          {/* </Stack> */}
                         </TableCell>
                       </TableRow>
                     );
