@@ -112,8 +112,8 @@ const AddProduct = ({ closeEvent }) => {
             <img
               alt="not fount"
               width="50px"
-              // src={URL.createObjectURL(image)} 
-              src={image}           
+              src={URL.createObjectURL(image)} 
+              // src={image}           
             />
           </center>
         )}
@@ -124,8 +124,11 @@ const AddProduct = ({ closeEvent }) => {
           name="myImage"
           onChange={(event) => {
             console.log(event.target.files[0]);
+            // if (event.target.files[0]) {
             setImage(event.target.files[0]);
-          }}
+            // }
+            // setImage(URL.createObjectURL(event.target.files[0]));
+            }}
         />
         <label
           style={{

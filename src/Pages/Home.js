@@ -1,5 +1,5 @@
 import { Box, CardContent, Card, Typography, Stack } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import SideNav from "../Components/SideNav";
 import Navbar from "../Components/Navbar";
 import Grid from "@mui/material/Grid";
@@ -10,12 +10,35 @@ import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 import Accordiondash from "../Components/Accordiondash";
 import BarChart from "../Charts/BarChart";
 import CountUp from 'react-countup';
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../Components/Firebase";
 
 const Home = () => {
+
+  const [email, setEmail] = useState("");
+
+  function GetCurrentUser() {
+    const [user, setUser] = useState(null);
+    useEffect(() => {
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          // setUser(user);
+          setEmail(user.email); 
+          console.log('mail::'+email);
+        } else {
+          // setUser(null);
+          setEmail('');
+        }
+      });
+    }, []);
+    return user;
+  }
+  const user = GetCurrentUser();
+  console.log('mail2::'+email);
   return (
     <>
       <div className="bgcolor">
-        <Navbar />
+        <Navbar email={email}/>
         <Box height={70} />
 
         <Box sx={{ display: "flex" }}>

@@ -88,7 +88,7 @@ export default function OrderList() {
   };
 
   const deleteApi = async (id) => {
-    const userDoc = doc(db, "user", id);
+    const userDoc = doc(db, "orders", id);
     await deleteDoc(userDoc);
     Swal.fire("Deleted!", "Your file has been deleted.", "success");
     getUsers();
@@ -214,7 +214,7 @@ export default function OrderList() {
                       >
                         <TableCell align="left">{row.name}</TableCell>
                         {/* <TableCell align="left">
-                        {row.id+1}
+                        {row.increnent}
                       </TableCell> */}
                         <TableCell align="left">{row.unit}</TableCell>
                         <TableCell align="left">{row.totalItems}</TableCell>

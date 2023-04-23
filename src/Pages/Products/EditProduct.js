@@ -138,9 +138,14 @@ const EditProduct = ({ fId, closeEvent }) => {
             console.log(event.target.files[0]);
 //             if(event.target.files.length!==0)
 // {
-//   setImage(URL.createObjectURL(event.target.files[0]));
+  // setImage(URL.createObjectURL(event.target.files[0]));
 // }             
-            setImage(event.target.files[0])
+setImage(event.target.files[0]);
+// let reader = new FileReader();
+//     reader.onload = function(e) {
+//       setImage(e.target.result);
+//     };
+//     reader.readAsDataURL(event.target.files[0]);
 
           }}
         />
