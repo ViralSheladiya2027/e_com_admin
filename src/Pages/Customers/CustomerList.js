@@ -151,6 +151,12 @@ export default function CustomerList() {
                     align="left"
                     style={{ minWidth: "100px", fontWeight: "bold" }}
                   >
+                    No.
+                  </TableCell>
+                  <TableCell
+                    align="left"
+                    style={{ minWidth: "100px", fontWeight: "bold" }}
+                  >
                     Full Name
                   </TableCell>
                   {/* <TableCell align="left" style={{ minWidth: "100px" }}>
@@ -202,8 +208,8 @@ export default function CustomerList() {
               </TableHead>
               <TableBody>
                 {rows
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row) => {
+                  .slice(page * rowsPerPage, (page+1) * rowsPerPage + rowsPerPage)
+                  .map((row,index) => {
                     return (
                       <TableRow
                         hover
@@ -211,6 +217,7 @@ export default function CustomerList() {
                         role="checkbox"
                         tabIndex={-1}
                       >
+                         <TableCell align="left">{page * rowsPerPage +index + 1}</TableCell>
                         <TableCell align="left">{row.fullname}</TableCell>
                         {/* <TableCell align="left">
                         <img

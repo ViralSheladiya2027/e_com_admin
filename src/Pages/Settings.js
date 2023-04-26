@@ -13,7 +13,7 @@ const Settings = () => {
     <Box sx={{display:"flex"}}>
       <SideNav/>
       <Box component="main" sx={{flexgrow: 1,p: 3, width: "100%"}}>
-      <List />
+      {/* <List /> */}
       </Box>
   
     </Box>

@@ -56,7 +56,7 @@ export default function OrderList() {
   useEffect(() => {
     getUsers();
     // eslint-disable-next-line
-  },[] );
+  }, []);
 
   const getUsers = async () => {
     const data = await getDocs(empCollectionRef);
@@ -139,7 +139,7 @@ export default function OrderList() {
               component="div"
               sx={{ padding: "20px" }}
             >
-            Orders
+              Orders
             </Typography>
 
             <Divider />
@@ -152,16 +152,20 @@ export default function OrderList() {
                     align="left"
                     style={{ minWidth: "100px", fontWeight: "bold" }}
                   >
-                   Name
+                    No.
                   </TableCell>
-                  {/* <TableCell align="left" style={{ minWidth: "100px" }}>
-                  ID
-                </TableCell> */}
                   <TableCell
                     align="left"
                     style={{ minWidth: "100px", fontWeight: "bold" }}
                   >
-                   Unit
+                    Name
+                  </TableCell>
+
+                  <TableCell
+                    align="left"
+                    style={{ minWidth: "100px", fontWeight: "bold" }}
+                  >
+                    Unit
                   </TableCell>
                   <TableCell
                     align="left"
@@ -185,7 +189,7 @@ export default function OrderList() {
                     align="left"
                     style={{ minWidth: "100px", fontWeight: "bold" }}
                   >
-                  Userid
+                    Userid
                   </TableCell>
                   {/* <TableCell
                     align="left"
@@ -203,8 +207,11 @@ export default function OrderList() {
               </TableHead>
               <TableBody>
                 {rows
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row) => {
+                  .slice(
+                    page * rowsPerPage,
+                    (page + 1) * rowsPerPage + rowsPerPage
+                  )
+                  .map((row, index) => {
                     return (
                       <TableRow
                         hover
@@ -212,10 +219,10 @@ export default function OrderList() {
                         role="checkbox"
                         tabIndex={-1}
                       >
+                        <TableCell align="left">
+                          {page * rowsPerPage + index + 1}
+                        </TableCell>
                         <TableCell align="left">{row.name}</TableCell>
-                        {/* <TableCell align="left">
-                        {row.increnent}
-                      </TableCell> */}
                         <TableCell align="left">{row.unit}</TableCell>
                         <TableCell align="left">{row.totalItems}</TableCell>
                         <TableCell align="left">{row.price}</TableCell>
@@ -224,7 +231,7 @@ export default function OrderList() {
                         {/* <TableCell align="left">{row.price}</TableCell> */}
                         <TableCell align="left">
                           {/* <Stack spacing={2} direction="row"> */}
-                            {/* <EditIcon
+                          {/* <EditIcon
                               style={{
                                 fontSize: "20px",
                                 color: "blue",
@@ -244,16 +251,16 @@ export default function OrderList() {
                                 );
                               }}
                             /> */}
-                            <DeleteIcon
-                              style={{
-                                fontSize: "20px",
-                                color: "darkred",
-                                cursor: "pointer",
-                              }}
-                              onClick={() => {
-                                deleteUser(row.id);
-                              }}
-                            />
+                          <DeleteIcon
+                            style={{
+                              fontSize: "20px",
+                              color: "darkred",
+                              cursor: "pointer",
+                            }}
+                            onClick={() => {
+                              deleteUser(row.id);
+                            }}
+                          />
                           {/* </Stack> */}
                         </TableCell>
                       </TableRow>

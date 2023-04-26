@@ -60,7 +60,7 @@ export default function ProductList() {
   useEffect(() => {
     getUsers();
     // eslint-disable-next-line
-  },[]);
+  }, []);
 
   const getUsers = async () => {
     const data = await getDocs(empCollectionRef);
@@ -192,6 +192,12 @@ export default function ProductList() {
                     align="left"
                     style={{ minWidth: "100px", fontWeight: "bold" }}
                   >
+                    No.
+                  </TableCell>
+                  <TableCell
+                    align="left"
+                    style={{ minWidth: "100px", fontWeight: "bold" }}
+                  >
                     Name
                   </TableCell>
                   <TableCell
@@ -234,8 +240,11 @@ export default function ProductList() {
               </TableHead>
               <TableBody>
                 {rows
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row) => {
+                  .slice(
+                    page * rowsPerPage,
+                    (page + 1) * rowsPerPage + rowsPerPage
+                  )
+                  .map((row, index) => {
                     return (
                       <TableRow
                         hover
@@ -243,6 +252,9 @@ export default function ProductList() {
                         role="checkbox"
                         tabIndex={-1}
                       >
+                        <TableCell align="left">
+                          {page * rowsPerPage + index + 1}
+                        </TableCell>
                         <TableCell align="left">{row.name}</TableCell>
                         <TableCell align="left">
                           <img
