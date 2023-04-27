@@ -4,93 +4,94 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import { Card, CardContent, Stack } from "@mui/material";
+import { Card, CardContent, Divider, Grid, Stack, TextField } from "@mui/material";
 import Personal from "./Personal";
 import Profile from "./Profile";
 import ChangePassword from "./ChangePassword";
 import MyAccount from "./MyAccount";
 import { styled } from '@mui/material/styles';
+import { AccountCircle } from "@mui/icons-material";
 
 
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
+// function TabPanel(props) {
+//   const { children, value, index, ...other } = props;
 
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
-const StyledTabs = styled((props) => (
-    <Tabs
-      {...props}
-      TabIndicatorProps={{ children: <span className="MuiTabs-indicatorSpan" /> }}
-    />
-  ))({
-    '& .MuiTabs-indicator': {
-      display: 'flex',
-      justifyContent: 'center',
-      backgroundColor: 'transparent',
-    },
-    '& .MuiTabs-indicatorSpan': {
-      maxWidth: 40,
-      width: '100%',
-      backgroundColor: '#635ee7',
-    },
-  });
+//   return (
+//     <div
+//       role="tabpanel"
+//       hidden={value !== index}
+//       id={`simple-tabpanel-${index}`}
+//       aria-labelledby={`simple-tab-${index}`}
+//       {...other}
+//     >
+//       {value === index && (
+//         <Box sx={{ p: 3 }}>
+//           <Typography>{children}</Typography>
+//         </Box>
+//       )}
+//     </div>
+//   );
+// }
+// const StyledTabs = styled((props) => (
+//     <Tabs
+//       {...props}
+//       TabIndicatorProps={{ children: <span className="MuiTabs-indicatorSpan" /> }}
+//     />
+//   ))({
+//     '& .MuiTabs-indicator': {
+//       display: 'flex',
+//       justifyContent: 'center',
+//       backgroundColor: 'transparent',
+//     },
+//     '& .MuiTabs-indicatorSpan': {
+//       maxWidth: 40,
+//       width: '100%',
+//       backgroundColor: '#635ee7',
+//     },
+//   });
   
-  const StyledTab = styled((props) => <Tab disableRipple {...props} />)(
-    ({ theme }) => ({
-      textTransform: 'none',
-      fontWeight: theme.typography.fontWeightRegular,
-      fontSize: theme.typography.pxToRem(15),
-      marginRight: theme.spacing(1),
-      fontWeight:"400",
-      color: '#141414',
-      '&.Mui-selected': {
-        color: '#0c828f',
-      },
-      '&.Mui-focusVisible': {
-        backgroundColor: '#30c1d1',
-      },
-    }),
-  );
+//   const StyledTab = styled((props) => <Tab disableRipple {...props} />)(
+//     ({ theme }) => ({
+//       textTransform: 'none',
+//       fontWeight: theme.typography.fontWeightRegular,
+//       fontSize: theme.typography.pxToRem(15),
+//       marginRight: theme.spacing(1),
+//       fontWeight:"400",
+//       color: '#141414',
+//       '&.Mui-selected': {
+//         color: '#0c828f',
+//       },
+//       '&.Mui-focusVisible': {
+//         backgroundColor: '#30c1d1',
+//       },
+//     }),
+//   );
   
-TabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.number.isRequired,
-  value: PropTypes.number.isRequired,
-};
+// TabPanel.propTypes = {
+//   children: PropTypes.node,
+//   index: PropTypes.number.isRequired,
+//   value: PropTypes.number.isRequired,
+// };
 
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
-  };
-}
+// function a11yProps(index) {
+//   return {
+//     id: `simple-tab-${index}`,
+//     "aria-controls": `simple-tabpanel-${index}`,
+//   };
+// }
 
-export default function List() {
-  const [value, setValue] = React.useState(0);
+export default function List({email}) {
+  // const [value, setValue] = React.useState(0);
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+  // const handleChange = (event, newValue) => {
+  //   setValue(newValue);
+  // };
 
   return (
     <>
       <Card sx={{ minHeight: 84 + "vh" }}>
       <CardContent>
-        <Box sx={{ width: "100%" }}>
+        {/* <Box sx={{ width: "100%" }}>
           <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
             <StyledTabs 
               value={value}
@@ -116,7 +117,48 @@ export default function List() {
           <TabPanel value={value} index={3}>
             <ChangePassword/>
           </TabPanel>
-        </Box>
+        </Box> */}
+         <Typography
+              gutterBottom
+              variant="h5"
+              component="div"
+              sx={{ padding: "20px" }}
+            >
+              Profile
+            </Typography>
+
+            <Divider />
+            <Box height={30} />
+            {/* <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
+        <AccountCircle sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
+        <TextField id="input-with-icon-textfield" label="Name" variant="standard" />
+      </Box>     */}
+      <Grid item xs={12}>
+      <Stack spacing={2} direction="row">
+      <AccountCircle/>
+      <Stack spacing={1} direction="column">
+      <TextField label="Name"
+          id="filled-size-small" size="small"variant="filled"></TextField>
+      <Typography>This is not your username or pin.This name just show your name</Typography>
+      </Stack>
+      </Stack>
+      </Grid>
+      <Box height={30} />
+      <Grid item xs={12}>
+      <Stack spacing={2} direction="row">
+      <AccountCircle/>
+      <TextField label="About"
+          id="filled-size-small" size="small"variant="filled"></TextField>
+      </Stack>
+      </Grid>
+      <Box height={30} />
+      <Grid item xs={12}>
+      <Stack spacing={2} direction="row">
+      <AccountCircle/>
+      <TextField 
+          id="filled-size-small" size="small"variant="filled"><Typography>{email}</Typography></TextField>
+      </Stack>
+      </Grid>
       </CardContent>
     </Card>
     </>

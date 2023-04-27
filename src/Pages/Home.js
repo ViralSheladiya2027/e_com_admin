@@ -22,11 +22,10 @@ const Home = () => {
     useEffect(() => {
       onAuthStateChanged(auth, (user) => {
         if (user) {
-          // setUser(user);
+          setUser(user);
           setEmail(user.email); 
-          console.log('mail::'+email);
         } else {
-          // setUser(null);
+          setUser(null);
           setEmail('');
         }
       });
@@ -34,11 +33,10 @@ const Home = () => {
     return user;
   }
   const user = GetCurrentUser();
-  console.log('mail2::'+email);
   return (
     <>
       <div className="bgcolor">
-        <Navbar email={email}/>
+        <Navbar user={user} email={email}/>
         <Box height={70} />
 
         <Box sx={{ display: "flex" }}>

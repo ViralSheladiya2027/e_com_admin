@@ -72,7 +72,7 @@ export default function Navbar({ user, email }) {
             aria-haspopup="true"
             onClick={handleMenu}
             color="inherit"
-            sx={{ marginLeft: "auto", marginRight: "22px" }}
+            sx={{ marginLeft: "12px", marginRight: "auto" }}
           >
             <Avatar sx={{ bgcolor: "#795548" }}>
               {" "}
@@ -100,9 +100,16 @@ export default function Navbar({ user, email }) {
             onClose={handleClose}
           >
             {!user && (
-              <MenuItem onClick={handleClose}>
-                <Link className="nav-link" to="/login">
+              <MenuItem onClick={handleClose}  >
+                <Link style={{color:"black"}} className="nav-link" to="/login">
                   Login
+                </Link>
+              </MenuItem>
+            )}
+            {user && (
+              <MenuItem onClick={handleClose}  >
+                <Link style={{color:"black"}} className="nav-link" to="/settings">
+                  Profile
                 </Link>
               </MenuItem>
             )}
