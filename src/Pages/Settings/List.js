@@ -1,97 +1,89 @@
-import * as React from "react";
-import PropTypes from "prop-types";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import Typography from "@mui/material/Typography";
+import EditIcon from "@mui/icons-material/Edit";
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+import MailOutlineOutlinedIcon from "@mui/icons-material/MailOutlineOutlined";
+import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
+import {
+  Card,
+  CardContent,
+  Divider,
+  Grid,
+  InputAdornment,
+  Modal,
+  Stack,
+  TextField
+} from "@mui/material";
 import Box from "@mui/material/Box";
-import { Card, CardContent, Divider, Grid, Stack, TextField } from "@mui/material";
-import Personal from "./Personal";
-import Profile from "./Profile";
-import ChangePassword from "./ChangePassword";
-import MyAccount from "./MyAccount";
-import { styled } from '@mui/material/styles';
-import { AccountCircle } from "@mui/icons-material";
+import Typography from "@mui/material/Typography";
+import React ,{useState}from "react";
+import EditAbout from "./EditAbout"
+import EditName from "./EditName"
 
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
 
-// function TabPanel(props) {
-//   const { children, value, index, ...other } = props;
+export default function List({ email }) {
 
-//   return (
-//     <div
-//       role="tabpanel"
-//       hidden={value !== index}
-//       id={`simple-tabpanel-${index}`}
-//       aria-labelledby={`simple-tab-${index}`}
-//       {...other}
-//     >
-//       {value === index && (
-//         <Box sx={{ p: 3 }}>
-//           <Typography>{children}</Typography>
-//         </Box>
-//       )}
-//     </div>
-//   );
-// }
-// const StyledTabs = styled((props) => (
-//     <Tabs
-//       {...props}
-//       TabIndicatorProps={{ children: <span className="MuiTabs-indicatorSpan" /> }}
-//     />
-//   ))({
-//     '& .MuiTabs-indicator': {
-//       display: 'flex',
-//       justifyContent: 'center',
-//       backgroundColor: 'transparent',
-//     },
-//     '& .MuiTabs-indicatorSpan': {
-//       maxWidth: 40,
-//       width: '100%',
-//       backgroundColor: '#635ee7',
-//     },
-//   });
-  
-//   const StyledTab = styled((props) => <Tab disableRipple {...props} />)(
-//     ({ theme }) => ({
-//       textTransform: 'none',
-//       fontWeight: theme.typography.fontWeightRegular,
-//       fontSize: theme.typography.pxToRem(15),
-//       marginRight: theme.spacing(1),
-//       fontWeight:"400",
-//       color: '#141414',
-//       '&.Mui-selected': {
-//         color: '#0c828f',
-//       },
-//       '&.Mui-focusVisible': {
-//         backgroundColor: '#30c1d1',
-//       },
-//     }),
-//   );
-  
-// TabPanel.propTypes = {
-//   children: PropTypes.node,
-//   index: PropTypes.number.isRequired,
-//   value: PropTypes.number.isRequired,
-// };
+  const [nameOpen, setNameOpen] = useState(false);
+  const [aboutOpen, setAboutOpen] = useState(false)
+  const handleOpen = () => setNameOpen(true);
+  const handleClose = () => setNameOpen(false);
+  const handleEditOpen = () => setAboutOpen(true);
+  const handleEditClose = () => setAboutOpen(false);
+  const [name, setName] = useState("");
+  const [about, setAbout] = useState("");
 
-// function a11yProps(index) {
-//   return {
-//     id: `simple-tab-${index}`,
-//     "aria-controls": `simple-tabpanel-${index}`,
-//   };
-// }
+  const editName =()=>{
+    // const data={
+    //   name:name,
+    // }
+   setName(name);
+   handleEditOpen();
+  }
 
-export default function List({email}) {
-  // const [value, setValue] = React.useState(0);
-
-  // const handleChange = (event, newValue) => {
-  //   setValue(newValue);
-  // };
+const editAbout =()=>{
+  const data={
+      about:about,
+    }
+setAbout(data);
+handleEditOpen();
+}
 
   return (
     <>
+     <div>
+        <Modal
+          open={nameOpen}
+          // onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style}>
+            <EditName closeEvent={handleClose} fName={name} />
+          </Box>
+        </Modal>
+        <Modal
+          open={aboutOpen}
+          // onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style}>
+            <EditAbout closeEvent={handleEditClose} fAbout={about} />
+          </Box>
+        </Modal>
+      </div>
       <Card sx={{ minHeight: 84 + "vh" }}>
-      <CardContent>
-        {/* <Box sx={{ width: "100%" }}>
+        <CardContent>
+          {/* <Box sx={{ width: "100%" }}>
           <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
             <StyledTabs 
               value={value}
@@ -118,50 +110,71 @@ export default function List({email}) {
             <ChangePassword/>
           </TabPanel>
         </Box> */}
-         <Typography
-              gutterBottom
-              variant="h5"
-              component="div"
-              sx={{ padding: "20px" }}
-            >
-              Profile
-            </Typography>
+          <Typography
+            gutterBottom
+            variant="h5"
+            component="div"
+            sx={{ padding: "20px" }}
+          >
+            Profile
+          </Typography>
 
-            <Divider />
-            <Box height={30} />
-            {/* <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
-        <AccountCircle sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
-        <TextField id="input-with-icon-textfield" label="Name" variant="standard" />
-      </Box>     */}
-      <Grid item xs={12}>
-      <Stack spacing={2} direction="row">
-      <AccountCircle/>
-      <Stack spacing={1} direction="column">
-      <TextField label="Name"
-          id="filled-size-small" size="small"variant="filled"></TextField>
-      <Typography>This is not your username or pin.This name just show your name</Typography>
-      </Stack>
-      </Stack>
-      </Grid>
-      <Box height={30} />
-      <Grid item xs={12}>
-      <Stack spacing={2} direction="row">
-      <AccountCircle/>
-      <TextField label="About"
-          id="filled-size-small" size="small"variant="filled"></TextField>
-      </Stack>
-      </Grid>
-      <Box height={30} />
-      <Grid item xs={12}>
-      <Stack spacing={2} direction="row">
-      <AccountCircle/>
-      <TextField 
-          id="filled-size-small" size="small"variant="filled"><Typography>{email}</Typography></TextField>
-      </Stack>
-      </Grid>
-      </CardContent>
-    </Card>
+          <Divider />
+          <Box height={30} />
+
+          <Grid item xs={12}>
+            <Stack spacing={2} direction="row">
+              <PersonOutlineOutlinedIcon />
+              <Stack spacing={1} direction="column">
+                <Typography sx={{ fontWeight: "bold" }}> Name :</Typography>
+                <TextField
+                  variant="standard"
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <EditIcon onClick={()=>{editName()}} />
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+
+                <Typography>
+                  This is not your username or pin.This name just show your name
+                </Typography>
+              </Stack>
+            </Stack>
+          </Grid>
+          <Box height={30} />
+          <Grid item xs={12}>
+            <Stack spacing={2} direction="row">
+              <InfoOutlinedIcon />
+              <Stack spacing={1} direction="column">
+                <Typography sx={{ fontWeight: "bold" }}> About :</Typography>
+                <TextField
+                  variant="standard"
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <EditIcon onClick={()=>{editAbout()}}/>
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+              </Stack>
+            </Stack>
+          </Grid>
+          <Box height={30} />
+          <Grid item xs={12}>
+            <Stack spacing={2} direction="row">
+              <MailOutlineOutlinedIcon />
+              <Stack spacing={1} direction="column">
+                <Typography sx={{ fontWeight: "bold" }}> Email :</Typography>
+                <Typography>{email ? email : "Please Login"}</Typography>
+              </Stack>
+            </Stack>
+          </Grid>
+        </CardContent>
+      </Card>
     </>
-  
   );
 }
