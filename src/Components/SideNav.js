@@ -90,7 +90,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
-export default function SideNav() {
+export default function SideNav(numRows) {
   const theme = useTheme();
   // const [open, setOpen] =useState(true);
 
@@ -110,7 +110,7 @@ const logOutClick =()=>{
   // const handleDrawerClose = () => {
   //   setOpen(false);
   // };
-
+  console.log(numRows)
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
@@ -171,7 +171,7 @@ const logOutClick =()=>{
                   <ListItemIcon>
                    <AddShoppingCartIcon />
                   </ListItemIcon>
-                  <ListItemText primary="Orders" />
+                  <ListItemText primary={`Orders ${numRows}`} />
                 </ListItemButton>
               </ListItem>
               <ListItem  disablePadding>

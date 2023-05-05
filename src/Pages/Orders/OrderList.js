@@ -94,6 +94,8 @@ export default function OrderList() {
     getUsers();
   };
 
+  const numRows = rows.length;
+  console.log(numRows)
   // const editData = (
   //   id,
   //   fullname,

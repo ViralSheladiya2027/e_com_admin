@@ -10,13 +10,14 @@ import {
   InputAdornment,
   Modal,
   Stack,
-  TextField
+  TextField,
 } from "@mui/material";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import React ,{useState}from "react";
-import EditAbout from "./EditAbout"
-import EditName from "./EditName"
+import React, { useState } from "react";
+import EditAbout from "./EditAbout";
+import EditName from "./EditName";
+import { Link } from "react-router-dom";
 
 const style = {
   position: "absolute",
@@ -31,9 +32,8 @@ const style = {
 };
 
 export default function List({ email }) {
-
   const [nameOpen, setNameOpen] = useState(false);
-  const [aboutOpen, setAboutOpen] = useState(false)
+  const [aboutOpen, setAboutOpen] = useState(false);
   const handleOpen = () => setNameOpen(true);
   const handleClose = () => setNameOpen(false);
   const handleEditOpen = () => setAboutOpen(true);
@@ -41,25 +41,25 @@ export default function List({ email }) {
   const [name, setName] = useState("");
   const [about, setAbout] = useState("");
 
-  const editName =()=>{
+  const editName = (name) => {
     // const data={
     //   name:name,
     // }
-   setName(name);
-   handleEditOpen();
-  }
+    setName(name);
+    handleOpen();
+  };
 
-const editAbout =()=>{
-  const data={
-      about:about,
-    }
-setAbout(data);
-handleEditOpen();
-}
+  const editAbout = () => {
+    const data = {
+      about: about,
+    };
+    setAbout(data);
+    handleEditOpen();
+  };
 
   return (
     <>
-     <div>
+      <div>
         <Modal
           open={nameOpen}
           // onClose={handleClose}
@@ -83,33 +83,6 @@ handleEditOpen();
       </div>
       <Card sx={{ minHeight: 84 + "vh" }}>
         <CardContent>
-          {/* <Box sx={{ width: "100%" }}>
-          <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-            <StyledTabs 
-              value={value}
-              onChange={handleChange}
-              aria-label="basic tabs example"
-         
-            >
-              <StyledTab   label="Profile" {...a11yProps(0)} />
-              <StyledTab  label="Personal Details" {...a11yProps(1)} />
-              <StyledTab  label="My Account" {...a11yProps(2)} />
-              <StyledTab  label="Change Password" {...a11yProps(3)} />
-            </StyledTabs>
-          </Box>
-          <TabPanel value={value} index={0}>
-            <Profile />
-          </TabPanel>
-          <TabPanel value={value} index={1}>
-            <Personal />
-          </TabPanel>
-          <TabPanel value={value} index={2}>
-            <MyAccount />
-          </TabPanel>
-          <TabPanel value={value} index={3}>
-            <ChangePassword/>
-          </TabPanel>
-        </Box> */}
           <Typography
             gutterBottom
             variant="h5"
@@ -132,7 +105,11 @@ handleEditOpen();
                   InputProps={{
                     endAdornment: (
                       <InputAdornment position="end">
-                        <EditIcon onClick={()=>{editName()}} />
+                        <EditIcon
+                          onClick={() => {
+                            editName(name);
+                          }}
+                        />
                       </InputAdornment>
                     ),
                   }}
@@ -155,7 +132,11 @@ handleEditOpen();
                   InputProps={{
                     endAdornment: (
                       <InputAdornment position="end">
-                        <EditIcon onClick={()=>{editAbout()}}/>
+                        <EditIcon
+                          onClick={() => {
+                            editAbout(about);
+                          }}
+                        />
                       </InputAdornment>
                     ),
                   }}
@@ -169,7 +150,22 @@ handleEditOpen();
               <MailOutlineOutlinedIcon />
               <Stack spacing={1} direction="column">
                 <Typography sx={{ fontWeight: "bold" }}> Email :</Typography>
-                <Typography>{email ? email : "Please Login"}</Typography>
+                <Typography>
+                  {email ? (
+                    email
+                  ) : (
+                    <>
+                      Please Login{" "}
+                      <Link
+                        to="/login"
+                        style={{ textDecoration: "none" }}
+                        className="link"
+                      >
+                        Here
+                      </Link>
+                    </>
+                  )}
+                </Typography>
               </Stack>
             </Stack>
           </Grid>

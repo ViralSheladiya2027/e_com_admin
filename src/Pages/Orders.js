@@ -7,7 +7,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../Components/Firebase";
 
 
-const Orders = () => {
+const Orders = (numRows) => {
   const [email, setEmail] = useState("");
 
   function GetCurrentUser() {
@@ -34,7 +34,7 @@ const Orders = () => {
     <Box height ={70}/>
     <Box
      sx={{display:"flex"}}>
-      <SideNav/>
+      <SideNav numRows={numRows}/>
       <Box component="main" sx={{flexgrow: 1,p: 3, width: "100%" }}>
    <OrderList />
       </Box>

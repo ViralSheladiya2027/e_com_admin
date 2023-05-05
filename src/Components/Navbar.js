@@ -20,7 +20,7 @@ const AppBar = styled(MuiAppBar, {
   zIndex: theme.zIndex.drawer + 1,
 }));
 
-export default function Navbar({ user, email }) {
+export default function Navbar({ user, email}) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);

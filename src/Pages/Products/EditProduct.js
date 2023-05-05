@@ -71,7 +71,7 @@ const EditProduct = ({ fId, closeEvent }) => {
     );
     getUsers();
     closeEvent();
-    Swal.fire("submitted", "your file has been updated", "success");
+    Swal.fire("submitted", "your product has been updated", "success");
   };
 
   const getUsers = async () => {
