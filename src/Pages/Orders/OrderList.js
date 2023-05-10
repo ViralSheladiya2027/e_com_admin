@@ -26,6 +26,7 @@ import { useStore } from "../../Store";
 import Swal from "sweetalert2";
 // import EditCustomer from "./EditCustomer";
 // import EditOrder from "./EditOrder";
+import { useNavigate } from "react-router-dom";
 
 // const style = {
 //   position: "absolute",
@@ -39,7 +40,7 @@ import Swal from "sweetalert2";
 //   p: 4,
 // };
 
-export default function OrderList() {
+export default function OrderList(props) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const setRows = useStore((state) => state.setRows);
@@ -52,6 +53,7 @@ export default function OrderList() {
   // const handleClose = () => setOpen(false);
   // const handleEditOpen = () => setEditOpen(true);
   // const handleEditClose = () => setEditOpen(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     getUsers();
@@ -95,7 +97,8 @@ export default function OrderList() {
   };
 
   const numRows = rows.length;
-  console.log(numRows)
+  props.number(numRows);
+  console.log(numRows);
   // const editData = (
   //   id,
   //   fullname,
@@ -229,7 +232,12 @@ export default function OrderList() {
                         <TableCell align="left">{row.totalItems}</TableCell>
                         <TableCell align="left">{row.price}</TableCell>
                         <TableCell align="left">{row.cartTotal}</TableCell>
-                        <TableCell align="left">{row.userid}</TableCell>
+                        <TableCell
+                          align="left"
+                          onClick={() => navigate(`/customers/${row.userid}`)}
+                        >
+                          {row.userid}
+                        </TableCell>
                         {/* <TableCell align="left">{row.price}</TableCell> */}
                         <TableCell align="left">
                           {/* <Stack spacing={2} direction="row"> */}

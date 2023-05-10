@@ -6,7 +6,7 @@ let Store=(set)=>({
     rows:[],
 setRows:(rows)=>set((state)=>({rows:rows})),
     updateOpen:(dopen)=>set((state)=>({dopen:dopen})),
-
+    
 });
 
 Store = persist(Store,{name:"my_store"})

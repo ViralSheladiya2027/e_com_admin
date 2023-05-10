@@ -21,7 +21,9 @@ import { auth,
 } from "../Components/Firebase";
 
 import { useNavigate } from "react-router-dom";
-import Alert from "@mui/material/Alert";
+// import Alert from "@mui/material/Alert";
+import { toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
 // import { collection, addDoc } from "firebase/firestore";
 
 const Login = () => {
@@ -30,8 +32,8 @@ const Login = () => {
   const handleMouseDownPassword = () => setShowPassword(!showPassword);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errorMsg, setErrorMsg] = useState("");
-  const [successMsg, setSuccessMsg] = useState("");
+  // const [errorMsg, setErrorMsg] = useState("");
+  // const [successMsg, setSuccessMsg] = useState("");
 
   const navigate = useNavigate();
 
@@ -52,19 +54,27 @@ const Login = () => {
 
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      setSuccessMsg("login success");
+      // setSuccessMsg("login success");
+      toast.success("Login succesfully!", {
+        position: "top-center",
+        theme: "colored",
+      });
       setEmail("");
       setPassword("");
-      setTimeout(() => {
-        setSuccessMsg("");
+      // setTimeout(() => {
+        // setSuccessMsg("");
         navigate("/");
-      }, 3000);
+      // }, 3000);
     } catch (err) {
       // console.error(err);
-      setErrorMsg(err.message);
-      setTimeout(() => {
-        setErrorMsg("");
-      }, 3000);
+      // setErrorMsg(err.message);
+      // setTimeout(() => {
+      //   setErrorMsg("");
+      // }, 3000);
+      toast.error(err.message, {
+        position: "top-center",
+        theme: "colored",
+      });
     }
 
     //       try {
@@ -79,7 +89,7 @@ const Login = () => {
 
   return (
     <>
-      {successMsg && (
+      {/* {successMsg && (
         <>
           <Alert variant="filled" severity="success">
             {successMsg}
@@ -93,7 +103,7 @@ const Login = () => {
             {errorMsg}
           </Alert>
         </>
-      )}
+      )} */}
 
       <Container maxWidth="xs">
         <Box

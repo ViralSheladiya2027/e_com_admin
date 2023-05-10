@@ -18,10 +18,12 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { styled, useTheme } from '@mui/material/styles';
-import * as React from 'react';
+import  React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useStore } from "../Store";
 import { auth } from "./Firebase";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const drawerWidth = 240;
 
@@ -90,17 +92,23 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
-export default function SideNav(numRows) {
+
+
+export default function SideNav({numRows}) {
   const theme = useTheme();
   // const [open, setOpen] =useState(true);
 
   // const updateOpen = useStore((state)=>state.updateOpen);
 const open = useStore((state)=>state.dopen);
-
+// const numRows = useStore((state) => state.numRows);
 
   const navigate = useNavigate();
 const logOutClick =()=>{
   auth.signOut();
+  toast.success("Your account has been logout", {
+      position: "top-center",
+      theme: "colored",
+    });
    navigate("/login");
 }
   // const handleDrawerOpen = () => {
@@ -110,6 +118,7 @@ const logOutClick =()=>{
   // const handleDrawerClose = () => {
   //   setOpen(false);
   // };
+
   console.log(numRows)
   return (
     <Box sx={{ display: 'flex' }}>

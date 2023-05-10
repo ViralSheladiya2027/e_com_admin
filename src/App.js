@@ -14,6 +14,7 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
+import { ToastContainer } from 'react-toastify';
 
 function App() {
 
@@ -27,11 +28,13 @@ function App() {
       <Route path="/products" element={<Products />}/>
       <Route path="/orders" element={<Orders />}/>
       <Route path="/customers" element={<Customers />}/>
+      <Route path="/customers/:userid" element={<Customers />}/>
       <Route path="/analytics" element={<Analytics />}/>
       <Route path="/settings" element={<Settings />}/>
       
     </Routes>
   </BrowserRouter>
+  <ToastContainer />
      </>
      
   );

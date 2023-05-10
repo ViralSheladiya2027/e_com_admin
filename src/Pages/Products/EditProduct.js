@@ -104,7 +104,9 @@ const EditProduct = ({ fId, closeEvent }) => {
       label: "5 kg",
     },
   ];
-
+  // useEffect(() => {
+  //   return () => URL.revokeObjectURL(image);
+  // }, [image]);
   return (
     <>
       <Box sx={{ m: 2 }} />
@@ -138,7 +140,7 @@ const EditProduct = ({ fId, closeEvent }) => {
             console.log(event.target.files[0]);
 //             if(event.target.files.length!==0)
 // {
-  // setImage(URL.createObjectURL(event.target.files[0]));
+//   setImage(URL.createObjectURL(event.target.files[0]));
 // }             
 setImage(event.target.files[0]);
 // let reader = new FileReader();
