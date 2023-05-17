@@ -151,14 +151,14 @@ const logOutClick =()=>{
         </DrawerHeader>
         <Divider />
         <List>
-        <ListItem  disablePadding sx={{display:"block"}}>
+        {/* <ListItem  disablePadding sx={{display:"block"}}>
                 <ListItemButton onClick={()=>navigate('/') }>
                   <ListItemIcon>
                    <HomeIcon/>
                   </ListItemIcon>
                   <ListItemText primary="Home" />
                 </ListItemButton>
-              </ListItem>
+              </ListItem> */}
               <ListItem  disablePadding>
               <ListItemButton onClick={()=>navigate('/products') }>
                   <ListItemIcon>
@@ -183,14 +183,14 @@ const logOutClick =()=>{
                   <ListItemText primary={`Orders ${numRows}`} />
                 </ListItemButton>
               </ListItem>
-              <ListItem  disablePadding>
+              {/* <ListItem  disablePadding>
               <ListItemButton onClick={()=>navigate('/analytics') }>
                   <ListItemIcon>
                    <AnalyticsIcon/>
                   </ListItemIcon>
                   <ListItemText primary="Analytics" />
                 </ListItemButton>
-              </ListItem>
+              </ListItem> */}
             
               <ListItem  disablePadding>
               <ListItemButton onClick={()=>navigate('/settings') }>

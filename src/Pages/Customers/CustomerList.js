@@ -25,6 +25,7 @@ import { collection, getDocs, deleteDoc, doc } from "firebase/firestore";
 import { useStore } from "../../Store";
 import Swal from "sweetalert2";
 // import EditCustomer from "./EditCustomer";
+import { useParams } from 'react-router-dom';
 
 // const style = {
 //   position: "absolute",
@@ -51,7 +52,7 @@ export default function CustomerList() {
   // const handleClose = () => setOpen(false);
   // const handleEditOpen = () => setEditOpen(true);
   // const handleEditClose = () => setEditOpen(false);
-
+  const { userId } = useParams();
   useEffect(() => {
     getUsers();
     // eslint-disable-next-line
@@ -192,12 +193,12 @@ export default function CustomerList() {
                   >
                   userid
                   </TableCell>
-                  {/* <TableCell
+                  <TableCell
                     align="left"
                     style={{ minWidth: "100px", fontWeight: "bold" }}
                   >
-                    Price
-                  </TableCell> */}
+                   Date
+                  </TableCell>
                   <TableCell
                     align="left"
                     style={{ minWidth: "100px", fontWeight: "bold" }}
@@ -216,6 +217,7 @@ export default function CustomerList() {
                         key={row.id}
                         role="checkbox"
                         tabIndex={-1}
+                        {...userId}
                       >
                          <TableCell align="left">{page * rowsPerPage +index + 1}</TableCell>
                         <TableCell align="left">{row.fullname}</TableCell>
@@ -232,7 +234,7 @@ export default function CustomerList() {
                         <TableCell align="left">{row.email}</TableCell>
                         {/* <TableCell align="left">{row.cart}</TableCell> */}
                         <TableCell align="left">{row.userid}</TableCell>
-                        {/* <TableCell align="left">{row.price}</TableCell> */}
+                        <TableCell align="left">{row.createdAt }</TableCell>
                         <TableCell align="left">
                           {/* <Stack spacing={2} direction="row"> */}
                             {/* <EditIcon
