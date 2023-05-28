@@ -39,12 +39,12 @@ const Orders = () => {
   return (
     <>
       <div className="bgcolor">
-        <Navbar user={user} email={email} />
+        <Navbar user={user} email={email}  />
         <Box height={70} />
         <Box sx={{ display: "flex" }}>
           <SideNav numRows={numRows} />
           <Box component="main" sx={{ flexgrow: 1, p: 3, width: "100%" }}>
-            <OrderList number={number} />
+            <OrderList number={number} user={user} />
           </Box>
         </Box>
       </div>

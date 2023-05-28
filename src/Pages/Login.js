@@ -41,6 +41,7 @@ const Login = () => {
     e.preventDefault();
     console.log(email, password);
 
+    // const currentDate = new Date();
     // try {
     //   await createUserWithEmailAndPassword(auth , email, password);
     // }
@@ -77,14 +78,19 @@ const Login = () => {
       });
     }
 
-    //       try {
-    //         await addDoc(collection(db ,"user"),{
-    // email:email
-    //         })
-    //       }
-    //       catch (err) {
-    //         setErrorMsg(err.message)
-    //       }
+  //         try {
+  //           await addDoc(collection(db ,"user"),{
+  //   email:email,
+  //   date:currentDate,
+  //           })
+  //         }
+  //         catch (err) {
+  //           toast.error(err.message, {
+  //             position: "top-center",
+  //             theme: "colored",
+  //           });
+  //         }
+  
   };
 
   return (

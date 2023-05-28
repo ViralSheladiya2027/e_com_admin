@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
-import EditIcon from "@mui/icons-material/Edit";
+// import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {
   Typography,
@@ -21,12 +21,20 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { db } from "../../Components/Firebase";
-import { collection, getDocs, deleteDoc, doc } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  deleteDoc,
+  doc,
+  query,
+  where,
+} from "firebase/firestore";
 import { useStore } from "../../Store";
 import Swal from "sweetalert2";
 // import EditCustomer from "./EditCustomer";
 import UserDetails from "./UserDetails";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
+import ContactPageOutlinedIcon from "@mui/icons-material/ContactPageOutlined";
 
 const style = {
   position: "absolute",
@@ -46,14 +54,14 @@ export default function OrderList(props) {
   const setRows = useStore((state) => state.setRows);
   const rows = useStore((state) => state.rows);
   const empCollectionRef = collection(db, "orders");
-  const [open, setOpen] = useState(false);
+  // const [open, setOpen] = useState(false);
   const [orderOpen, setOrderOpen] = useState(false);
   // const [formId, setFormId] = useState("");
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  // const handleOpen = () => setOpen(true);
+  // const handleClose = () => setOpen(false);
   const handleOrderOpen = () => setOrderOpen(true);
   const handleOrderClose = () => setOrderOpen(false);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   useEffect(() => {
     getUsers();
@@ -76,7 +84,7 @@ export default function OrderList(props) {
   const deleteUser = (id) => {
     Swal.fire({
       title: "Are you sure?",
-      text: "You won't be able to revert this!",
+      text: "Your customer order has been deleted !",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -92,19 +100,19 @@ export default function OrderList(props) {
   const deleteApi = async (id) => {
     const userDoc = doc(db, "orders", id);
     await deleteDoc(userDoc);
-    Swal.fire("Deleted!", "Your file has been deleted.", "success");
-    getUsers();
+    Swal.fire("Deleted!", "Your customer order has been deleted.", "success");
+    // getUsers();
   };
 
-  const numRows = rows.length;
-  props.number(numRows);
+  // const numRows = rows.length;
+  // props.number(numRows);
   // console.log(numRows);
 
-const userDetails=(userid)=>{
-  // const order =rows.find(order => order.userid === userid)
-  handleOrderOpen(userid);
-  // console.log(order)
-}
+  const userDetails = (userid) => {
+    // const order =rows.find(order => order.userid === userid)
+    handleOrderOpen();
+    // console.log(userid)
+  };
   return (
     <>
       <div>
@@ -218,45 +226,38 @@ const userDetails=(userid)=>{
                         <TableCell align="left">{row.cartTotal}</TableCell>
                         <TableCell
                           align="left"
-                        //  onClick={()=> navigate("/Customers")}
+                          //  onClick={()=> navigate("/Customers")}
                         >
                           {row.userid}
                         </TableCell>
-                        <TableCell align="left">{row.createdAt}</TableCell>
+                        <TableCell align="left">
+                          {row.date && row.date.toDate
+                            ? row.date.toDate().toDateString()
+                            : "N/A"}
+                        </TableCell>
                         <TableCell align="left">
                           <Stack spacing={2} direction="row">
-                          <EditIcon
+                            <ContactPageOutlinedIcon
                               style={{
                                 fontSize: "20px",
                                 color: "blue",
                                 cursor: "pointer",
                               }}
-                              
-                              onClick={() => { userDetails(row.userid)}}
+                              onClick={() => {
+                                userDetails(row.userid);
+                              }}
                               className="cursor-pointer"
-                              // onClick={() => {
-                              //   editData(
-                              //     row.id,
-                              //     row.fullname,
-                              //     row.mobilenumber,
-                              //     row.address,
-                              //     row.email,
-                              //     row.cart,
-                              //     row.location,
-                              //     row.price,
-                              //   );
-                              // }}
                             />
-                          <DeleteIcon
-                            style={{
-                              fontSize: "20px",
-                              color: "darkred",
-                              cursor: "pointer",
-                            }}
-                            onClick={() => {
-                              deleteUser(row.id);
-                            }}
-                          />
+                            <DeleteIcon
+                              style={{
+                                fontSize: "20px",
+                                color: "darkred",
+                                cursor: "pointer",
+                              }}
+                              onClick={() => {
+                                deleteUser(row.id);
+                              }}
+                            />
                           </Stack>
                         </TableCell>
                       </TableRow>
@@ -286,3 +287,46 @@ const userDetails=(userid)=>{
     </>
   );
 }
+
+// export default function OrderList(userid) {
+//   const setRows = useStore((state) => state.setRows);
+//   const rows = useStore((state) => state.rows);
+//   const fetchData = async (userid) => {
+//     try {
+//       const snapshot = await db
+//         .collection('user')
+//         .doc(userid)
+//         // .collection('orders')
+//         .get();
+
+//       const setRows = snapshot.docs.map(doc => doc.data());
+//       // Update your component state or do further processing with the data
+//     } catch (error) {
+//       console.log('Error fetching data:', error);
+//     }
+//   };
+//   useEffect(() => {
+//    fetchData()
+//   }, [])
+
+//   return (
+//     <table>
+//       <thead>
+//         <tr>
+//           <th>Column 1</th>
+//           <th>Column 2</th>
+//           {/* Add more table headers if needed */}
+//         </tr>
+//       </thead>
+//       <tbody>
+//         {rows.map((item, index) => (
+//           <tr key={index}>
+//             <td>{item.name}</td>
+//             <td>{item.unit}</td>
+//             {/* Add more table cells if needed */}
+//           </tr>
+//         ))}
+//       </tbody>
+//     </table>
+//   );
+// }

@@ -1,29 +1,29 @@
 import CloseIcon from "@mui/icons-material/Close";
-import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
+// import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import {
     Box,
-    Button,
+    // Button,
     Grid,
     IconButton,
-    InputAdornment,
-    TableRow,
+    // InputAdornment,
+    // TableRow,
     TextField,
     Typography
 } from "@mui/material";
-import { collection, doc, getDocs, updateDoc } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 import { useEffect, useState } from "react";
-import Swal from "sweetalert2";
+// import Swal from "sweetalert2";
 import { db } from "../../Components/Firebase";
-import { useStore } from "../../Store";
+// import { useStore } from "../../Store";
 
 const UserDetails = ({ closeEvent,userid }) => {
   const [rows, setRows] = useState([]);
   // const rows = useStore((state) => state.rows);
   // const setRows = useStore((state) => state.setRows);
   const empCollectionRef = collection(db, "user");
-  const [orders, setOrders] = useState([]);
-  const [users, setUsers] = useState([]);
-  const orderCollectionRef = collection(db, "orders");
+  // const [orders, setOrders] = useState([]);
+  // const [users, setUsers] = useState([]);
+  // const orderCollectionRef = collection(db, "orders");
   // useEffect(() => {
   //   setFullName(fId.fullname);
   //   setPrice(fId.price);
@@ -41,13 +41,13 @@ const UserDetails = ({ closeEvent,userid }) => {
 
     getUsers();
 
-  //   const getOrder = async () => {
-  //     const data = await getDocs(orderCollectionRef);
-  //     setRow(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-  //     setOrders(orders);
-  //   };
+    // const getOrder = async () => {
+    //   const data = await getDocs(orderCollectionRef);
+    //   setRows(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    //   setOrders(orders);
+    // };
 
-  //   getOrder();
+    // getOrder();
    // eslint-disable-next-line
   },[] );
 
@@ -71,7 +71,7 @@ const UserDetails = ({ closeEvent,userid }) => {
       {rows.map((row) => {
           
           // const user = users.find(user => user.userid === order.userid);
-      // if(user.userid === order.userid){
+      // if(users.userid === orders.userid){
         // console.log(user.userid)
         
       return(

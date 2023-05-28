@@ -34,8 +34,7 @@ const EditProduct = ({ fId, closeEvent }) => {
     setUnit(fId.unit);
     setDescription(fId.description);
     setRating(fId.rating);
-    // eslint-disable-next-line
-  }, []);
+  }, [fId.description, fId.image, fId.name, fId.price, fId.rating, fId.unit]);
 
   const updateUser = async (e) => {
     e.preventDefault();

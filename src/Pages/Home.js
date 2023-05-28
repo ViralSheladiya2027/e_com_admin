@@ -1,20 +1,21 @@
-import { Box, CardContent, Card, Typography, Stack } from "@mui/material";
+import { Box, CardContent, Card, 
+  // Typography, Stack 
+} from "@mui/material";
 import React, { useEffect, useState } from "react";
 import SideNav from "../Components/SideNav";
 import Navbar from "../Components/Navbar";
 import Grid from "@mui/material/Grid";
 import "../App.css";
-import StorefrontIcon from "@mui/icons-material/Storefront";
-import CreditCardIcon from "@mui/icons-material/CreditCard";
-import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
+// import StorefrontIcon from "@mui/icons-material/Storefront";
+// import CreditCardIcon from "@mui/icons-material/CreditCard";
+// import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 import Accordiondash from "../Components/Accordiondash";
 import BarChart from "../Charts/BarChart";
-import CountUp from 'react-countup';
+// import CountUp from 'react-countup';
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../Components/Firebase";
 
 const Home = () => {
-
   const [email, setEmail] = useState("");
 
   function GetCurrentUser() {
@@ -23,10 +24,10 @@ const Home = () => {
       onAuthStateChanged(auth, (user) => {
         if (user) {
           setUser(user);
-          setEmail(user.email); 
+          setEmail(user.email);
         } else {
           setUser(null);
-          setEmail('');
+          setEmail("");
         }
       });
     }, []);
@@ -36,13 +37,13 @@ const Home = () => {
   return (
     <>
       <div className="bgcolor">
-        <Navbar user={user} email={email}/>
+        <Navbar user={user} email={email} />
         <Box height={70} />
 
         <Box sx={{ display: "flex" }}>
           <SideNav />
           <Box component="main" sx={{ flexgrow: 1, p: 3 }}>
-            <Grid container spacing={2}>
+            {/* <Grid container spacing={2}>
               <Grid item xs={8}>
                 <Stack spacing={2} direction="row">
                   <Card
@@ -130,7 +131,7 @@ const Home = () => {
                   </Card>
                 </Stack>
               </Grid>
-            </Grid>
+            </Grid> */}
             <Box height={20} />
             <Grid container spacing={2}>
               <Grid item xs={8}>
