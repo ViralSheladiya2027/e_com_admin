@@ -9,8 +9,6 @@ import { auth } from "../Components/Firebase";
 const Orders = () => {
   const [email, setEmail] = useState("");
 
-  // let {numRows} = props.data;
-
   function GetCurrentUser() {
     const [user, setUser] = useState(null);
     useEffect(() => {
@@ -28,23 +26,15 @@ const Orders = () => {
   }
   const user = GetCurrentUser();
 
-  function number(numRows) {
-    console.log(numRows);
-    return numRows;
-  }
-  const numRows = number();
-  console.log(numRows);
-
-
   return (
     <>
       <div className="bgcolor">
-        <Navbar user={user} email={email}  />
+        <Navbar user={user} email={email} />
         <Box height={70} />
         <Box sx={{ display: "flex" }}>
-          <SideNav numRows={numRows} />
+          <SideNav />
           <Box component="main" sx={{ flexgrow: 1, p: 3, width: "100%" }}>
-            <OrderList number={number} user={user} />
+            <OrderList />
           </Box>
         </Box>
       </div>

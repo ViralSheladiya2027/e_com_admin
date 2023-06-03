@@ -36,6 +36,8 @@ import UserDetails from "./UserDetails";
 // import { useNavigate } from "react-router-dom";
 import ContactPageOutlinedIcon from "@mui/icons-material/ContactPageOutlined";
 
+import 'firebase/firestore';
+
 const style = {
   position: "absolute",
   top: "50%",
@@ -48,7 +50,7 @@ const style = {
   p: 4,
 };
 
-export default function OrderList(props) {
+export default function OrderList() {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const setRows = useStore((state) => state.setRows);
@@ -62,16 +64,19 @@ export default function OrderList(props) {
   const handleOrderOpen = () => setOrderOpen(true);
   const handleOrderClose = () => setOrderOpen(false);
   // const navigate = useNavigate();
-
+  const [items, setItems] = useState([]);
+  
   useEffect(() => {
+    const getUsers = async () => {
+      const data = await getDocs(empCollectionRef);
+      setRows(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    };
+
     getUsers();
     // eslint-disable-next-line
   }, []);
 
-  const getUsers = async () => {
-    const data = await getDocs(empCollectionRef);
-    setRows(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-  };
+ 
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -103,10 +108,6 @@ export default function OrderList(props) {
     Swal.fire("Deleted!", "Your customer order has been deleted.", "success");
     // getUsers();
   };
-
-  // const numRows = rows.length;
-  // props.number(numRows);
-  // console.log(numRows);
 
   const userDetails = (userid) => {
     // const order =rows.find(order => order.userid === userid)
@@ -188,6 +189,12 @@ export default function OrderList(props) {
                   >
                     Userid
                   </TableCell>
+                  {/* <TableCell
+                    align="left"
+                    style={{ minWidth: "100px", fontWeight: "bold" }}
+                  >
+                    items
+                  </TableCell> */}
                   <TableCell
                     align="left"
                     style={{ minWidth: "100px", fontWeight: "bold" }}
@@ -230,6 +237,15 @@ export default function OrderList(props) {
                         >
                           {row.userid}
                         </TableCell>
+                        {/* <TableCell align="left">
+                          {" "}
+                          {row.items.map((item) => (
+                            <div key={item.id}>
+                              <h3>{item.name}</h3>
+                              <p>Price: ${item.price}</p>
+                            </div>
+                          ))}
+                        </TableCell> */}
                         <TableCell align="left">
                           {row.date && row.date.toDate
                             ? row.date.toDate().toDateString()
@@ -285,48 +301,9 @@ export default function OrderList(props) {
         </>
       )}
     </>
+    
   );
+
+
 }
 
-// export default function OrderList(userid) {
-//   const setRows = useStore((state) => state.setRows);
-//   const rows = useStore((state) => state.rows);
-//   const fetchData = async (userid) => {
-//     try {
-//       const snapshot = await db
-//         .collection('user')
-//         .doc(userid)
-//         // .collection('orders')
-//         .get();
-
-//       const setRows = snapshot.docs.map(doc => doc.data());
-//       // Update your component state or do further processing with the data
-//     } catch (error) {
-//       console.log('Error fetching data:', error);
-//     }
-//   };
-//   useEffect(() => {
-//    fetchData()
-//   }, [])
-
-//   return (
-//     <table>
-//       <thead>
-//         <tr>
-//           <th>Column 1</th>
-//           <th>Column 2</th>
-//           {/* Add more table headers if needed */}
-//         </tr>
-//       </thead>
-//       <tbody>
-//         {rows.map((item, index) => (
-//           <tr key={index}>
-//             <td>{item.name}</td>
-//             <td>{item.unit}</td>
-//             {/* Add more table cells if needed */}
-//           </tr>
-//         ))}
-//       </tbody>
-//     </table>
-//   );
-// }

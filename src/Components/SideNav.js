@@ -25,9 +25,6 @@ import { auth, db } from "./Firebase";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { collection, getDocs } from "firebase/firestore";
-import firebase from "./Firebase";
-// import firebase from 'firebase/app';
-import "firebase/firestore";
 
 const drawerWidth = 240;
 
@@ -96,13 +93,12 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
-export default function SideNav({ numRows }) {
+export default function SideNav() {
   const theme = useTheme();
   // const [open, setOpen] =useState(true);
 
   // const updateOpen = useStore((state)=>state.updateOpen);
   const open = useStore((state) => state.dopen);
-  // const numRows = useStore((state) => state.numRows);
 
   const navigate = useNavigate();
   const logOutClick = () => {
@@ -155,7 +151,7 @@ export default function SideNav({ numRows }) {
       }
     };
     fetchCollectionLength();
-  }, []);
+  });
 
   return (
     <Box sx={{ display: "flex" }}>

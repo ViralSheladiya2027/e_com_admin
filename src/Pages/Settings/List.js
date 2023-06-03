@@ -1,5 +1,4 @@
-import EditIcon from "@mui/icons-material/Edit";
-import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+import LocalPhoneOutlinedIcon from "@mui/icons-material/LocalPhoneOutlined";
 import MailOutlineOutlinedIcon from "@mui/icons-material/MailOutlineOutlined";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import {
@@ -8,79 +7,43 @@ import {
   Divider,
   Grid,
   InputAdornment,
-  Modal,
   Stack,
   TextField,
 } from "@mui/material";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import React, { useState } from "react";
-import EditAbout from "./EditAbout";
-import EditName from "./EditName";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
-
 export default function List({ email }) {
-  const [nameOpen, setNameOpen] = useState(false);
-  const [aboutOpen, setAboutOpen] = useState(false);
-  const handleOpen = () => setNameOpen(true);
-  const handleClose = () => setNameOpen(false);
-  const handleEditOpen = () => setAboutOpen(true);
-  const handleEditClose = () => setAboutOpen(false);
   const [name, setName] = useState("");
-  const [about, setAbout] = useState("");
+  const [phone, setPhone] = useState("");
 
-  const editName = (name) => {
-    // const data={
-    //   name:name,
-    // }
-    setName(name);
-    handleOpen();
-  };
+  useEffect(() => {
+    const savedName = localStorage.getItem("name");
+    if (savedName) {
+      setName(savedName);
+    }
+    const savedPhone = localStorage.getItem("phone");
+    if (savedPhone) {
+      setPhone(savedPhone);
+    }
+  }, []);
 
-  const editAbout = () => {
-    const data = {
-      about: about,
-    };
-    setAbout(data);
-    handleEditOpen();
-  };
+  function handleNameChange(event) {
+    const value = event.target.value;
+    setName(value);
+    localStorage.setItem("name", value);
+  }
+
+  function handlePhoneChange(event) {
+    const value = event.target.value;
+    setPhone(value);
+    localStorage.setItem("phone", value);
+  }
 
   return (
     <>
-      <div>
-        <Modal
-          open={nameOpen}
-          // onClose={handleClose}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Box sx={style}>
-            <EditName closeEvent={handleClose} fName={name} />
-          </Box>
-        </Modal>
-        <Modal
-          open={aboutOpen}
-          // onClose={handleClose}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Box sx={style}>
-            <EditAbout closeEvent={handleEditClose} fAbout={about} />
-          </Box>
-        </Modal>
-      </div>
       <Card sx={{ minHeight: 84 + "vh" }}>
         <CardContent>
           <Typography
@@ -102,17 +65,8 @@ export default function List({ email }) {
                 <Typography sx={{ fontWeight: "bold" }}> Name :</Typography>
                 <TextField
                   variant="standard"
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <EditIcon
-                          onClick={() => {
-                            editName(name);
-                          }}
-                        />
-                      </InputAdornment>
-                    ),
-                  }}
+                  value={name}
+                  onChange={handleNameChange}
                 />
 
                 <Typography>
@@ -124,22 +78,24 @@ export default function List({ email }) {
           <Box height={30} />
           <Grid item xs={12}>
             <Stack spacing={2} direction="row">
-              <InfoOutlinedIcon />
+              <LocalPhoneOutlinedIcon />
               <Stack spacing={1} direction="column">
-                <Typography sx={{ fontWeight: "bold" }}> About :</Typography>
+                <Typography sx={{ fontWeight: "bold" }}> Phone :</Typography>
                 <TextField
                   variant="standard"
+                  inputProps={{
+                    inputMode: "numeric",
+                    pattern: "[1-9]{1}[0-9]{9}",
+                    maxLength: 10,
+                  }}
+                  // eslint-disable-next-line
                   InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <EditIcon
-                          onClick={() => {
-                            editAbout(about);
-                          }}
-                        />
-                      </InputAdornment>
+                    startAdornment: (
+                      <InputAdornment position="start">+91</InputAdornment>
                     ),
                   }}
+                  value={phone}
+                  onChange={handlePhoneChange}
                 />
               </Stack>
             </Stack>
