@@ -1,9 +1,9 @@
-import * as React from 'react';
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import Typography from '@mui/material/Typography';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import * as React from "react";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import Typography from "@mui/material/Typography";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 export default function Accordiondash() {
   return (
@@ -18,7 +18,8 @@ export default function Accordiondash() {
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-           Cloth wash liquid is best product of thunder chemical. it is not harmful of body
+            The cloth wash liquid produced by Thunder Chemical is considered to
+            be the best product. It is not harmful to the body.
           </Typography>
         </AccordionDetails>
       </Accordion>
@@ -32,8 +33,9 @@ export default function Accordiondash() {
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            malesuada lacus ex, sit amet blandit leo lobortis eget.
+            The dishwashing liquid produced by Thunder Chemical Company is of
+            high quality. It effectively cleans all types of utensils, leaving
+            them spotless and sparkling
           </Typography>
         </AccordionDetails>
       </Accordion>
@@ -47,8 +49,9 @@ export default function Accordiondash() {
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            malesuada lacus ex, sit amet blandit leo lobortis eget.
+            The hand wash liquids manufactured by Thunder Chemical Company are
+            of excellent quality. They come in two delightful flavors: orange
+            and rose
           </Typography>
         </AccordionDetails>
       </Accordion>
@@ -62,8 +65,9 @@ export default function Accordiondash() {
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            malesuada lacus ex, sit amet blandit leo lobortis eget.
+            Our jaggery is made from organically grown, pure sugarcane. We
+            ensure that only clean sugarcane is brought to our farm. We offer
+            jaggery in 2kg and 5kg boxes.
           </Typography>
         </AccordionDetails>
       </Accordion>

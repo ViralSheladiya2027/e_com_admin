@@ -26,8 +26,8 @@ import {
   getDocs,
   deleteDoc,
   doc,
-  query,
-  where,
+  // query,
+  // where,
 } from "firebase/firestore";
 import { useStore } from "../../Store";
 import Swal from "sweetalert2";
@@ -36,7 +36,7 @@ import UserDetails from "./UserDetails";
 // import { useNavigate } from "react-router-dom";
 import ContactPageOutlinedIcon from "@mui/icons-material/ContactPageOutlined";
 
-import 'firebase/firestore';
+import "firebase/firestore";
 
 const style = {
   position: "absolute",
@@ -64,19 +64,28 @@ export default function OrderList() {
   const handleOrderOpen = () => setOrderOpen(true);
   const handleOrderClose = () => setOrderOpen(false);
   // const navigate = useNavigate();
-  const [items, setItems] = useState([]);
-  
-  useEffect(() => {
-    const getUsers = async () => {
-      const data = await getDocs(empCollectionRef);
-      setRows(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    };
+  // const [items, setItems] = useState([]);
 
+  useEffect(() => {
     getUsers();
     // eslint-disable-next-line
   }, []);
 
- 
+  const getUsers = async () => {
+    const data = await getDocs(empCollectionRef);
+    setRows(
+      data.docs.map((doc) => {
+        const data = doc.data();
+
+        const subItems = data.subitems || [];
+        return {
+          ...data,
+          id: doc.id,
+          subItems,
+        };
+      })
+    );
+  };
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -106,7 +115,7 @@ export default function OrderList() {
     const userDoc = doc(db, "orders", id);
     await deleteDoc(userDoc);
     Swal.fire("Deleted!", "Your customer order has been deleted.", "success");
-    // getUsers();
+    getUsers();
   };
 
   const userDetails = (userid) => {
@@ -156,27 +165,27 @@ export default function OrderList() {
                     align="left"
                     style={{ minWidth: "100px", fontWeight: "bold" }}
                   >
-                    Name
+                    items
                   </TableCell>
 
-                  <TableCell
+                  {/* <TableCell
                     align="left"
                     style={{ minWidth: "100px", fontWeight: "bold" }}
                   >
                     Unit
-                  </TableCell>
+                  </TableCell> */}
                   <TableCell
                     align="left"
                     style={{ minWidth: "100px", fontWeight: "bold" }}
                   >
                     Totalitems
                   </TableCell>
-                  <TableCell
+                  {/* <TableCell
                     align="left"
                     style={{ minWidth: "100px", fontWeight: "bold" }}
                   >
                     Price
-                  </TableCell>
+                  </TableCell> */}
                   <TableCell
                     align="left"
                     style={{ minWidth: "100px", fontWeight: "bold" }}
@@ -226,10 +235,26 @@ export default function OrderList() {
                         <TableCell align="left">
                           {page * rowsPerPage + index + 1}
                         </TableCell>
-                        <TableCell align="left">{row.name}</TableCell>
-                        <TableCell align="left">{row.unit}</TableCell>
+                        <TableCell align="left">
+                          <ol>
+                            {row.items?.map((item, i) => (
+                              <li key={i}>
+                                {item.name}
+                                <ul type="disc">
+                                  <li>
+                                    Unit-{""} {item.unit}
+                                  </li>
+                                  <li>
+                                    Qty-{""} {item.quantity}
+                                  </li>
+                                </ul>
+                              </li>
+                            ))}
+                          </ol>
+                        </TableCell>
+                        {/* <TableCell align="left">{row.unit}</TableCell> */}
                         <TableCell align="left">{row.totalItems}</TableCell>
-                        <TableCell align="left">{row.price}</TableCell>
+                        {/* <TableCell align="left">{row.price}</TableCell> */}
                         <TableCell align="left">{row.cartTotal}</TableCell>
                         <TableCell
                           align="left"
@@ -301,9 +326,5 @@ export default function OrderList() {
         </>
       )}
     </>
-    
   );
-
-
 }
-
