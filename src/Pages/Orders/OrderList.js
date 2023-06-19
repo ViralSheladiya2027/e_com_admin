@@ -56,16 +56,9 @@ export default function OrderList() {
   const setRows = useStore((state) => state.setRows);
   const rows = useStore((state) => state.rows);
   const empCollectionRef = collection(db, "orders");
-  // const [open, setOpen] = useState(false);
   const [orderOpen, setOrderOpen] = useState(false);
-  // const [formId, setFormId] = useState("");
-  // const handleOpen = () => setOpen(true);
-  // const handleClose = () => setOpen(false);
   const handleOrderOpen = () => setOrderOpen(true);
   const handleOrderClose = () => setOrderOpen(false);
-  // const navigate = useNavigate();
-  // const [items, setItems] = useState([]);
-
   useEffect(() => {
     getUsers();
     // eslint-disable-next-line
@@ -118,8 +111,7 @@ export default function OrderList() {
     getUsers();
   };
 
-  const userDetails = (userid) => {
-    // const order =rows.find(order => order.userid === userid)
+  const userDetails = async (userid) => {
     handleOrderOpen();
     // console.log(userid)
   };
@@ -168,24 +160,13 @@ export default function OrderList() {
                     items
                   </TableCell>
 
-                  {/* <TableCell
-                    align="left"
-                    style={{ minWidth: "100px", fontWeight: "bold" }}
-                  >
-                    Unit
-                  </TableCell> */}
                   <TableCell
                     align="left"
                     style={{ minWidth: "100px", fontWeight: "bold" }}
                   >
                     Totalitems
                   </TableCell>
-                  {/* <TableCell
-                    align="left"
-                    style={{ minWidth: "100px", fontWeight: "bold" }}
-                  >
-                    Price
-                  </TableCell> */}
+
                   <TableCell
                     align="left"
                     style={{ minWidth: "100px", fontWeight: "bold" }}
@@ -198,17 +179,18 @@ export default function OrderList() {
                   >
                     Userid
                   </TableCell>
-                  {/* <TableCell
-                    align="left"
-                    style={{ minWidth: "100px", fontWeight: "bold" }}
-                  >
-                    items
-                  </TableCell> */}
+
                   <TableCell
                     align="left"
                     style={{ minWidth: "100px", fontWeight: "bold" }}
                   >
                     Date
+                  </TableCell>
+                  <TableCell
+                    align="left"
+                    style={{ minWidth: "100px", fontWeight: "bold" }}
+                  >
+                    Status
                   </TableCell>
                   <TableCell
                     align="left"
@@ -252,29 +234,17 @@ export default function OrderList() {
                             ))}
                           </ol>
                         </TableCell>
-                        {/* <TableCell align="left">{row.unit}</TableCell> */}
                         <TableCell align="left">{row.totalItems}</TableCell>
-                        {/* <TableCell align="left">{row.price}</TableCell> */}
                         <TableCell align="left">{row.cartTotal}</TableCell>
-                        <TableCell
-                          align="left"
-                          //  onClick={()=> navigate("/Customers")}
-                        >
-                          {row.userid}
-                        </TableCell>
-                        {/* <TableCell align="left">
-                          {" "}
-                          {row.items.map((item) => (
-                            <div key={item.id}>
-                              <h3>{item.name}</h3>
-                              <p>Price: ${item.price}</p>
-                            </div>
-                          ))}
-                        </TableCell> */}
+                        <TableCell align="left">{row.userid}</TableCell>
+
                         <TableCell align="left">
                           {row.date && row.date.toDate
                             ? row.date.toDate().toDateString()
                             : "N/A"}
+                        </TableCell>
+                        <TableCell align="left">
+                          <button>{row.status ? "active" : "Dispatch"}</button>
                         </TableCell>
                         <TableCell align="left">
                           <Stack spacing={2} direction="row">
