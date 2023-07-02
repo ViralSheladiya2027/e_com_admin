@@ -26,6 +26,7 @@ import {
   getDocs,
   deleteDoc,
   doc,
+  updateDoc,
   // query,
   // where,
 } from "firebase/firestore";
@@ -57,6 +58,8 @@ export default function OrderList() {
   const rows = useStore((state) => state.rows);
   const empCollectionRef = collection(db, "orders");
   const [orderOpen, setOrderOpen] = useState(false);
+  const [orderDispatch, setOrderDispatch] = useState("Dispatch");
+  const [userOrderID, setUserOrderID] = useState("");
   const handleOrderOpen = () => setOrderOpen(true);
   const handleOrderClose = () => setOrderOpen(false);
   useEffect(() => {
@@ -80,7 +83,7 @@ export default function OrderList() {
     );
   };
 
-  const handleChangePage = (event, newPage) => {
+  const handleChangePage = (newPage) => {
     setPage(newPage);
   };
 
@@ -111,21 +114,50 @@ export default function OrderList() {
     getUsers();
   };
 
-  const userDetails = async (userid) => {
-    handleOrderOpen();
-    // console.log(userid)
+  const orderStatus = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "Your customer order has been Dispatch ?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Dispatch it !",
+    }).then((result) => {
+      if (result.value) {
+        dispatchApi(id);
+      }
+    });
   };
+
+  const dispatchApi = async (id) => {
+    const orderDoc = doc(db, "orders", id);
+    await updateDoc(orderDoc, { status: orderDispatch });
+    Swal.fire(
+      "Deliverd !",
+      "Your customer order has been delivered !",
+      "success"
+    );
+    getUsers();
+  };
+
+  const userDetails = () => {
+    handleOrderOpen();
+  };
+
   return (
     <>
       <div>
         <Modal
           open={orderOpen}
-          // onClose={handleClose}
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
           <Box sx={style}>
-            <UserDetails closeEvent={handleOrderClose} />
+            <UserDetails
+              orderUserId={userOrderID}
+              closeEvent={handleOrderClose}
+            />
           </Box>
         </Modal>
       </div>
@@ -244,7 +276,15 @@ export default function OrderList() {
                             : "N/A"}
                         </TableCell>
                         <TableCell align="left">
-                          <button>{row.status ? "active" : "Dispatch"}</button>
+                          <button
+                            onClick={() => {
+                              orderStatus(row.id);
+                            }}
+                            value={orderDispatch}
+                            onChange={(e) => setOrderDispatch(e.target.value)}
+                          >
+                            {row.status}
+                          </button>
                         </TableCell>
                         <TableCell align="left">
                           <Stack spacing={2} direction="row">
@@ -255,7 +295,8 @@ export default function OrderList() {
                                 cursor: "pointer",
                               }}
                               onClick={() => {
-                                userDetails(row.userid);
+                                setUserOrderID(row.userid);
+                                userDetails();
                               }}
                               className="cursor-pointer"
                             />
