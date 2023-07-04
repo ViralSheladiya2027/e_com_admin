@@ -12,19 +12,12 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
-import {
-  signInWithEmailAndPassword,
-  // createUserWithEmailAndPassword,
-} from "firebase/auth";
-import { auth, 
-  // db 
-} from "../Components/Firebase";
-
+import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
+import { auth, db } from "../Components/Firebase";
 import { useNavigate } from "react-router-dom";
-// import Alert from "@mui/material/Alert";
-import { toast } from 'react-toastify';
-  import 'react-toastify/dist/ReactToastify.css';
-// import { collection, addDoc } from "firebase/firestore";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { collection, doc, setDoc } from "firebase/firestore";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -32,85 +25,65 @@ const Login = () => {
   const handleMouseDownPassword = () => setShowPassword(!showPassword);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // const [errorMsg, setErrorMsg] = useState("");
-  // const [successMsg, setSuccessMsg] = useState("");
-
+  const [admin, setAdmin] = useState(null);
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
     console.log(email, password);
 
-    // const currentDate = new Date();
+    const currentDate = new Date();
     // try {
     //   await createUserWithEmailAndPassword(auth , email, password);
+    //   toast.success("Login succesfully!", {
+    //     position: "top-center",
+    //     theme: "colored",
+    //   });
     // }
     // catch (err) {
-    //   console.error(err);
-    //   setErrorMsg(err.message)
-    //  setTimeout(() => {
-    //   setErrorMsg("");
-    // }, 3000);
+    //   toast.error(err.message, {
+    //     position: "top-center",
+    //     theme: "colored",
+    //   });
     // }
 
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      // setSuccessMsg("login success");
       toast.success("Login succesfully!", {
         position: "top-center",
         theme: "colored",
       });
       setEmail("");
       setPassword("");
-      // setTimeout(() => {
-        // setSuccessMsg("");
-        navigate("/");
-      // }, 3000);
+      navigate("/");
     } catch (err) {
-      // console.error(err);
-      // setErrorMsg(err.message);
-      // setTimeout(() => {
-      //   setErrorMsg("");
-      // }, 3000);
       toast.error(err.message, {
         position: "top-center",
         theme: "colored",
       });
     }
 
-  //         try {
-  //           await addDoc(collection(db ,"user"),{
-  //   email:email,
-  //   date:currentDate,
-  //           })
-  //         }
-  //         catch (err) {
-  //           toast.error(err.message, {
-  //             position: "top-center",
-  //             theme: "colored",
-  //           });
-  //         }
-  
+    onAuthStateChanged(auth, (admin) => {
+      if (admin) {
+        const userCollectionRef = collection(db, "admin");
+        const userDocRef = doc(userCollectionRef, admin.uid);
+
+        return setDoc(userDocRef, {
+          email: email,
+          password: password,
+          adminid: admin.uid,
+          date: currentDate,
+        });
+      } else {
+        setAdmin(null);
+      }
+    });
+
+    return admin;
   };
 
   return (
     <>
-      {/* {successMsg && (
-        <>
-          <Alert variant="filled" severity="success">
-            {successMsg}
-          </Alert>
-        </>
-      )}
-
-      {errorMsg && (
-        <>
-          <Alert variant="filled" severity="error">
-            {errorMsg}
-          </Alert>
-        </>
-      )} */}
-
       <Container maxWidth="xs">
         <Box
           component="form"
@@ -123,7 +96,7 @@ const Login = () => {
             p: "24px",
           }}
         >
-          <img src={logo} height="50px"alt="" />
+          <img src={logo} height="50px" alt="" />
           <br />
           <Typography color="textSecondary" variant="h5">
             Admin
@@ -172,6 +145,7 @@ const Login = () => {
             fullWidth
             color="primary"
             onClick={handleLogin}
+            style={{ background: "#263238" }}
           >
             login
           </Button>

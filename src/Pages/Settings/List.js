@@ -1,6 +1,7 @@
 import LocalPhoneOutlinedIcon from "@mui/icons-material/LocalPhoneOutlined";
 import MailOutlineOutlinedIcon from "@mui/icons-material/MailOutlineOutlined";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
+import VpnKeyOutlinedIcon from "@mui/icons-material/VpnKeyOutlined";
 import {
   Card,
   CardContent,
@@ -14,10 +15,28 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import IconButton from "@mui/material/IconButton";
+import { auth, db } from "../../Components/Firebase";
+import { onAuthStateChanged, updatePassword } from "firebase/auth";
+import { collection, doc } from "firebase/firestore";
 
 export default function List({ email }) {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const handleClickShowPasswordOne = () => setShowPassword(!showPassword);
+  const handleMouseDownPassword = () => setShowPassword(!showPassword);
+  const [showPasswordCurrent, setShowPasswordCurrent] = useState(false);
+  const handleClickShowPasswordCurrent = () =>
+    setShowPasswordCurrent(!showPasswordCurrent);
+  const handleMouseDownPasswordCurrent = () =>
+    setShowPasswordCurrent(!showPasswordCurrent);
+  const [admin, setAdmin] = useState("");
+  const currentDate = new Date();
 
   useEffect(() => {
     const savedName = localStorage.getItem("name");
@@ -41,6 +60,18 @@ export default function List({ email }) {
     setPhone(value);
     localStorage.setItem("phone", value);
   }
+
+  const changePassword = async (e,newPassword) => {
+    e.preventDefault();
+
+    try {
+      await auth.currentUser.updatePassword(newPassword);
+      // Password change successful
+      console.log('Password changed successfully');
+    } catch (error) {
+      console.log("msg"+ error.message);
+    }
+  };
 
   return (
     <>
@@ -122,6 +153,71 @@ export default function List({ email }) {
                     </>
                   )}
                 </Typography>
+              </Stack>
+            </Stack>
+          </Grid>
+          <Box height={30} />
+          <Grid item xs={12}>
+            <Stack spacing={2} direction="row">
+              <VpnKeyOutlinedIcon />
+              <Stack spacing={1} direction="column">
+                <Typography sx={{ fontWeight: "bold" }}>
+                  {" "}
+                  Change Password :
+                </Typography>
+                <form onSubmit={changePassword}>
+                  <Stack spacing={3} direction="row">
+                    <TextField
+                      variant="standard"
+                      type={showPasswordCurrent ? "text" : "password"}
+                      placeholder="Enter current password"
+                      value={currentPassword}
+                      onChange={(e) => setCurrentPassword(e.target.value)}
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <IconButton
+                              aria-label="toggle password visibility"
+                              onClick={handleClickShowPasswordCurrent}
+                              onMouseDown={handleMouseDownPasswordCurrent}
+                            >
+                              {showPasswordCurrent ? (
+                                <Visibility />
+                              ) : (
+                                <VisibilityOff />
+                              )}
+                            </IconButton>
+                          </InputAdornment>
+                        ),
+                      }}
+                    />
+                    <TextField
+                      variant="standard"
+                      type={showPassword ? "text" : "password"}
+                      placeholder="Enter new password"
+                      value={newPassword}
+                      onChange={(e) => setNewPassword(e.target.value)}
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <IconButton
+                              aria-label="toggle password visibility"
+                              onClick={handleClickShowPasswordOne}
+                              onMouseDown={handleMouseDownPassword}
+                            >
+                              {showPassword ? (
+                                <Visibility />
+                              ) : (
+                                <VisibilityOff />
+                              )}
+                            </IconButton>
+                          </InputAdornment>
+                        ),
+                      }}
+                    />
+                    <button type="submit">Save Password</button>
+                  </Stack>
+                </form>
               </Stack>
             </Stack>
           </Grid>
