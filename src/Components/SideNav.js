@@ -24,7 +24,7 @@ import { useStore } from "../Store";
 import { auth, db } from "./Firebase";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
 
 const drawerWidth = 240;
 
@@ -120,14 +120,18 @@ export default function SideNav() {
   const [orderLength, setOrderLength] = useState(0);
   const [userLength, setUserLength] = useState(0);
   const [productLength, setProductLength] = useState(0);
-  const orderRef = collection(db, "orders");
   const userRef = collection(db, "user");
   const productRef = collection(db, "products");
 
   useEffect(() => {
     const fetchCollectionLength = async () => {
       try {
-        const snapshot = await getDocs(orderRef);
+        const q = query(
+          collection(db, "orders"),
+          where("status", "==", "Active")
+        );
+        const snapshot = await getDocs(q);
+        // const snapshot = await getDocs(orderRef);
         const length = snapshot.size;
         setOrderLength(length);
       } catch (error) {

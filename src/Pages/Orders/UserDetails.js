@@ -3,9 +3,12 @@ import { Box, Grid, IconButton, TextField, Typography } from "@mui/material";
 import { collection, getDocs } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { db } from "../../Components/Firebase";
+// import { useStore } from "../../Store";
 
 const UserDetails = ({ orderUserId, closeEvent }) => {
   const [rows, setRows] = useState([]);
+  // const rows = useStore((state) => state.rows);
+  // const setRows = useStore((state) => state.setRows);
 
   useEffect(() => {
     const getUsers = async () => {
@@ -32,6 +35,7 @@ const UserDetails = ({ orderUserId, closeEvent }) => {
       </IconButton>
 
       <Box height={20} />
+      
       {rows.map((row) => {
         if (orderUserId === row.userid) {
           // console.log("Row Data "+orderUserId)

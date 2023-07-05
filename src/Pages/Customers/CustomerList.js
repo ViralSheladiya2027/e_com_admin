@@ -24,8 +24,6 @@ import { db } from "../../Components/Firebase";
 import { collection, getDocs, deleteDoc, doc } from "firebase/firestore";
 import { useStore } from "../../Store";
 import Swal from "sweetalert2";
-// import EditCustomer from "./EditCustomer";
-import { useParams } from "react-router-dom";
 
 // const style = {
 //   position: "absolute",
@@ -187,12 +185,12 @@ export default function CustomerList() {
                   >
                     Cart
                   </TableCell> */}
-                  <TableCell
+                  {/* <TableCell
                     align="left"
                     style={{ minWidth: "100px", fontWeight: "bold" }}
                   >
                     userid
-                  </TableCell>
+                  </TableCell> */}
                   <TableCell
                     align="left"
                     style={{ minWidth: "100px", fontWeight: "bold" }}
@@ -238,7 +236,7 @@ export default function CustomerList() {
                         <TableCell align="left">{row.address}</TableCell>
                         <TableCell align="left">{row.email}</TableCell>
                         {/* <TableCell align="left">{row.cart}</TableCell> */}
-                        <TableCell align="left">{row.userid}</TableCell>
+                        {/* <TableCell align="left">{row.userid}</TableCell> */}
                         <TableCell align="left">
                           {row.date && row.date.toDate
                             ? row.date.toDate().toDateString()

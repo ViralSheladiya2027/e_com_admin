@@ -205,12 +205,12 @@ export default function OrderList() {
                   >
                     CartTotal
                   </TableCell>
-                  <TableCell
+                  {/* <TableCell
                     align="left"
                     style={{ minWidth: "100px", fontWeight: "bold" }}
                   >
                     Userid
-                  </TableCell>
+                  </TableCell> */}
 
                   <TableCell
                     align="left"
@@ -268,7 +268,7 @@ export default function OrderList() {
                         </TableCell>
                         <TableCell align="left">{row.totalItems}</TableCell>
                         <TableCell align="left">{row.cartTotal}</TableCell>
-                        <TableCell align="left">{row.userid}</TableCell>
+                        {/* <TableCell align="left">{row.userid}</TableCell> */}
 
                         <TableCell align="left">
                           {row.date && row.date.toDate
@@ -282,6 +282,7 @@ export default function OrderList() {
                             }}
                             value={orderDispatch}
                             onChange={(e) => setOrderDispatch(e.target.value)}
+                            style={{ background: "#ff7043" }}
                           >
                             {row.status}
                           </button>

@@ -3,6 +3,7 @@ import MailOutlineOutlinedIcon from "@mui/icons-material/MailOutlineOutlined";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import VpnKeyOutlinedIcon from "@mui/icons-material/VpnKeyOutlined";
 import {
+  Button,
   Card,
   CardContent,
   Divider,
@@ -18,9 +19,16 @@ import { Link } from "react-router-dom";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import IconButton from "@mui/material/IconButton";
-import { auth, db } from "../../Components/Firebase";
-import { onAuthStateChanged, updatePassword } from "firebase/auth";
-import { collection, doc } from "firebase/firestore";
+import { auth } from "../../Components/Firebase";
+import {
+  // onAuthStateChanged,
+  // reauthenticateWithCredential,
+  // sendPasswordResetEmail,
+  updatePassword,
+} from "firebase/auth";
+// import { collection, doc } from "firebase/firestore";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function List({ email }) {
   const [name, setName] = useState("");
@@ -35,8 +43,8 @@ export default function List({ email }) {
     setShowPasswordCurrent(!showPasswordCurrent);
   const handleMouseDownPasswordCurrent = () =>
     setShowPasswordCurrent(!showPasswordCurrent);
-  const [admin, setAdmin] = useState("");
-  const currentDate = new Date();
+  // const [admin, setAdmin] = useState("");
+  // const currentDate = new Date();
 
   useEffect(() => {
     const savedName = localStorage.getItem("name");
@@ -61,15 +69,74 @@ export default function List({ email }) {
     localStorage.setItem("phone", value);
   }
 
-  const changePassword = async (e,newPassword) => {
+  function validatePassword(password) {
+    // Check if password is at least 6 characters long
+    if (password.length < 6) {
+      return false;
+    }
+
+    // Check if password contains at least one letter and one number
+    const letterRegex = /[a-zA-Z]/;
+    const numberRegex = /[0-9]/;
+
+    if (!letterRegex.test(password) || !numberRegex.test(password)) {
+      return false;
+    }
+
+    return true;
+  }
+
+  const changePassword = async (e) => {
     e.preventDefault();
 
-    try {
-      await auth.currentUser.updatePassword(newPassword);
-      // Password change successful
-      console.log('Password changed successfully');
-    } catch (error) {
-      console.log("msg"+ error.message);
+    const user = auth.currentUser;
+
+    if (user !== null) {
+      // const currentPassword = getCurrentPassword(); // Retrieve the current password from your form or input field
+      // const newPassword = getNewPassword(); // Retrieve the new password from your form or input field
+
+      if (currentPassword !== newPassword) {
+        if (validatePassword(newPassword)) {
+          updatePassword(user, newPassword)
+            .then(() => {
+              console.log("Password updated successfully");
+              toast.success("Your password has been changed", {
+                position: "top-center",
+                theme: "colored",
+              });
+              setCurrentPassword("");
+              setNewPassword("");
+            })
+            .catch((error) => {
+              console.log("Error:", error);
+              toast.error(error.message, {
+                position: "top-center",
+                theme: "colored",
+              });
+            });
+        } else {
+          toast.error(
+            "Your new password must be at least 6 characters long and contain both letters and numbers",
+            {
+              position: "top-center",
+              theme: "colored",
+            }
+          );
+        }
+      } else {
+        toast.error(
+          "Your new password cannot be the same as your current password",
+          {
+            position: "top-center",
+            theme: "colored",
+          }
+        );
+      }
+    } else {
+      toast.error("Please log in to your account", {
+        position: "top-center",
+        theme: "colored",
+      });
     }
   };
 
@@ -182,9 +249,9 @@ export default function List({ email }) {
                               onMouseDown={handleMouseDownPasswordCurrent}
                             >
                               {showPasswordCurrent ? (
-                                <Visibility />
-                              ) : (
                                 <VisibilityOff />
+                              ) : (
+                                <Visibility />
                               )}
                             </IconButton>
                           </InputAdornment>
@@ -206,16 +273,23 @@ export default function List({ email }) {
                               onMouseDown={handleMouseDownPassword}
                             >
                               {showPassword ? (
-                                <Visibility />
-                              ) : (
                                 <VisibilityOff />
+                              ) : (
+                                <Visibility />
                               )}
                             </IconButton>
                           </InputAdornment>
                         ),
                       }}
                     />
-                    <button type="submit">Save Password</button>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      type="submit"
+                      style={{ background: "#2e7d32" }}
+                    >
+                      Save Password
+                    </Button>
                   </Stack>
                 </form>
               </Stack>
