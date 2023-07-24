@@ -48,7 +48,7 @@ const EditProduct = ({ fId, closeEvent }) => {
         const progress = Math.round(
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100
         );
-        console.log(progress)
+        console.log(progress);
       },
       (error) => {
         alert(error);
@@ -60,8 +60,8 @@ const EditProduct = ({ fId, closeEvent }) => {
             name: name,
             price: Number(price),
             unit: unit,
-            description:description,
-            rating:Number(rating),
+            description: description,
+            rating: Number(rating),
           };
           updateDoc(userDoc, newFields);
           console.log("URL::" + downloadURL);
@@ -125,29 +125,22 @@ const EditProduct = ({ fId, closeEvent }) => {
             <img
               alt="not fount"
               width="50px"
-              // src={URL.createObjectURL(image)}
-              src={image}
+              src={
+                typeof image === "string" ? image : URL.createObjectURL(image)
+              }
             />
           </center>
-         )}
+        )}
         <input
           hidden
           id="image"
           type="file"
           name="myImage"
           onChange={(event) => {
-            console.log(event.target.files[0]);
-//             if(event.target.files.length!==0)
-// {
-//   setImage(URL.createObjectURL(event.target.files[0]));
-// }             
-setImage(event.target.files[0]);
-// let reader = new FileReader();
-//     reader.onload = function(e) {
-//       setImage(e.target.result);
-//     };
-//     reader.readAsDataURL(event.target.files[0]);
-
+            const selectedImage = event.target.files[0];
+            if (selectedImage) {
+              setImage(selectedImage);
+            }
           }}
         />
         <label
@@ -225,7 +218,6 @@ setImage(event.target.files[0]);
             variant="outlined"
             size="small"
             sx={{ minWidth: "100%" }}
-      
           />
         </Grid>
         <Grid item xs={12}>
